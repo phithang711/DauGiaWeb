@@ -1,0 +1,28 @@
+body {
+    background: url('https://www.indexexchange.com/wp-content/uploads/2019/03/header-bidding-auction-ss-1920_uusz3n-1120x630.gif');
+    padding: 50px;
+}
+
+.login {
+    margin-bottom: 5px;
+}
+
+.login-submit {
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+.dropdown-menu {
+    width: 300px !important;
+}
+
+@media(max-width:768px) {
+    #login-dp {
+        background-color: inherit;
+        color: #fff;
+    }
+    #login-dp .bottom {
+        background-color: inherit;
+        border-top: 0 none;
+    }
+}
