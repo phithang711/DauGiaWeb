@@ -1,0 +1,34 @@
+.logoImg{
+    border-radius: 10px;
+    margin: 0px;
+}
+
+.carousel-indicators {
+    position: static;  
+}
+
+.carousel-indicators .active img{
+    opacity: 0.5;
+}
+
+.slide{
+    width: 20%;
+}
+
+.product-info{
+    width: 50%;
+    margin-left: 50px;
+}
+
+.product-description{
+    display: flex;
+}
+
+.history-table{
+    margin-left: 20px;
+    width: 100%;
+}
+
+.checked{
+    color: orange;
+}
