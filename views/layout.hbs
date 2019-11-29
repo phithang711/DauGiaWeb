@@ -1,78 +1,46 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-    <title>{{title}}</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+	<title>Login V1</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="css/util.css">
+<!--===============================================================================================-->
+	<script src='https://www.google.com/recaptcha/api.js?hl=vi'></script>
+
 </head>
-
-<body>
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-primary static-top">
-            <div class="container">
-                <a class="navbar-brand" href="#">
-                    Logo
-                </a>
-                <div class="collapse navbar-collapse" id="navbarResponsive">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item">
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">Categories <span class="caret"></span></a>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li class="list-group-item list-group-item-light"><a href="#">Action</a></li>
-                                    <li class="list-group-item list-group-item-light"><a href="#">Another action</a></li>
-                                    <li class="list-group-item list-group-item-light"><a href="#">Something else here</a></li>
-                                    <li class="list-group-item list-group-item-light"><a href="#">Separated link</a></li>
-                                    <li class="list-group-item list-group-item-light"><a href="#">One more separated link</a></li>
-                                </ul>
-                            </li>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Top</a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">New</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Trending</a>
-                        </li>
-                    </ul>
-                    <form class="navbar-nav ml-auto align-middle" role="search">
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Search">
-                        </div>
-                        <button type="button" class="btn btn-light form-group">Submit</button>
-                    </form>
-                    <ul class="navbar-nav mr-right">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Login
-            </a>
-                            <div class="dropdown-menu dropdown-menu-right p-3">
-                                <form class="form-horizontal" method="post" accept-charset="UTF-8">
-                                    <span>Username:</span>
-                                    <input class="form-control login" type="text" name="username2" placeholder="Username">
-                                    <span>Password:</span>
-                                    <input class="form-control login" type="text" name="password2" placeholder="Password">
-                                    <input class="btn btn-primary login-submit" type="button" name="submit" value="Login">
-                                </form>
-                                <span><a href="">Register new account</a></span>
-                                <br>
-                                <span><a href="">Forget password?</a></span>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-
-            </div>
-        </nav>
-    </header>
+	{{>nav}}
     {{{body}}}
 </body>
+
+<!--===============================================================================================-->	
+	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/bootstrap/js/popper.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/tilt/tilt.jquery.min.js"></script>
+	<script >
+		$('.js-tilt').tilt({
+			scale: 1.1
+		})
+	</script>
+<!--===============================================================================================-->
+	<script src="js/main.js"></script>
 
 </html>
