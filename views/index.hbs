@@ -1,9 +1,10 @@
-<link rel="stylesheet" type="text/css" href="css/signIn.css">
-	<div class="limiter">
-		<div class="container-login100">
-			<div class="wrap-login100">
-				
-                   
+<div class="limiter">
+		<div class="container-main-content">
+			<div class="wrap-main-content">
+				{{> sectionslideshow item=slideshow}}
+				{{#each data}}
+					{{> section item=content}}
+				{{/each}}
 			</div>
 		</div>
-	</div>
+</div>

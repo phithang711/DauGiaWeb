@@ -37,6 +37,78 @@ html {
     font-family: Poppins-Regular, sans-serif;
 }
 
+.containerflex {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: baseline;
+    align-content: flex-start;
+    margin-top: 10px;
+}
+
+.containerflex .card {
+    width: 280px;
+    height: 400px;
+    margin: 5px 5px 5px 10px;
+}
+
+.container-main-content {
+    width: 100%;
+    min-height: 100vh;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    background: #9053c7;
+    background: -webkit-linear-gradient(-135deg, #c850c0, #4158d0);
+    background: -o-linear-gradient(-135deg, #c850c0, #4158d0);
+    background: -moz-linear-gradient(-135deg, #c850c0, #4158d0);
+    background: linear-gradient(-135deg, #c850c0, #4158d0);
+}
+
+.wrap-main-content {
+    width: 100%;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 15px;
+}
+
+.section-container {
+    padding: 10px;
+    width: 100%;
+}
+
+.section-container-slideshow {
+    padding: 0px 0px 30px 0px;
+}
+
+.section-image-parent {
+    height: 250px;
+}
+
+.section-image-parent img {
+    height: 250px;
+    object-fit: contain;
+}
+
+.carousel-item {
+    height: 350px;
+}
+
 
 /*---------------------------------------------*/
 
