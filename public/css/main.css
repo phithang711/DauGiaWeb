@@ -44,12 +44,11 @@ html {
     justify-content: flex-start;
     align-items: baseline;
     align-content: flex-start;
-    margin-top: 10px;
 }
 
 .containerflex .card {
     width: 280px;
-    height: 400px;
+    height: 450px;
     margin: 5px 5px 5px 10px;
 }
 
@@ -449,6 +448,8 @@ iframe {
 }
 
 
+
+
 /*------------------------------------------------------------------
   [ Button ]*/
 
@@ -588,8 +589,6 @@ iframe {
 }
 
 .container {
-    width: 660px;
-    position: relative;
     margin: 0 auto;
 }
 
@@ -830,4 +829,49 @@ input[type=checkbox]:not(old):checked+label>span:before {
     position: relative;
     z-index: 2;
     color: #555;
+}
+
+
+/* My test */
+ /* create two column for item user*/
+ .column {
+    float: left;
+    width: 50%;
+  }
+  
+  /* Clear floats after the columns */
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
+  .ratechecked {
+    color: #ffff66;
+  }
+
+
+  /* resize input number when choosing quality */
+  input[type="number"] {
+    width: 50px;
+}
+
+  
+.moveright{
+  padding-left:40px;
+}
+
+.bidbutton{
+  background-color: #f41e1e;
+  border: none;
+  color: white;
+  padding: 10px 40px;
+  text-align: center;
+  font-size: 16px;
+  margin: 4px 2px;
+  opacity: 0.6;
+  transition: 0.3s;
+  display: inline-block;
+  text-decoration: none;
+  cursor: pointer;
 }

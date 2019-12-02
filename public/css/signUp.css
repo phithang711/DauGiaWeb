@@ -207,10 +207,11 @@ h2 {
 }
 
 .container {
-	width: 660px;
+	width: 800px;
 	position: relative;
 	margin: 0 auto;
 }
+
 
 .display-flex {
 	justify-content: space-between;
@@ -436,7 +437,7 @@ input[type=checkbox]:not(old):checked + label > span:before {
   @media screen and (max-width: 768px) {
     .container {
       width: calc(100% - 40px);
-      max-width: 100%; } }
+	  max-width: 100%; } }
   @media screen and (max-width: 480px) {
     .signup-content {
       padding: 50px 25px; } }
