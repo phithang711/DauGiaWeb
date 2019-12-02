@@ -859,6 +859,7 @@ input[type=checkbox]:not(old):checked+label>span:before {
   
 .moveright{
   padding-left:40px;
+  padding-top:20px;
 }
 
 .bidbutton{
