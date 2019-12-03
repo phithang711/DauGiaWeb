@@ -21,7 +21,7 @@ let slideShowItems = [{
     }
 ]
 
-let homepageItems = [{
+let window.homepageItems = [{
         content: {
             title: "Top",
             items: [{
@@ -181,6 +181,10 @@ router.get('/login', function(req, res, next) {
 
 router.get('/signup', function(req, res, next) {
     res.render('signup', { title: 'Express' });
+});
+
+router.get('/betview', function(req, res, next) {
+    res.render('betview', { title: 'Express' });
 });
 
 
