@@ -28,49 +28,57 @@ let window.homepageItems = [{
                     name: "A4 USB LED",
                     picture: "https://i.ebayimg.com/thumbs/images/g/qigAAOSwWAldTTSW/s-l225.webp",
                     description: "Stereo Bass Surround Gaming Headset for PS4",
-                    price: "14.97"
+                    price: "14.97",
+                    link: "/vatpham1"
                 },
                 {
                     name: "ONIKUMA K1",
                     picture: "https://images-na.ssl-images-amazon.com/images/I/91OME-jyFmL.jpg",
                     description: "Stereo Bass Surround Gaming Headset for PS4 New Xbox One PC with Mic",
-                    price: "19.98"
+                    price: "19.98",
+                    link: "/vatpham1"
                 },
                 {
                     name: "3 Colors LED Backlit",
                     picture: "https://i.ebayimg.com/thumbs/images/g/ocQAAOSwIRhd4OM5/s-l225.webp",
                     description: "USB Wired Gaming Keyboard Multimedia and 2400 DPI Mouse Set",
-                    price: "16.14"
+                    price: "16.14",
+                    link: "/vatpham1"
                 },
                 {
                     name: "Logitech G203",
                     picture: "https://i.ebayimg.com/thumbs/images/m/mZE5JW39zkUOOj1wNlAQwQg/s-l225.jpg",
                     description: "Logitech G203 Mouse Prodigy Programmable",
-                    price: "21.95"
+                    price: "21.95",
+                    link: "/vatpham1"
                 },
                 {
                     name: "McAfee AntiVirus 1 PC ",
                     picture: "https://i.ebayimg.com/thumbs/images/g/kJIAAOSwWnBctiB1/s-l225.webp",
                     description: "Digital delivery",
-                    price: "15.99"
+                    price: "15.99",
+                    link: "/vatpham1"
                 },
                 {
                     name: "3 Colors LED Backlit",
                     picture: "https://i.ebayimg.com/thumbs/images/g/ocQAAOSwIRhd4OM5/s-l225.webp",
                     description: "USB Wired Gaming Keyboard Multimedia and 2400 DPI Mouse Set",
-                    price: "16.14"
+                    price: "16.14",
+                    link: "/vatpham1"
                 },
                 {
                     name: "Logitech G203",
                     picture: "https://i.ebayimg.com/thumbs/images/m/mZE5JW39zkUOOj1wNlAQwQg/s-l225.jpg",
                     description: "Logitech G203 Mouse Prodigy Programmable",
-                    price: "21.95"
+                    price: "21.95",
+                    link: "/vatpham1"
                 },
                 {
                     name: "McAfee AntiVirus 1 PC ",
                     picture: "https://i.ebayimg.com/thumbs/images/g/kJIAAOSwWnBctiB1/s-l225.webp",
                     description: "Digital delivery",
-                    price: "15.99"
+                    price: "15.99",
+                    link: "/vatpham1"
                 }
             ]
         }
@@ -82,49 +90,57 @@ let window.homepageItems = [{
                     name: "Lords of the Rings",
                     picture: "https://images-na.ssl-images-amazon.com/images/I/91OME-jyFmL.jpg",
                     description: "No",
-                    price: "99"
+                    price: "99",
+                    link: "/vatpham1"
                 },
                 {
                     name: "Lords of the Rings",
                     picture: "https://images-na.ssl-images-amazon.com/images/I/91OME-jyFmL.jpg",
                     description: "No",
-                    price: "99"
+                    price: "99",
+                    link: "/vatpham1"
                 },
                 {
                     name: "Lords of the Rings",
                     picture: "https://images-na.ssl-images-amazon.com/images/I/91OME-jyFmL.jpg",
                     description: "No",
-                    price: "99"
+                    price: "99",
+                    link: "/vatpham1"
                 },
                 {
                     name: "Lords of the Rings",
                     picture: "https://images-na.ssl-images-amazon.com/images/I/91OME-jyFmL.jpg",
                     description: "No",
-                    price: "99"
+                    price: "99",
+                    link: "/vatpham1"
                 },
                 {
                     name: "Lords of the Rings",
                     picture: "https://images-na.ssl-images-amazon.com/images/I/91OME-jyFmL.jpg",
                     description: "No",
-                    price: "99"
+                    price: "99",
+                    link: "/vatpham1"
                 },
                 {
                     name: "3 Colors LED Backlit",
                     picture: "https://i.ebayimg.com/thumbs/images/g/ocQAAOSwIRhd4OM5/s-l225.webp",
                     description: "USB Wired Gaming Keyboard Multimedia and 2400 DPI Mouse Set",
-                    price: "16.14"
+                    price: "16.14",
+                    link: "/vatpham1"
                 },
                 {
                     name: "Logitech G203",
                     picture: "https://i.ebayimg.com/thumbs/images/m/mZE5JW39zkUOOj1wNlAQwQg/s-l225.jpg",
                     description: "Logitech G203 Mouse Prodigy Programmable",
-                    price: "21.95"
+                    price: "21.95",
+                    link: "/vatpham1"
                 },
                 {
                     name: "McAfee AntiVirus 1 PC ",
                     picture: "https://i.ebayimg.com/thumbs/images/g/kJIAAOSwWnBctiB1/s-l225.webp",
                     description: "Digital delivery",
-                    price: "15.99"
+                    price: "15.99",
+                    link: "/vatpham1"
                 }
             ]
         }
@@ -187,6 +203,10 @@ router.get('/betview', function(req, res, next) {
     res.render('betview', { title: 'Express' });
 });
 
+
+router.get('/vatpham1', function(req, res, next) {
+    res.render('../views/user_page/UIitem', { title: 'Express' });
+  });
 
 
 module.exports = router;
