@@ -128,7 +128,7 @@ var homepageItems = [{
     },
     {
         content: {
-            title: "ending today",
+            title: "ending",
             items: [{
                     name: "Lords of the Rings",
                     picture: "https://images-na.ssl-images-amazon.com/images/I/91OME-jyFmL.jpg",

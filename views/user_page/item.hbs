@@ -1,8 +1,6 @@
 <div class="limiter">
 		<div class="container-main-content">
-			<div class="wrap-main-content">
-				<div class="row">
-        <div class="column">
+			<div class="wrap-main-content wrap-item-view">
             <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner">
                     <div class="carousel-item active">
@@ -54,8 +52,8 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="column">
+
+                    <div>
             <h2>
                 <font color='red' style="clear:both;">
                     <center>{{name}}</center>
@@ -77,7 +75,7 @@
                     <span class="fa fa-star-o "></span>
                 </div>
             </center>
-            <hr>
+                        <hr>
             <div class='moveright'>
                 <p style="font-size:large;"><b>Condition</b>: New</p>
                 <p><br></p>
@@ -86,7 +84,6 @@
                 </form>
             </div>
             <p><br></p>
-
             <div class="card mx-auto bg-light" style="width: 30rem">
                 <div class='moveright'>
                     <span>Current Price: <b>{{price}}$</b></span>
@@ -98,13 +95,16 @@
                     <hr>
                     <p>Minimum bit: 10010$</p>
                     <hr>
-                    <button type='button' class='bidbutton'>Bid</button>
+                    <span>Interested?</span>
+                    <br>
+                    <a id="bidnow"><button type='button' class='bidbutton'>Bid now</button></a>
                     <p><br></p>
                 </div>
             </div>
-
+        </div>         
+            
         </div>
-    </div>
 			</div>
 		</div>
 </div>
+<script src="/js/item.js"></script>

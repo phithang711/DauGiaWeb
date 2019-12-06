@@ -24,6 +24,11 @@
     display: flex;
 }
 
+.bid-collapse{
+    width: 400px;
+    height: inherit;
+}
+
 .history-table{
     margin-left: 20px;
     width: 100%;
@@ -39,7 +44,7 @@
 }
 
 #buy-btn{
-    width: 150px;;
+    width: 150px;
 }
 
 .buy-now-btn{

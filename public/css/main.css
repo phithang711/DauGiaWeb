@@ -54,7 +54,7 @@ html {
 
 .container-main-content {
     width: 100%;
-    min-height: 100vh;
+    min-height: 80vh;
     display: -webkit-box;
     display: -webkit-flex;
     display: -moz-box;
@@ -78,6 +78,14 @@ html {
     flex-wrap: wrap;
     justify-content: space-between;
     padding: 15px;
+}
+
+.wrap-item-view{
+    justify-content: space-around;
+}
+
+.wrap-item-view .carousel{
+    width: 50%;
 }
 
 .section-container {
