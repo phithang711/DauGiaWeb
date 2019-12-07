@@ -183,6 +183,15 @@ let homepageItems = [{
     }
 ]
 
+let accountList = [{
+    id: "1",
+    name: "abc"
+},
+{
+    id: "2",
+    name: "bcd"
+}]
+
 router.get('/', function(req, res) {
     var context = {
         data: homepageItems,
@@ -197,6 +206,10 @@ router.get('/login', function(req, res, next) {
 
 router.get('/signup', function(req, res, next) {
     res.render('signup', { title: 'Express' });
+});
+
+router.get('/manage', function(req, res, next) {
+    res.render('manageView',accountList);
 });
 
 
