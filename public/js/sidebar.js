@@ -1,0 +1,1 @@
+//$('#bidnow').attr('href', window.location.pathname. + '/bid');

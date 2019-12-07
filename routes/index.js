@@ -41,13 +41,13 @@ router.get('/:type/:index', function(req, res) {
         res.render('user_page/item', item);
 
     } else {
-        item=products.homepageItems.find(item => item.content.title === productType).content.items[index];
+        item = products.homepageItems.find(item => item.content.title === productType).content.items[index];
         // item = products.homepageItems.filter(obj => {
         //     return obj.content.title === productType
         //   }).content.items[index];
-          res.render('user_page/item', item);
+        res.render('user_page/item', item);
     }
-    
+
 });
 
 router.get('/:type/:index/bid', function(req, res) {
@@ -59,11 +59,31 @@ router.get('/:type/:index/bid', function(req, res) {
         res.render('user_page/itemBid', item);
 
     } else {
-        item=products.homepageItems.find(item => item.content.title === productType).content.items[index];
+        item = products.homepageItems.find(item => item.content.title === productType).content.items[index];
         res.render('user_page/itemBid', item);
     }
-    
+
 });
+
+
+router.get('/upload', function(req, res) {
+    res.render('user_page/uploadProduct', { title: 'Upload a product:' });
+
+});
+
+
+router.get('/user/:username/assess', function(req, res) {
+    res.render('user_page/assess', { title: 'Assess' });
+});
+
+router.get('/user/:username/edit', function(req, res) {
+    res.render('user_page/editProfile', { title: 'Edit Profile' });
+});
+
+router.get('/user/:username/favourite', function(req, res) {
+    res.render('user_page/favourite', { title: 'Favourite' });
+});
+
 
 
 module.exports = router;
