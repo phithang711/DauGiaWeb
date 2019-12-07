@@ -71,6 +71,21 @@ router.get('/upload', function(req, res) {
 
 });
 
+router.get('/:type/:index/review', function(req, res) {
+    //get param
+    var productType = req.params.type.normalize();
+    var index = parseInt(req.params.index);
+    if (productType === 'all') {
+        item = products.all.content.items[index];
+        res.render('user_page/commentrate', item);
+
+    } else {
+        item=products.homepageItems.find(item => item.content.title === productType).content.items[index];
+        res.render('user_page/commentrate', item);
+    }
+    
+});
+
 
 router.get('/user/:username/assess', function(req, res) {
     res.render('user_page/assess', { title: 'Assess' });
