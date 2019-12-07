@@ -13,7 +13,8 @@
                         <img class="d-block w-100" src="{{picture}}" class="img-fluid" alt="Third slide" />
                     </div>
                 </div>
-                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                <div>
+                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="sr-only">Previous</span>
                 </a>
@@ -37,6 +38,7 @@
                                 data-target="#carouselExampleIndicators" data-slide-to="2" />
                         </div>
                     </div>
+                </div>
                 </div>
             </div>
 
@@ -81,11 +83,6 @@
                 <div class="card mx-auto bg-light" style="width: 30rem">
                     <div class='moveright'>
                         <span>Current Price: <b>{{price}}$</b></span>
-                        <p>
-                            <font size='-1px'>
-                                &nbsp;&nbsp;&nbsp;&nbsp;Aproximate: 230.0000 vnđ
-                            </font>
-                        </p>
                         <p><br></p>
                         <div>
                             <p><b>Highest price bidder</b>: @tranthuanthanh</p>
@@ -109,8 +106,17 @@
                     </div>
                 </div>
             </div>
-
         </div>
+                    <div class="suggested-content" style="clear: both;">
+                <h5>Suggested</h5>
+                <div class="suggested-items">
+                    {{>itemcard}}
+                    {{>itemcard}}
+                    {{>itemcard}}
+                    {{>itemcard}}
+                    {{>itemcard}}
+                </div>               
+            </div>
     </div>
 </div>
 </div>

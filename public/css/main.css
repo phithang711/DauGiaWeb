@@ -80,12 +80,20 @@ html {
     padding: 15px;
 }
 
-.wrap-item-view{
+.wrap-item-view {
     justify-content: space-around;
 }
 
-.wrap-item-view .carousel{
+.wrap-item-view .carousel {
     width: 50%;
+}
+
+.carousel-inner {
+    height: 80%;
+}
+
+#carouselExampleIndicators {
+    width: 35%;
 }
 
 .section-container {
@@ -106,7 +114,7 @@ html {
     object-fit: contain;
 }
 
-.carousel-item {
+#home-slideshow .carousel-item {
     height: 350px;
 }
 
@@ -450,8 +458,6 @@ iframe {
 }
 
 
-
-
 /*------------------------------------------------------------------
   [ Button ]*/
 
@@ -726,6 +732,23 @@ iframe {
     color: #222;
 }
 
+.suggested-content {
+    padding: 30px;
+    width: 90%;
+}
+
+.suggested-content .suggested-items {
+    padding-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.suggested-item {
+    width: 150px;
+    height: 150px;
+    margin: 10px;
+}
+
 .form-submit {
     width: 100%;
     border-radius: 5px;
@@ -835,46 +858,51 @@ input[type=checkbox]:not(old):checked+label>span:before {
 
 
 /* My test */
- /* create two column for item user*/
- .column {
+
+
+/* create two column for item user*/
+
+.column {
     float: left;
     width: 50%;
-  }
-  
-  /* Clear floats after the columns */
-  .row:after {
+}
+
+
+/* Clear floats after the columns */
+
+.row:after {
     content: "";
     display: table;
     clear: both;
-  }
+}
 
-  .ratechecked {
+.ratechecked {
     color: #ffff66;
-  }
+}
 
 
-  /* resize input number when choosing quality */
-  input[type="number"] {
+/* resize input number when choosing quality */
+
+input[type="number"] {
     width: 50px;
 }
 
-  
-.moveright{
-  padding-left:40px;
-  padding-top:20px;
+.moveright {
+    padding-left: 40px;
+    padding-top: 20px;
 }
 
-.bidbutton{
-  background-color: #f41e1e;
-  border: none;
-  color: white;
-  padding: 10px 40px;
-  text-align: center;
-  font-size: 16px;
-  margin: 4px 2px;
-  opacity: 0.6;
-  transition: 0.3s;
-  display: inline-block;
-  text-decoration: none;
-  cursor: pointer;
+.bidbutton {
+    background-color: #f41e1e;
+    border: none;
+    color: white;
+    padding: 10px 40px;
+    text-align: center;
+    font-size: 16px;
+    margin: 4px 2px;
+    opacity: 0.6;
+    transition: 0.3s;
+    display: inline-block;
+    text-decoration: none;
+    cursor: pointer;
 }
