@@ -63,21 +63,6 @@
                     </div>
                 </center>
                 <hr>
-                <div class='moveright'>
-                    <p style="font-size:large;"><b>Condition</b>: New</p>
-                    <p><br></p>
-                    <form>
-                        <b>Quality:</b> <input type='number' name='Quality_product' value='1' min='0'>
-                    </form>
-                    <p><br></p>
-                    <div>
-                        <p style="font-size:large;"><b>Seller</b>: @phithangnguyen</p>
-                        <span style="font-size:small;">Rate: 4.5</span>
-                        <p class="fa fa-star ratechecked"></p>
-                    </div>
-
-                </div>
-                <p><br></p>
                 <div class="card mx-auto bg-light" style="width: 30rem">
                     <div class='moveright'>
                         <span>Current Price: <b>{{price}}$</b></span>
@@ -86,32 +71,63 @@
                                 &nbsp;&nbsp;&nbsp;&nbsp;Aproximate: 230.0000 vnđ
                             </font>
                         </p>
+                        <hr>
+                        <center><font color='red'><h3>List of bidder</h3></font></center>
                         <p><br></p>
-                        <div>
-                            <p><b>Highest price bidder</b>: @tranthuanthanh</p>
-                            <span style="font-size:small;">Rate: 4.3</span>
-                            <p class="fa fa-star ratechecked"></p>
-                        </div>
+                        <table>
+                            <tr>
+                                <td scope="row">
+                                    @tranthuanthanh:
+                                </td>
+                                <td>15$</td>
+
+                                <td>
+                                    <a class="btn btn-sm btn-danger m-l-10" role="button" alt="denybid"
+                                        onclick="deleteRow(this)">
+                                        <i class="fa fa-close " style="color:white"></i>
+                                    </a>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td scope="row">
+                                    @dangductrung:
+                                </td>
+                                <td>11$</td>
+
+                                <td>
+                                    <a class="btn btn-sm btn-danger m-l-10" role="button" alt="denybid"
+                                        onclick="deleteRow(this)">
+                                        <i class="fa fa-close " style="color:white"></i>
+                                    </a>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td scope="row">
+                                    @testterkun:
+                                </td>
+                                <td>8$</td>
+
+                                <td>
+                                    <a class="btn btn-sm btn-danger m-l-10" role="button" alt="denybid"
+                                        onclick="deleteRow(this)">
+                                        <i class="fa fa-close " style="color:white"></i>
+                                    </a>
+                                </td>
+                            </tr>
+
+                        </table>
+
                         <hr>
                         <p>Create at: <span id="create_at"> 5:01 AM 23/11/2019</span></p>
                         <p>Close in: <span id="end_at"> after 10 hours</span></p>
-                        <hr>
-                        <p>Minimum bit: 10010$</p>
-                        <hr>
-                        <span>Interested?</span>
-                        <br>
-                        <a id="bidnow"><button type='button' class='bidbutton'>Bid now</button></a>
-                        <a id="Comment"><button type='button' class='bidbutton'>Review</button></a>
-                        <hr>
-                        <a id="merchantsite"><button type='button' class='bidbutton'>Deny bid site (for merchant only)</button></a>
                         <p><br></p>
-
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>
 </div>
-<script src="/js/item.js"></script>
+<script src="/js/itemmerchant.js"></script>
