@@ -1,0 +1,31 @@
+<div class="section-container">
+    <h4 id="{{item.title}}" class="section-title">{{item.title}}</h4>
+        <div class="containerflex">
+            {{#each item.items}}
+            <div class="card">
+                <div style="float:left;">
+                    <span class="badge bg-danger" style="float:right;color:white">3 days </span>
+                    <span class="badge badge-info" style="float:right">4832 bids</span>
+                </div>
+                <div class="section-image-parent">
+                    <img class="card-img-top" src="{{picture}}" alt="Card image cap">
+                </div>
+                
+                <div class="card-body">
+                    <h6 class="card-title" style="float: left;font-size:smaller;font-weight:bold"><a class="product-name"  href="{{../item.title}}/{{@index}}">{{name}}</a></h6>
+
+                    <div class="currency" style="float: right;font-size:large;font-weight:bold;color:red">
+                        <span class="sign">$</span>
+                        <span class="currency">{{price}}</span>
+                    </div>
+                    <br>
+                    <p class="card-text" style="clear:both;">{{description}}</p>
+                    
+                </div>
+
+                
+                
+            </div>
+			{{/each}}
+        </div>
+</div>

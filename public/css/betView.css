@@ -1,0 +1,57 @@
+.logoImg{
+    border-radius: 10px;
+    margin: 0px;
+}
+
+.carousel-indicators {
+    position: static;  
+}
+
+.carousel-indicators .active img{
+    opacity: 0.5;
+}
+
+.slide{
+    width: 20%;
+}
+
+.product-info{
+    width: 50%;
+    margin-left: 50px;
+}
+
+.product-description{
+    display: flex;
+}
+
+.bid-collapse{
+    width: 400px;
+    height: inherit;
+}
+
+.history-table{
+    margin-left: 20px;
+    width: 100%;
+}
+
+.checked{
+    color: orange;
+}
+
+.normal-bid-btn{
+    border-right-color: black !important;
+    border-right-width: 2px;
+}
+
+#buy-btn{
+    width: 150px;
+}
+
+.buy-now-btn{
+    width: 150px;;
+}
+
+.price{
+    margin: auto; 
+    margin-right: 20px;
+}

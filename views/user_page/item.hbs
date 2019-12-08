@@ -1,0 +1,123 @@
+<div class="limiter">
+    <div class="container-main-content">
+        <div class="wrap-main-content wrap-item-view">
+            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img class="d-block w-100" src="{{picture}}" class="img-fluid" alt="First slide" />
+                    </div>
+                    <div class="carousel-item">
+                        <img class="d-block w-100" src="{{picture}}" class="img-fluid" alt="Second slide" />
+                    </div>
+                    <div class="carousel-item">
+                        <img class="d-block w-100" src="{{picture}}" class="img-fluid" alt="Third slide" />
+                    </div>
+                </div>
+                <div>
+                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+
+                <div class="container pt-4 pb-5">
+                    <div class="row carousel-indicators">
+                        <div class="col-md-4 item">
+                            <img src="{{picture}}" class="img-fluid" class="img-fluid"
+                                data-target="#carouselExampleIndicators" data-slide-to="0" />
+                        </div>
+                        <div class="col-md-4 item">
+                            <img src="{{picture}}" class="img-fluid" class="img-fluid"
+                                data-target="#carouselExampleIndicators" data-slide-to="1" />
+                        </div>
+                        <div class="col-md-4 item">
+                            <img src="{{picture}}" class="img-fluid" class="img-fluid"
+                                data-target="#carouselExampleIndicators" data-slide-to="2" />
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+
+            <div>
+                <h2>
+                    <font color='red' style="clear:both;">
+                        <center>{{name}}</center>
+                    </font>
+                </h2>
+                <p>
+                    <font color='red' size='-1px'>
+                        <center>🔥 1100 people viewed this items</center>
+                    </font>
+                    <br>
+                </p>
+                <center>
+                    <div>
+                        <span>Rating: </span>
+                        <span class="fa fa-star ratechecked "></span>
+                        <span class="fa fa-star ratechecked "></span>
+                        <span class="fa fa-star ratechecked"></span>
+                        <span class="fa fa-star ratechecked"></span>
+                        <span class="fa fa-star-o "></span>
+                    </div>
+                </center>
+                <hr>
+                <div class='moveright'>
+                    <p style="font-size:large;"><b>Condition</b>: New</p>
+                    <p><br></p>
+                    <form>
+                        <b>Quality:</b> <input type='number' name='Quality_product' value='1' min='0'>
+                    </form>
+                    <p><br></p>
+                    <div>
+                        <p style="font-size:large;"><b>Seller</b>: @phithangnguyen</p>
+                        <span style="font-size:small;">Rate: 4.5</span>
+                        <p class="fa fa-star ratechecked"></p>
+                    </div>
+
+                </div>
+                <p><br></p>
+                <div class="card mx-auto bg-light" style="width: 30rem">
+                    <div class='moveright'>
+                        <span>Current Price: <b>{{price}}$</b></span>
+                        <p><br></p>
+                        <div>
+                            <p><b>Highest price bidder</b>: @tranthuanthanh</p>
+                            <span style="font-size:small;">Rate: 4.3</span>
+                            <p class="fa fa-star ratechecked"></p>
+                        </div>
+                        <hr>
+                        <p>Create at: <span id="create_at"> 5:01 AM 23/11/2019</span></p>
+                        <p>Close in: <span id="end_at"> after 10 hours</span></p>
+                        <hr>
+                        <p>Minimum bit: 10010$</p>
+                        <hr>
+                        <span>Interested?</span>
+                        <br>
+                        <a id="bidnow"><button type='button' class='bidbutton'>Bid now</button></a>
+                        <a id="Comment"><button type='button' class='bidbutton'>Review</button></a>
+                        <hr>
+                        <a id="merchantsite"><button type='button' class='bidbutton'>Deny bid site (for merchant only)</button></a>
+                        <p><br></p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+                    <div class="suggested-content" style="clear: both;">
+                <h5>Suggested</h5>
+                <div class="suggested-items">
+                    {{>itemcard}}
+                    {{>itemcard}}
+                    {{>itemcard}}
+                    {{>itemcard}}
+                    {{>itemcard}}
+                </div>               
+            </div>
+    </div>
+</div>
+</div>
+<script src="/js/item.js"></script>
