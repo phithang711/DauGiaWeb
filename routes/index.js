@@ -6,7 +6,7 @@ var products = require('./products');
 router.get('/', function(req, res) {
     var context = {
         data: products.homepageItems,
-        slideshow: products.homepageItems
+        slideshow: products.slideShowItems
     };
     res.render('index', context);
 });
@@ -80,10 +80,10 @@ router.get('/:type/:index/review', function(req, res) {
         res.render('user_page/commentrate', item);
 
     } else {
-        item=products.homepageItems.find(item => item.content.title === productType).content.items[index];
+        item = products.homepageItems.find(item => item.content.title === productType).content.items[index];
         res.render('user_page/commentrate', item);
     }
-    
+
 });
 
 router.get('/:type/:index/merchantview', function(req, res) {
@@ -95,10 +95,10 @@ router.get('/:type/:index/merchantview', function(req, res) {
         res.render('user_page/itemmerchant', item);
 
     } else {
-        item=products.homepageItems.find(item => item.content.title === productType).content.items[index];
+        item = products.homepageItems.find(item => item.content.title === productType).content.items[index];
         res.render('user_page/itemmerchant', item);
     }
-    
+
 });
 
 
@@ -114,6 +114,22 @@ router.get('/user/:username/favourite', function(req, res) {
     res.render('user_page/favourite', { title: 'Favourite' });
 });
 
+router.get('/watchlist', function(req, res, next) {
+    res.render('watchListView', { title: 'List' });
+});
+
+router.get('/manage', function(req, res, next) {
+    let accountList = [{
+            id: "1",
+            name: "abc"
+        },
+        {
+            id: "2",
+            name: "bcd"
+        }
+    ]
+    res.render('manageView', accountList);
+});
 
 
 module.exports = router;
