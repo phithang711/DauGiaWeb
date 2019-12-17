@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+const deviceModel = require('../models/device.model');
 
 var products = require('./products');
 
@@ -11,8 +12,13 @@ router.get('/', function(req, res) {
     res.render('index', context);
 });
 
-router.get('/all', function(req, res) {
-    var context = products.all;
+router.get('/all', async function(req, res) {
+    var result = await deviceModel.all();
+
+    var context = {
+        title: "all",
+        items: result
+    }
     res.render('allProducts', context);
 });
 
@@ -32,22 +38,15 @@ router.get('/uiitem', function(req, res, next) {
     res.render('user_page/item', { title: 'Express' });
 });
 
-router.get('/:type/:index', function(req, res) {
-    //get param
-    var productType = req.params.type.normalize();
-    var index = parseInt(req.params.index);
-    if (productType === 'all') {
-        item = products.all.content.items[index];
-        res.render('user_page/item', item);
+router.get('/item/:index', async function(req, res) {
+    var index = req.params.index;
 
-    } else {
-        item = products.homepageItems.find(item => item.content.title === productType).content.items[index];
-        // item = products.homepageItems.filter(obj => {
-        //     return obj.content.title === productType
-        //   }).content.items[index];
-        res.render('user_page/item', item);
-    }
+    var result = await deviceModel.getById(index);
 
+    res.render('user_page/item', {
+        item: result[0],
+        empty: result.length === 0
+    })
 });
 
 router.get('/:type/:index/bid', function(req, res) {
