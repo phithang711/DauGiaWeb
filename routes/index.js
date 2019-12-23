@@ -49,19 +49,13 @@ router.get('/item/:index', async function(req, res) {
     })
 });
 
-router.get('/:type/:index/bid', function(req, res) {
+router.get('/item/:index/bid', async function(req, res) {
     //get param
-    var productType = req.params.type.normalize();
+
     var index = parseInt(req.params.index);
-    if (productType === 'all') {
-        item = products.all.content.items[index];
-        res.render('user_page/itemBid', item);
-
-    } else {
-        item = products.homepageItems.find(item => item.content.title === productType).content.items[index];
-        res.render('user_page/itemBid', item);
-    }
-
+    var result = await deviceModel.getById(index);
+    console.log(result);
+    res.render('user_page/itemBid', result[0]);
 });
 
 
