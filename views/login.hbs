@@ -46,11 +46,18 @@
 				<img src="images/logo.JPG" alt="IMG">
 			</div>
 
-			<form class="login100-form validate-form">
+			<form class="login100-form validate-form" method="post">
 				<span class="login100-form-title">
 					Member Login
 				</span>
-
+				{{#if err_message}}
+				<div class="alert alert-warning alert-dismissible fade show" role="alert">
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					{{err_message}}
+				</div>
+				{{/if}}
 				<div class="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
 					<input class="input100" type="text" name="email" placeholder="Email">
 					<span class="focus-input100"></span>
