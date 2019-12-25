@@ -1,0 +1,135 @@
+<div class="limiter">
+    <div class="container-main-content container-main-content-top">
+        <div class="wrap-main-content wrap-item-view wrap-main-content-top">
+    <br>
+    <div class="dropdown  ml-2">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Sort
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="#">All</a>
+            <a class="dropdown-item" href="#">Seller</a>
+            <a class="dropdown-item" href="#">Bidder</a>
+        </div>
+    </div>
+    <br>
+    <table class="table table-hover table-responsive">
+        <thead class="thead-dark">
+            <tr>
+                <th>#</th>
+                <th>User</th>
+                <th>Type</th>
+                <th>Rating</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td scope="row">1</td>
+                <td>abc</td>
+                <td>Seller</td>
+                <td>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#downgrade">
+                        <i class="fa fa-arrow-down" aria-hidden="true"></i>
+                    </button>
+                    <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#deactive">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                    </button>
+                    <button type="button" class="btn btn-outline-warning" data-toggle="modal" data-target="#warning">
+                        <i class="fa fa-bell" aria-hidden="true"></i>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td scope="row">1</td>
+                <td>abc</td>
+                <td>Bidder</td>
+                <td>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#deactive">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="modal fade" id="downgrade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Confirm</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Do you want to <b>downgrade</b> this seller?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Yes, Sure</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="deactive" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Confirm</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Do you want to <b>deactive</b> this seller?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Yes, Sure</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="warning" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Confirm</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Do you want to <b>warning</b> this seller?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Yes, Sure</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    </div>
+</div>

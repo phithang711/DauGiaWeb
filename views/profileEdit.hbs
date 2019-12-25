@@ -1,0 +1,60 @@
+
+
+<link rel="stylesheet" type="text/css" href="/css/signOut.css">
+
+{{> sidenav}}
+
+
+
+<div style="width: 100%;">
+    <div class="container">
+        <h2>Profile</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <label>User Id</label>
+            </div>
+            <div class="col-md-6">
+                <p>{{UserId}}</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <label>Name</label>
+            </div>
+            <div class="col-md-6">
+                <p>{{Name}}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label>Email</label>
+            </div>
+            <div class="col-md-6">
+                <p>{{Email}}</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <label>Profession</label>
+            </div>
+            <div class="col-md-6">
+                <p>{{Profession}}</p>
+            </div>
+        </div>
+        <div class="row">
+            {{#if type.bidder}} 
+            
+            {{else}}
+            <div class="col-md-6 p-3">
+                <a href="#" class="btn btn-info" role="button">Sale in 7 days</a>
+            </div>
+            {{/if}} 
+            <div class="col-md-6 p-3">
+                <a href="/user/:username/example" class="btn btn-info" role="button">Edit info profile</a>
+            </div>
+        </div>
+    </div>
+
+</div>
