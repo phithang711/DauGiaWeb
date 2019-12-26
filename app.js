@@ -3,18 +3,32 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var exphbs = require('express-handlebars');
+const hbs_sections = require('express-handlebars-sections');
+const numeral = require('numeral');
 
 var app = express();
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
+var hbs = exphbs.create({
+
+    helpers: {
+        format: val => numeral(val).format('0,0'),
+        section: hbs_sections(),
+    },
+    layoutsDir: path.join(__dirname, "views/layouts"),
+    partialsDir: path.join(__dirname, "views/partials"),
+    defaultLayout: 'layout',
+    extname: 'hbs',
+});
+
+app.engine('hbs', hbs.engine);
+
+app.set('views', path.join(__dirname, "views"));
 app.set('view engine', 'hbs');
 
-var hbs = require('hbs');
-hbs.registerPartials(__dirname + '/views/partials');
+//hbs.registerPartials(__dirname + '/views/partials');
 
 app.use(logger('dev'));
 app.use(express.json());

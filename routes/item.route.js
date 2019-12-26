@@ -27,7 +27,7 @@ router.get('/item/:index/bid', async function(req, res) {
     var index = parseInt(req.params.index);
     var result = await deviceModel.getById(index);
     console.log(result);
-    res.render('user_page/itemBid', result[0]);
+    res.render('itemBid', result[0]);
 });
 
 
@@ -37,7 +37,7 @@ router.get('/item/:index/review', function(req, res) {
     var index = parseInt(req.params.index);
     if (productType === 'all') {
         item = products.all.content.items[index];
-        res.render('user_page/commentrate', item);
+        res.render('itemReview', item);
 
     } else {
         item = products.homepageItems.find(item => item.content.title === productType).content.items[index];
