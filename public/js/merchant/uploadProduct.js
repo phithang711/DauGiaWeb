@@ -54,3 +54,7 @@ $('#addNewDevice').click(function(e) {
 $("#other").click(function() {
     $("#target").submit();
 });
+
+$(function() {
+    $('#datetimepicker4').datetimepicker();
+});

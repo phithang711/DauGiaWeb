@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var moment = require('moment');
 
 const deviceModel = require('../../models/device.model');
 const productModel = require('../../models/product.model');
@@ -87,19 +88,27 @@ router.post('/upload', async function(req, res) {
                 var id = (await deviceModel.getLastId())[0].id;
             }
 
-            var product = {
-                if () {
+            var date = Date.parse(req.body.expired);
+            var nowDate = Date.now();
 
-                }
+            var formattedExpiredDate = moment(date).format('YYYY-MM-DD hh:mm:ss');
+            var formattedNowDate = moment(nowDate).format('YYYY-MM-DD hh:mm:ss');
+
+
+            var product = {
+                "device_id": 0,
+                "seller_id": "1",
+                "first_price": req.body.startprice,
+                "step_price": req.body.stepprice,
+                "start_date": formattedNowDate,
+                "end_date": formattedExpiredDate,
+                "description": "0",
             }
 
-            var result = await productModel.add();
+            var result = await productModel.add(product);
+        } else {
+            res.render('uploadProduct')
         }
-        //     await add(product)
-        // if(addproduct===true)
-        //      res.render('the new product)
-        // 
-
     });
 });
 module.exports = router;
