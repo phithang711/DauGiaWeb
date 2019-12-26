@@ -51,29 +51,33 @@ $('#addNewDevice').click(function(e) {
         $("#deviceid option[value='-1']").each(function() {
             $(this).attr('selected', 'selected');
         });
+        $('#myModal').modal('hide');
+    } else {
+        alert("Please choose 3 pictures for the new device");
     }
+
 });
 
 
 
-$('#cancelAddNewDevice').click(function(e) {
-    $('#images').fileinput('clear');
-    $('#brand').val('');
-    $('#model').val('');
+$('.btn-clear').click(function(e) {
+    $("#images").reset();
+    $('#brand').reset();
+    $('#model').reset();
 
-    $("#deviceid option[value='-1']").each(function() {
-        $(this).remove();
-    });
+    // $("#deviceid option[value='-1']").each(function() {
+    //     $(this).remove();
+    // });
 
-    if (brand !== "" && model !== "" && $('#images')[0].files.length === 3) {
-        $('#deviceid').append(`<option value="-1"> 
-                                       ${brand} ${model}
-                                  </option>`);
+    // if (brand !== "" && model !== "" && $('#images')[0].files.length === 3) {
+    //     $('#deviceid').append(`<option value="-1"> 
+    //                                    ${brand} ${model}
+    //                               </option>`);
 
-        $("#deviceid option[value='-1']").each(function() {
-            $(this).attr('selected', 'selected');
-        });
-    }
+    //     $("#deviceid option[value='-1']").each(function() {
+    //         $(this).attr('selected', 'selected');
+    //     });
+    // }
 });
 
 $("#other").click(function() {
