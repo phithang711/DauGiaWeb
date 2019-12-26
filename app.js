@@ -36,6 +36,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+require('./middlewares/session.mdw')(app);
+
+app.use('/', require('./routes/account.route'));
+require('./middlewares/local.mdw')(app);
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
@@ -54,7 +59,7 @@ app.use('/', require('./routes/merchant/upload.route'));
 app.use('/', require('./routes/admin/manage.route'));
 app.use('/', require('./routes/all.route'));
 app.use('/', require('./routes/item.route'));
-app.use('/', require('./routes/login.route'));
+
 app.use('/user', require('./routes/profile.route'));
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

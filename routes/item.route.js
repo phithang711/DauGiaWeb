@@ -3,6 +3,7 @@ var router = express.Router();
 const deviceModel = require('../models/device.model');
 
 router.get('/watchlist', function(req, res, next) {
+    console.log("SESS" + req.session.authUser.id);
     res.render('bidder/watchList', { title: 'Betview' });
 });
 

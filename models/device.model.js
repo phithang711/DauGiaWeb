@@ -29,6 +29,7 @@
          try {
              db.load(query);
          } catch {
+             console.log("can't add device");
              return false;
          }
          return true;

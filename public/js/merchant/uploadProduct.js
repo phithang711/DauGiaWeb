@@ -51,45 +51,56 @@ $('#addNewDevice').click(function(e) {
         $("#deviceid option[value='-1']").each(function() {
             $(this).attr('selected', 'selected');
         });
+        $('#myModal').modal('hide');
+    } else {
+        alert("Please choose 3 pictures for the new device");
     }
+
 });
 
 
 
-$('#cancelAddNewDevice').click(function(e) {
-    $('#images').fileinput('clear');
-    $('#brand').val('');
-    $('#model').val('');
+$('.btn-clear').click(function(e) {
+    $("#images").reset();
+    $('#brand').reset();
+    $('#model').reset();
 
     $("#deviceid option[value='-1']").each(function() {
         $(this).remove();
     });
 
-    if (brand !== "" && model !== "" && $('#images')[0].files.length === 3) {
-        $('#deviceid').append(`<option value="-1"> 
-                                       ${brand} ${model}
-                                  </option>`);
+    // if (brand !== "" && model !== "" && $('#images')[0].files.length === 3) {
+    //     $('#deviceid').append(`<option value="-1"> 
+    //                                    ${brand} ${model}
+    //                               </option>`);
 
-        $("#deviceid option[value='-1']").each(function() {
-            $(this).attr('selected', 'selected');
-        });
-    }
+    //     $("#deviceid option[value='-1']").each(function() {
+    //         $(this).attr('selected', 'selected');
+    //     });
+    // }
 });
 
-$("#other").click(function() {
-    $("#target").submit();
-});
+// $("#other").click(function() {
+//     $("#target").submit();
+// });
 
-$('#submitForm').click(function() {
+$('#submitForm').click(function(e) {
+    e.preventDefault();
     var valid = true;
     var brand = $('#brand').val();
     var model = $('#model').val();
-    if ($('#deviceid').children("option:selected").val() !== "-1") {
+    console.log($('#deviceid').children("option:selected").val());
+    if ($('#deviceid').children("option:selected").val() === "-1") {
         if (brand === "" || model === "" || $('#images')[0].files.length !== 3) {
             valid = false;
         }
     } else {
 
     }
-    $("#target").submit();
+
+    if (valid)
+        $("#product-details").submit();
+    else {
+        alert("Please fill the product information");
+    }
 });

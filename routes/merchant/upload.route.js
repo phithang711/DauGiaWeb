@@ -20,8 +20,8 @@ router.post('/upload', async function(req, res) {
 
     var lastId = (await deviceModel.getLastId())[0].id + 1;
     var newId = lastId.toString(10);
-    var dir = `./public/imgs/device/${newId}/`;
-    var showDir = `imgs/device/${newId}/`;
+    var dir = `./public/images/device/${newId}/`;
+    var showDir = `images/device/${newId}/`;
     var pictureDir = [];
 
     if (!fs.existsSync(dir)) {
@@ -55,9 +55,10 @@ router.post('/upload', async function(req, res) {
             res.render('index');
         }
 
-        var result = false;
+        var id = req.body.deviceid;
+        var result = true;
 
-        if (pictureDir.length > 0) {
+        if (id === "-1" && pictureDir.length > 0) {
             //Init the params here
             var device = {
                 "brand": req.body.brand,
@@ -80,16 +81,17 @@ router.post('/upload', async function(req, res) {
                 "img_url2": pictureDir[2],
             }
             result = await deviceModel.add(device);
-
         }
 
-        if (result) {
-            var id = req.body.deviceid;
+        if (!result) {
+            return;
+        }
 
-            if (id === -1) {
-                var id = (await deviceModel.getLastId())[0].id;
-            }
+        if (result && id === "-1") {
+            id = (await deviceModel.getLastId())[0].id;
+        }
 
+        if (id !== "-1") {
             var date = Date.parse(req.body.expired);
             var nowDate = Date.now();
 
@@ -97,9 +99,10 @@ router.post('/upload', async function(req, res) {
             var formattedNowDate = moment(nowDate).format('YYYY-MM-DD hh:mm:ss');
 
 
+            console.log("SESS" + req.session.authUser.id);
             var product = {
-                "device_id": 0,
-                "seller_id": "1",
+                "device_id": id,
+                "seller_id": req.session.authUser.id,
                 "first_price": req.body.startprice,
                 "step_price": req.body.stepprice,
                 "start_date": formattedNowDate,
@@ -107,9 +110,17 @@ router.post('/upload', async function(req, res) {
                 "description": "0",
             }
 
-            var result = await productModel.add(product);
-        } else {
-            res.render('uploadProduct')
+            var addProductResult = await productModel.add(product);
+
+            if (addProductResult) {
+                console.log("added");
+            } else {
+                var result = await deviceModel.all();
+                var context = {
+                    items: result
+                }
+                res.render('merchant/uploadProduct', { title: 'Upload a product:', list: context });
+            }
         }
     });
 });

@@ -32,6 +32,7 @@
          try {
              db.load(query);
          } catch {
+             console.log("can't add product");
              return false;
          }
          return true;
