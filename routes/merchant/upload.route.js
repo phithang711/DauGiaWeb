@@ -14,6 +14,7 @@ router.get('/upload', async function(req, res) {
 });
 
 router.post('/upload', async function(req, res) {
+    console.log(req.body);
     const multer = require('multer');
     var fs = require('fs');
 
@@ -22,8 +23,6 @@ router.post('/upload', async function(req, res) {
     var dir = `./public/imgs/device/${newId}/`;
     var showDir = `imgs/device/${newId}/`;
     var pictureDir = [];
-
-    console.log(dir);
 
     if (!fs.existsSync(dir)) {
         fs.mkdirSync(dir);
@@ -53,33 +52,36 @@ router.post('/upload', async function(req, res) {
             }
             res.render('merchant/uploadProduct', { title: 'Upload a product:', list: context });
         } else {
-            console.log(pictureDir);
             res.render('index');
         }
 
-        //Init the params here
-        var device = {
-            "brand": req.body.brand,
-            "model": req.body.model,
-            "type": req.body.type,
-            "released": req.body.released,
-            "status": req.body.status,
-            "weight": req.body.weight,
-            "display_type": req.body.displaytype,
-            "display_size": req.body.displaysize,
-            "display_resolution": req.body.displayres,
-            "os": req.body.os,
-            "gpu": req.body.gpu,
-            "ram": req.body.ram,
-            "sensors": req.body.sensors,
-            "battery": req.body.battery,
-            "colors": req.body.color,
-            "img_url": pictureDir[0],
-            "img_url1": pictureDir[1],
-            "img_url2": pictureDir[2],
+        var result = false;
+
+        if (pictureDir.length > 0) {
+            //Init the params here
+            var device = {
+                "brand": req.body.brand,
+                "model": req.body.model,
+                "type": req.body.type,
+                "released": req.body.released,
+                "status": req.body.status,
+                "weight": req.body.weight,
+                "display_type": req.body.displaytype,
+                "display_size": req.body.displaysize,
+                "display_resolution": req.body.displayres,
+                "os": req.body.os,
+                "gpu": req.body.gpu,
+                "ram": req.body.ram,
+                "sensors": req.body.sensors,
+                "battery": req.body.battery,
+                "colors": req.body.color,
+                "img_url": pictureDir[0],
+                "img_url1": pictureDir[1],
+                "img_url2": pictureDir[2],
+            }
+            result = await deviceModel.add(device);
+
         }
-        console.log(device);
-        var result = await deviceModel.add(device);
 
         if (result) {
             var id = req.body.deviceid;
