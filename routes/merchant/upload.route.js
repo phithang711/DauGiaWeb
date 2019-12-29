@@ -18,7 +18,7 @@ router.post('/upload', async function(req, res) {
     const multer = require('multer');
     var fs = require('fs');
 
-    var lastId = (await deviceModel.getLastId())[0].id + 1;
+    var lastId = (await deviceModel.getLastId())[0].device_id + 1;
     var newId = lastId.toString(10);
     var dir = `./public/images/device/${newId}/`;
     var showDir = `images/device/${newId}/`;
@@ -56,6 +56,7 @@ router.post('/upload', async function(req, res) {
         }
 
         var id = req.body.deviceid;
+        console.log("Get" + id);
         var result = true;
 
         if (id === "-1" && pictureDir.length > 0) {
@@ -88,7 +89,7 @@ router.post('/upload', async function(req, res) {
         }
 
         if (result && id === "-1") {
-            id = (await deviceModel.getLastId())[0].id;
+            id = (await deviceModel.getLastId())[0].device_id;
         }
 
         if (id !== "-1") {
@@ -99,10 +100,12 @@ router.post('/upload', async function(req, res) {
             var formattedNowDate = moment(nowDate).format('YYYY-MM-DD hh:mm:ss');
 
 
+            console.log(id);
+            console.log("SESS" + req.session.authUser.user_id);
             console.log("SESS" + req.session.authUser.id);
             var product = {
                 "device_id": id,
-                "seller_id": req.session.authUser.id,
+                "seller_id": req.session.authUser.user_id,
                 "first_price": req.body.startprice,
                 "step_price": req.body.stepprice,
                 "start_date": formattedNowDate,
@@ -115,11 +118,7 @@ router.post('/upload', async function(req, res) {
             if (addProductResult) {
                 console.log("added");
             } else {
-                var result = await deviceModel.all();
-                var context = {
-                    items: result
-                }
-                res.render('merchant/uploadProduct', { title: 'Upload a product:', list: context });
+                console.log("failed to add");
             }
         }
     });

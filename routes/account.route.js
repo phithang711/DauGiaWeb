@@ -14,15 +14,15 @@ router.get('/signup', function(req, res, next) {
 
 
 
-router.post('/signup', async function (req,res) {
+router.post('/signup', async function(req, res) {
     var email = req.body.email;
     var password = req.body.password;
     const user = await userModel.checkUsernameIsExisted(email);
-    if(user !== null) {
+    if (user !== null) {
         return res.render('signup', {
             layout: false,
             err_message: 'Username is existed.'
-          });
+        });
     }
     console.log(config.authentication.saltRounds);
     const hash = bcrypt.hashSync(password, config.authentication.saltRounds);
@@ -36,27 +36,26 @@ router.post('/signup', async function (req,res) {
     res.redirect('/login');
 });
 
-router.post('/logout', async function (req, res) {
+router.post('/logout', async function(req, res) {
     req.session.isAuthenticated = false;
     req.session.authUser = null;
-    res.redirect(req.headers.referer);
+    res.redirect(req.get('referer'));
 });
 
 const local = require('../middlewares/local.mdw');
 
-router.post('/login', async function (req, res) 
-{
+router.post('/login', async function(req, res) {
     var email = req.body.email;
     var password = req.body.pass;
     const user = await userModel.checkUsernameIsExisted(email);
-    if(user === null) {
+    if (user === null) {
         return res.render('login', {
             layout: false,
             err_message: 'Invalid username or password.'
         });
     }
     const rs = bcrypt.compareSync(password, user.password);
-    if(rs === false) {
+    if (rs === false) {
         return res.render('login', {
             layout: false,
             err_message: 'Invalid username or password.'

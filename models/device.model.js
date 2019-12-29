@@ -5,7 +5,7 @@
      all: _ => db.load('select * from device'),
      //search: (keyword) => db.load("select * from book where match (title) against('-" + keyword + "')"),
      search: (keyword) => db.load("SELECT * FROM device WHERE (brand) LIKE '%" + keyword + "%' OR (model) LIKE '%" + keyword + "%'"),
-     getById: (id) => db.load("SELECT * FROM device WHERE (id)=" + id),
+     getById: (id) => db.load("SELECT * FROM device WHERE (device_id)=" + id),
      add: (info) => {
          var query = "INSERT INTO device (";
 
@@ -34,5 +34,5 @@
          }
          return true;
      },
-     getLastId: () => db.load('SELECT id FROM device ORDER BY id DESC LIMIT 1'),
+     getLastId: () => db.load('SELECT device_id FROM device ORDER BY device_id DESC LIMIT 1'),
  };
