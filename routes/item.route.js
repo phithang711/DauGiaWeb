@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const deviceModel = require('../models/device.model');
+const productModel = require('../models/product.model');
 
 router.get('/watchlist', function(req, res, next) {
     console.log("SESS" + req.session.authUser.id);
@@ -14,7 +14,7 @@ router.get('/betview', function(req, res, next) {
 router.get('/item/:index', async function(req, res) {
     var index = req.params.index;
 
-    var result = await deviceModel.getById(index);
+    var result = await productModel.getById(index);
     console.log(result);
     res.render('item', {
         item: result[0],
@@ -26,7 +26,7 @@ router.get('/item/:index/bid', async function(req, res) {
     //get param
 
     var index = parseInt(req.params.index);
-    var result = await deviceModel.getById(index);
+    var result = await productModel.getById(index);
     console.log(result);
     res.render('itemBid', result[0]);
 });

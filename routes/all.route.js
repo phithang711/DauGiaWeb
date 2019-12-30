@@ -1,12 +1,19 @@
 var express = require('express');
 var router = express.Router();
-const deviceModel = require('../models/device.model');
+const productModel = require('../models/product.model');
 
 router.get('/all', async function(req, res) {
-    var result = await deviceModel.all();
+    if (req.query.type == null)
+        var result = await productModel.all();
+
+    else {
+
+        var result = await productModel.getByType(req.query.type);
+    }
     var context = {
         items: result
     }
+    console.log(result);
     res.render('productAll', context);
 });
 module.exports = router;

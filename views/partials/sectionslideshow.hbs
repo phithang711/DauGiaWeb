@@ -1,15 +1,24 @@
-<div class="section-container section-container-slideshow">
-    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+<div class="section-container section-container-slideshow" style="height: 450px;">
+    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel" style="height:450px">
   <div id="home-slideshow" class="carousel-inner">
+    <style>
+      #home-slideshow img{
+        margin-top: -200px;
+        height: initial;
+      }
+
+      #home-slideshow carousel-item{
+        height:500px;
+      }
+    </style>
     <div class="carousel-item active">
-      <a href="/all/0"><img class="d-block w-100" src="{{item.items.0.slide_picture}}" alt="First slide"></a>
+      <a href="#"><img class="d-block w-100" src="images/slideshow.jpg" alt="First slide"></a>
     </div>
-    <div class="carousel-item">
-      <a href="/all/1"></a><img class="d-block w-100" src="{{item.items.1.slide_picture}}" alt="Second slide"></a>
-    </div>
-    <div class="carousel-item">
-      <a href="/all/2"></a><img class="d-block w-100" src="{{item.items.2.slide_picture}}" alt="Third slide"></a>
-    </div>
+    {{#each item}}
+      <div class="carousel-item">
+        <a href="/item/{{product_id}}"><img class="d-block w-100" src="{{img_url2}}" alt="Second slide"></a>
+      </div>
+    {{/each}}   
   </div>
   <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
