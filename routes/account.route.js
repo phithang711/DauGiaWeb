@@ -5,11 +5,11 @@ const userModel = require('../models/user.model');
 const config = require('../configs/userModelConfig.json');
 
 router.get('/login', function(req, res, next) {
-    res.render('login', { title: 'AuctionDealer Login', layout: false });
+    res.render('/login', { title: 'AuctionDealer Login', layout: false });
 });
 
 router.get('/signup', function(req, res, next) {
-    res.render('signup', { title: 'AuctionDealer Sign up', layout: false });
+    res.render('/signup', { title: 'AuctionDealer Sign up', layout: false });
 });
 
 
@@ -68,5 +68,25 @@ router.post('/login', async function(req, res) {
     const url = req.query.retUrl || '/';
     res.redirect(url);
 });
+
+router.get("/account/profile", function (req, res) {
+    const user = req.session.authUser;
+    let isBuyer = false;
+    let isAdmin = false;
+    let isMerchant = false;
+    if( user.type == 0 ){
+        isBuyer = true;
+    } else if(user.type == 1) {
+        isMerchant = true; 
+    } else if (user.type == 2) {
+        isAdmin = true;
+    }
+    res.render("accountProfile", {
+        user: user,
+        isBuyer: isBuyer,
+        isMerchant: isMerchant,
+        isAdmin: isAdmin
+    })
+  })
 
 module.exports = router;
