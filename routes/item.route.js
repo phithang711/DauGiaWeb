@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const productModel = require('../models/product.model');
+var encrypt = require('../utils/encrypt.util');
 
 router.get('/watchlist', function(req, res, next) {
     console.log("SESS" + req.session.authUser.id);
@@ -16,6 +17,9 @@ router.get('/item/:index', async function(req, res) {
 
     var result = await productModel.getById(index);
     console.log(result);
+    if (result.length > 0) {
+        result[0].description = encrypt.decrypt(result[0].description);
+    }
     res.render('item', {
         item: result[0],
         empty: result.length === 0

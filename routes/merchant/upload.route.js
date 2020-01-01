@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var moment = require('moment');
+var encrypt = require('../../utils/encrypt.util');
 
 const deviceModel = require('../../models/device.model');
 const productModel = require('../../models/product.model');
@@ -103,6 +104,7 @@ router.post('/upload', async function(req, res) {
             console.log(id);
             console.log("SESS" + req.session.authUser.user_id);
             console.log("SESS" + req.session.authUser.id);
+            console.log("SESS" + req.session.authUser.type);
             var product = {
                 "device_id": id,
                 "seller_id": req.session.authUser.user_id,
@@ -110,8 +112,10 @@ router.post('/upload', async function(req, res) {
                 "step_price": req.body.stepprice,
                 "start_date": formattedNowDate,
                 "end_date": formattedExpiredDate,
-                "description": "0",
+                "description": encrypt.encrypt(req.body.details),
             }
+
+            console.log(product);
 
             var addProductResult = await productModel.add(product);
 

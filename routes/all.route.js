@@ -16,4 +16,5 @@ router.get('/all', async function(req, res) {
     console.log(result);
     res.render('productAll', context);
 });
+
 module.exports = router;
