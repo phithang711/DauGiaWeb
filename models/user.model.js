@@ -19,4 +19,9 @@ module.exports = {
         }
         return null;
     },
+
+    changeProfile: async entity => 
+    {
+        await db.load(`update user set name = '${entity.name}', email = '${entity.email}', phone = '${entity.phone}', DOB ='${entity.DOB}' where user_id = '${entity.user_id}'`);
+    },
 }

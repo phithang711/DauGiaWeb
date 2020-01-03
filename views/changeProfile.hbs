@@ -1,0 +1,49 @@
+{{#section 'css'}}
+<link rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
+{{/section}}
+
+{{#section 'js'}}
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+<script>
+  $('#txtDOB').datetimepicker({
+    format: 'd/m/Y',
+    timepicker: false,
+    mask: true,
+  });
+</script>
+{{/section}}
+
+<title>Profile</title>
+<div class="row w-100">
+    <div class="col-sm-12 text-center">
+        <h1>Profile</h1>
+    </div>
+    <div class="col-sm-2"><img src="../images/img_avatar.png"
+            class="img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}" alt=""></div>
+
+    <form action="/profile/changeProfile" class="w-75" method="POST" id="changeProfileForm">
+    <div class="col-sm-8">
+        <div class="form-group">
+            <label for="">Name</label>
+            <input type="text" class="form-control" name="name" id="" value="{{this.user.name}}">
+        </div>
+        <div class="form-group">
+            <label for="">Email</label>
+            <input type="text" class="form-control" name="email" id="" value="{{this.user.email}}">
+        </div>
+        <div class="form-group">
+            <label for="">Phone</label>
+            <input type="number" class="form-control w-100" name="phone" id="" value="{{this.user.phone}}">
+        </div>
+      <div class="form-group">
+        <label for="txtDOB">DOB</label>
+        <input type="text" class="form-control" id="txtDOB" name="dob" value="{{this.user.DOB}}">
+      </div>
+        <div>
+            <a name="" id="" class="btn btn-outline-primary" href="javascript: $('#changeProfileForm').submit()" role="button">Change</a>
+        </div>
+    </div>
+    </form>
+</div>

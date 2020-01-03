@@ -37,7 +37,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 require('./middlewares/session.mdw')(app);
-
 app.use('/', require('./routes/account.route'));
 require('./middlewares/local.mdw')(app);
 
