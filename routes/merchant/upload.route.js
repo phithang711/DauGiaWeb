@@ -7,6 +7,11 @@ const deviceModel = require('../../models/device.model');
 const productModel = require('../../models/product.model');
 
 router.get('/upload', async function(req, res) {
+    if (req.session.authUser === null || req.session.authUser.type === "0" || req.session.authUser.type === undefined) {
+        res.status(404) // HTTP status 404: NotFound
+            .send('Not found');
+        return;
+    }
     var result = await deviceModel.all();
     var context = {
         items: result
@@ -15,6 +20,11 @@ router.get('/upload', async function(req, res) {
 });
 
 router.post('/upload', async function(req, res) {
+    if (req.session.authUser === null || req.session.authUser.type === "0" || req.session.authUser.type === undefined) {
+        res.status(404) // HTTP status 404: NotFound
+            .send('Not found');
+        return;
+    }
     console.log(req.body);
     const multer = require('multer');
     var fs = require('fs');
@@ -100,11 +110,6 @@ router.post('/upload', async function(req, res) {
             var formattedExpiredDate = moment(date).format('YYYY-MM-DD hh:mm:ss');
             var formattedNowDate = moment(nowDate).format('YYYY-MM-DD hh:mm:ss');
 
-
-            console.log(id);
-            console.log("SESS" + req.session.authUser.user_id);
-            console.log("SESS" + req.session.authUser.id);
-            console.log("SESS" + req.session.authUser.type);
             var product = {
                 "device_id": id,
                 "seller_id": req.session.authUser.user_id,
