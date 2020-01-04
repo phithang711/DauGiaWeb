@@ -5,11 +5,11 @@ const userModel = require('../models/user.model');
 const config = require('../configs/userModelConfig.json');
 
 router.get('/login', function(req, res, next) {
-    res.render('/login', { title: 'AuctionDealer Login', layout: false });
+    res.render('login', { title: 'AuctionDealer Login', layout: false });
 });
 
 router.get('/signup', function(req, res, next) {
-    res.render('/signup', { title: 'AuctionDealer Sign up', layout: false });
+    res.render('signup', { title: 'AuctionDealer Sign up', layout: false });
 });
 
 
