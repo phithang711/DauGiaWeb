@@ -3,6 +3,7 @@ var router = express.Router();
 const bcrypt = require('bcryptjs');
 const userModel = require('../models/user.model');
 const config = require('../configs/userModelConfig.json');
+const toMerchant = require('../models/tomerchant');
 
 router.get('/login', function(req, res, next) {
     res.render('login', { title: 'AuctionDealer Login', layout: false });
@@ -88,5 +89,21 @@ router.get("/account/profile", function (req, res) {
         isAdmin: isAdmin
     })
   })
+
+router.post('/tomerchant', async function(req, res) {
+    if (req.session.authUser === null || req.session.authUser.type === "1" || req.session.authUser.type === "2" || req.session.authUser.type === undefined) {
+        res.status(404) // HTTP status 404: NotFound
+            .send('Not found');
+        return;
+    }
+    console.log(req.session.authUser.email);
+    var checkadd = await toMerchant.add(req.session.authUser.email);
+    if (checkadd==true){
+        res.redirect(req.get('referer'));
+    } else{
+        console.log("failed redirect");
+    }
+});
+
 
 module.exports = router;
