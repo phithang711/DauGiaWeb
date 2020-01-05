@@ -1,6 +1,5 @@
 var express = require('express');
 var router = express.Router();
-var math = require("mathjs");
 const productModel = require('../models/product.model');
 
 router.get('/all', async function(req, res) {
@@ -14,13 +13,15 @@ router.get('/all', async function(req, res) {
 
     if (type == null) {
         var result = await productModel.all(limit, (getPage - 1) * limit);
-        var count = math.ceil((await productModel.all(1000000, 0)).length / limit);
+        var count = (await productModel.all(1000000, 0)).length;
 
     } else {
         var result = await productModel.getByType(type, limit, (getPage - 1) * limit);
 
-        var count = math.ceil((await productModel.getByType(type, 1000000, 0)).length / limit);
+        var count = (await productModel.getByType(type, 1000000, 0)).length;
     }
+
+    count = Math.round(count / limit) + 1;
 
     var context = {
         items: result,
