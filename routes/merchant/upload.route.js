@@ -32,7 +32,7 @@ router.post('/upload', async function(req, res) {
     var lastId = (await deviceModel.getLastId())[0].device_id + 1;
     var newId = lastId.toString(10);
     var dir = `./public/images/device/${newId}/`;
-    var showDir = `images/device/${newId}/`;
+    var showDir = `/images/device/${newId}/`;
     var pictureDir = [];
 
     if (!fs.existsSync(dir)) {

@@ -3,22 +3,44 @@ var router = express.Router();
 const productModel = require('../models/product.model');
 
 router.get('/all', async function(req, res) {
-    var type = req.query.type;
     var limit = 10;
+    var type = req.query.type;
     var getPage = req.query.page;
     var getOrder = req.query.order;
-    var getType = req.query.option;
+    var getOption = req.query.option;
+    var getKeyword = req.query.keyword;
     if (getPage === undefined)
         getPage = 1;
 
-    if (type == null) {
-        var result = await productModel.all(limit, (getPage - 1) * limit);
-        var count = (await productModel.all(1000000, 0)).length;
+    var result = [];
+    var count = 0;
+    if (getKeyword === undefined || getKeyword === null) {
+        if (type == null) {
+            result = await productModel.all(limit, (getPage - 1) * limit);
+            count = (await productModel.all(1000000, 0)).length;
 
+        } else {
+            if (getOption === "ending") {
+                result = await productModel.getEnding(limit, (getPage - 1) * limit);
+                count = (await productModel.getEnding(1000000, 0)).length;
+            } else if (getOption === "price") {
+                result = await productModel.getTopBidPrice(limit, (getPage - 1) * limit);
+                count = (await productModel.getTopBidPrice(1000000, 0)).length;
+            } else if (getOption === "bid") {
+                result = await productModel.getTopBidCount(limit, (getPage - 1) * limit);
+                count = (await productModel.getTopBidCount(1000000, 0)).length;
+            }
+
+            if (getOrder === "descending") {
+                result = result.reverse();
+            }
+            if (type !== undefined && type !== "all") {
+                result = result.filter((row) => row.type === type);
+            }
+        }
     } else {
-        var result = await productModel.getByType(type, limit, (getPage - 1) * limit);
-
-        var count = (await productModel.getByType(type, 1000000, 0)).length;
+        result = await productModel.search(limit, (getPage - 1) * limit, getKeyword);
+        count = (await productModel.search(1000000, 0, getKeyword)).length;
     }
 
     count = Math.round(count / limit) + 1;

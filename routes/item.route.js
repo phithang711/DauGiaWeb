@@ -4,7 +4,6 @@ const productModel = require('../models/product.model');
 var encrypt = require('../utils/encrypt.util');
 
 router.get('/watchlist', function(req, res, next) {
-    console.log("SESS" + req.session.authUser.id);
     res.render('bidder/watchList', { title: 'Betview' });
 });
 
@@ -51,12 +50,12 @@ router.get('/item/:index/review', function(req, res) {
 
 });
 
-router.get('/otp', (req, res) => {	 
-    res.render('otpMail', {title: "OTP"});
+router.get('/otp', (req, res) => {
+    res.render('otpMail', { title: "OTP" });
 });
 
-router.get('/404', (req, res) => {	 
-    res.render('pageNotFound', {title: "404"});
+router.get('/404', (req, res) => {
+    res.render('pageNotFound', { title: "404" });
 });
 // router.get('/:type/:index/merchantview', function(req, res) {
 //     //get param

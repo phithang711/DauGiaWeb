@@ -6,30 +6,33 @@
     <div style="padding-left: 20px;font-size:14px">
       <span>Type:</span>
       <div class="radio" id="sortOrder">
-        <label><input type="radio" name="type" value="phone" checked>Phone</label>
+        <label><input type="radio" name="type" value="phone" required>Phone</label>
       </div>
       <div class="radio">
         <label><input type="radio" value="laptop" name="type">Laptop</label>
+      </div>
+      <div class="radio">
+        <label><input type="radio" value="all" name="type">All</label>
       </div>
     </div>
     <div class="dropdown-divider"></div>
     <div style="padding-left: 20px;font-size:14px">
       <span>Option:</span>
       <div class="radio" id="sortOption">
-        <label><input type="radio" name="option" value="ending" checked>Ending time</label>
+        <label><input type="radio" name="option" value="ending" required>Ending time</label>
       </div>
       <div class="radio">
-        <label><input type="radio" name="option" value="price">Price</label>
+        <label><input type="radio" name="option" value="price">Top price</label>
       </div>
       <div class="radio">
-        <label><input type="radio" name="option" value="bid">Bid</label>
+        <label><input type="radio" name="option" value="bid">Top bid</label>
       </div>
     </div>
     <div class="dropdown-divider"></div>
     <div style="padding-left: 20px;font-size:14px">
       <span>Order:</span>
       <div class="radio" id="sortOrder">
-        <label><input type="radio" name="order" value="ascending" checked>Ascending</label>
+        <label><input type="radio" name="order" value="ascending" required>Ascending</label>
       </div>
       <div class="radio">
         <label><input type="radio" name="order" value="descending">Descending</label>
