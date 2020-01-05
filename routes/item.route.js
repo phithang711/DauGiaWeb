@@ -51,6 +51,13 @@ router.get('/item/:index/review', function(req, res) {
 
 });
 
+router.get('/otp', (req, res) => {	 
+    res.render('otpMail', {title: "OTP"});
+});
+
+router.get('/404', (req, res) => {	 
+    res.render('pageNotFound', {title: "404"});
+});
 // router.get('/:type/:index/merchantview', function(req, res) {
 //     //get param
 //     var productType = req.params.type.normalize();
