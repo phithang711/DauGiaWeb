@@ -3,94 +3,91 @@ var router = express.Router();
 const bcrypt = require('bcryptjs');
 const userModel = require('../models/user.model');
 const config = require('../configs/userModelConfig.json');
-
+const nodemailer = require('nodemailer');
 router.get('/login', function(req, res, next) {
-    res.render('login', { title: 'AuctionDealer Login', layout: false });
+	res.render('login', { title: 'AuctionDealer Login', layout: false });
 });
 
 router.get('/signup', function(req, res, next) {
-    res.render('signup', { title: 'AuctionDealer Sign up', layout: false });
+	res.render('signup', { title: 'AuctionDealer Sign up', layout: false });
 });
 
-
-
 router.post('/signup', async function(req, res) {
-    var email = req.body.email;
-    var password = req.body.password;
-    const user = await userModel.checkUsernameIsExisted(email);
-    if (user !== null) {
-        return res.render('signup', {
-            layout: false,
-            err_message: 'Username is existed.'
-        });
-    }
-    console.log(config.authentication.saltRounds);
-    const hash = bcrypt.hashSync(password, config.authentication.saltRounds);
-    const entity = {
-        name: req.body.name,
-        email: req.body.email,
-        password: hash,
-        type: 0
-    }
-    const ret = await userModel.add(entity);
-    res.redirect('/login');
+	var email = req.body.email;
+	var password = req.body.password;
+	const user = await userModel.checkUsernameIsExisted(email);
+	if (user !== null) {
+		return res.render('signup', {
+			layout: false,
+			err_message: 'Username is existed.'
+		});
+	}
+	console.log(config.authentication.saltRounds);
+	const hash = bcrypt.hashSync(password, config.authentication.saltRounds);
+	const entity = {
+		name: req.body.name,
+		email: req.body.email,
+		password: hash,
+		type: 0
+	};
+	const ret = await userModel.add(entity);
+	res.redirect('/login');
 });
 
 router.post('/logout', async function(req, res) {
-    req.session.isAuthenticated = false;
-    req.session.authUser = null;
-    res.redirect(req.get('referer'));
+	req.session.isAuthenticated = false;
+	req.session.authUser = null;
+	res.redirect(req.get('referer'));
 });
 
 const local = require('../middlewares/local.mdw');
 
 router.post('/login', async function(req, res) {
-    var email = req.body.email;
-    var password = req.body.pass;
-    const user = await userModel.checkUsernameIsExisted(email);
-    if (user === null) {
-        return res.render('login', {
-            layout: false,
-            err_message: 'Invalid username or password.'
-        });
-    }
-    const rs = bcrypt.compareSync(password, user.password);
-    if (rs === false) {
-        return res.render('login', {
-            layout: false,
-            err_message: 'Invalid username or password.'
-        });
-    }
+	var email = req.body.email;
+	var password = req.body.pass;
+	const user = await userModel.checkUsernameIsExisted(email);
+	if (user === null) {
+		return res.render('login', {
+			layout: false,
+			err_message: 'Invalid username or password.'
+		});
+	}
+	const rs = bcrypt.compareSync(password, user.password);
+	if (rs === false) {
+		return res.render('login', {
+			layout: false,
+			err_message: 'Invalid username or password.'
+		});
+	}
 
-    delete user.password;
-    req.session.isAuthenticated = true;
-    req.session.authUser = user;
-    const url = req.query.retUrl || '/';
-    res.redirect(url);
+	delete user.password;
+	req.session.isAuthenticated = true;
+	req.session.authUser = user;
+	const url = req.query.retUrl || '/';
+	res.redirect(url);
 });
 
-router.get("/account/profile", function (req, res) {
-    const user = req.session.authUser;
-    let isBuyer = false;
-    let isAdmin = false;
-    let isMerchant = false;
-    if( user.type == 0 ){
-        isBuyer = true;
-    } else if(user.type == 1) {
-        isMerchant = true; 
-    } else if (user.type == 2) {
-        isAdmin = true;
-    }
-    res.render("accountProfile", {
-        user: user,
-        isBuyer: isBuyer,
-        isMerchant: isMerchant,
-        isAdmin: isAdmin
-    })
-  });
+router.get('/account/profile', function(req, res) {
+	const user = req.session.authUser;
+	let isBuyer = false;
+	let isAdmin = false;
+	let isMerchant = false;
+	if (user.type == 0) {
+		isBuyer = true;
+	} else if (user.type == 1) {
+		isMerchant = true;
+	} else if (user.type == 2) {
+		isAdmin = true;
+	}
+	res.render('accountProfile', {
+		user: user,
+		isBuyer: isBuyer,
+		isMerchant: isMerchant,
+		isAdmin: isAdmin
+	});
+});
 
-  var _nodemailer = require('nodemailer');
-  router.post('/send', (req, res) => {
+router.post('/send', (req, res) => {
 	const output = `
       <p>You have a new contact request</p>
       <h3>Contact Details</h3>
@@ -105,13 +102,14 @@ router.get("/account/profile", function (req, res) {
     `;
 
 	// create reusable transporter object using the default SMTP transport
-	let transporter = _nodemailer.createTransport({
-		host: 'mail.YOURDOMAIN.com',
-		port: 587,
-		secure: false, // true for 465, false for other ports
+	let transporter = nodemailer.createTransport({
+        service: 'gmail',
+		// host: 'mail.YOURDOMAIN.com',
+		// port: 587,
+		// secure: false, // true for 465, false for other ports
 		auth: {
-			user: 'your mail', // generated ethereal user
-			pass: 'pass' // generated ethereal password
+			user: 'derekzohar@gmail.com', // generated ethereal user
+			pass: 'thangww123' // generated ethereal password
 		},
 		tls: {
 			rejectUnauthorized: false
@@ -120,8 +118,8 @@ router.get("/account/profile", function (req, res) {
 
 	// setup email data with unicode symbols
 	let mailOptions = {
-		from: '"Nodemailer Contact" <your mail>', // sender address
-		to: 'ngovietthangww@gmail.com', // list of receivers
+		from: '"Nodemailer Contact" <derekzohar@gmail.com>', // sender address
+		to: 'to mail', // list of receivers
 		subject: 'Node Contact Request', // Subject line
 		text: 'Hello world?', // plain text body
 		html: output // html body
@@ -129,14 +127,14 @@ router.get("/account/profile", function (req, res) {
 	// send mail with defined transport object
 	transporter.sendMail(mailOptions, (error, info) => {
 		if (error) {
+			console.log(123);
 			return console.log(error);
 		}
 		console.log('Message sent: %s', info.messageId);
-		console.log('Preview URL: %s', _nodemailer.getTestMessageUrl(info));
+		console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
 
-		res.render('otpMail', { msg: 'Email has been sent' });
+		res.render('otpMail', { title: 'otp' });
 	});
 });
-
 
 module.exports = router;
