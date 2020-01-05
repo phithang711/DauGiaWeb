@@ -14,4 +14,5 @@ router.get('/:username/favourite', function(req, res) {
     res.render('profileFavourite', { title: 'Favourite' });
 });
 
+
 module.exports = router;

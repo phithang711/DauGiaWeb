@@ -44,11 +44,15 @@
         </button>
         <br>
         <br>
-        {{#if isReader}}
-        <button type="button" class="btn btn-outline-primary w-100">
+        {{#if isBuyer}}
+        <form id="frmToMerchant" action="/tomerchant" method="post">
+        <button type="button" class="btn btn-outline-primary w-100" value="{{this.user.email}}" id="uptomerchant">
             <i class="fa fa-arrow-up" aria-hidden="true"></i>
             Become Merchant
         </button>
+        </form>
+        <br>
+        <br>
         {{/if}}
         {{#if isMerchant}}
         <button type="button" class="btn btn-outline-primary w-100">
@@ -85,3 +89,10 @@
         <br>
     </div>
 </div>
+
+
+<script type="module">
+    $('#uptomerchant').click(function (e) {
+        $("#frmToMerchant").submit();
+    });
+</script>
