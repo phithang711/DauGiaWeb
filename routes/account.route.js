@@ -139,8 +139,6 @@ router.post('/send', (req, res) => {
     });
 });
 
-<<
-<< << < HEAD
 router.get("/account/profile", function(req, res) {
     const user = req.session.authUser;
     let isBuyer = false;
@@ -176,8 +174,4 @@ router.post('/tomerchant', async function(req, res) {
     }
 });
 
-
-module.exports = router; ===
-=== =
-module.exports = router; >>>
->>> > origin / #otpMail_PageNotFound
+module.exports = router;
