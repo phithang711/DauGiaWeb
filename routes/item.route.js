@@ -17,9 +17,9 @@ router.get('/item/:index', async function(req, res) {
 
     var result = await productModel.getById(index);
     console.log(result);
-    if (result.length > 0) {
-        result[0].description = encrypt.decrypt(result[0].description);
-    }
+    // if (result.length > 0) {
+    //     result[0].description = encrypt.decrypt(result[0].description);
+    // }
     res.render('item', {
         item: result[0],
         empty: result.length === 0

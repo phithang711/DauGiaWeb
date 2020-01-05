@@ -1,19 +1,33 @@
 var express = require('express');
 var router = express.Router();
+var math = require("mathjs");
 const productModel = require('../models/product.model');
 
 router.get('/all', async function(req, res) {
-    if (req.query.type == null)
-        var result = await productModel.all();
+    var type = req.query.type;
+    var limit = 10;
+    var getPage = req.query.page;
+    var getOrder = req.query.order;
+    var getType = req.query.option;
+    if (getPage === undefined)
+        getPage = 1;
 
-    else {
+    if (type == null) {
+        var result = await productModel.all(limit, (getPage - 1) * limit);
+        var count = math.ceil((await productModel.all(1000000, 0)).length / limit);
 
-        var result = await productModel.getByType(req.query.type);
+    } else {
+        var result = await productModel.getByType(type, limit, (getPage - 1) * limit);
+
+        var count = math.ceil((await productModel.getByType(type, 1000000, 0)).length / limit);
     }
+
     var context = {
-        items: result
+        items: result,
+        page: getPage,
+        totalPage: count + 1,
+        empty: result.length === 0
     }
-    console.log(result);
     res.render('productAll', context);
 });
 

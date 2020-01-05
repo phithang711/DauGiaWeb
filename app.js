@@ -16,35 +16,23 @@ var hbs = exphbs.create({
     helpers: {
         format: val => numeral(val).format('0,0'),
         section: hbs_sections(),
-        compare: function(lvalue, rvalue, options) {
-
-            if (arguments.length < 3)
-                throw new Error("Handlerbars Helper 'compare' needs 2 parameters");
-
-            var operator = options.hash.operator || "==";
-
-            var operators = {
-                '==': function(l, r) { return l == r; },
-                '===': function(l, r) { return l === r; },
-                '!=': function(l, r) { return l != r; },
-                '<': function(l, r) { return l < r; },
-                '>': function(l, r) { return l > r; },
-                '<=': function(l, r) { return l <= r; },
-                '>=': function(l, r) { return l >= r; },
-                'typeof': function(l, r) { return typeof l == r; }
-            }
-
-            if (!operators[operator])
-                throw new Error("Handlerbars Helper 'compare' doesn't know the operator " + operator);
-
-            var result = operators[operator](lvalue, rvalue);
-
-            if (result) {
-                return options.fn(this);
-            } else {
-                return options.inverse(this);
-            }
-
+        compareEqual: function(arg1, arg2, options) {
+            return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
+        },
+        compareNotEqual: function(arg1, arg2, options) {
+            return (arg1 != arg2) ? options.fn(this) : options.inverse(this);
+        },
+        compareEqualWithNum: function(arg1, arg2, options) {
+            return (parseInt(arg1) == parseInt(arg2) + 1) ? options.fn(this) : options.inverse(this);
+        },
+        compareNotEqualWithNum: function(arg1, arg2, options) {
+            return (parseInt(arg1) != parseInt(arg2) + 1) ? options.fn(this) : options.inverse(this);
+        },
+        for: function(from, to, incr, block) {
+            var accum = '';
+            for (var i = from; i < to; i += incr)
+                accum += block.fn(i);
+            return accum;
         },
     },
     layoutsDir: path.join(__dirname, "views/layouts"),

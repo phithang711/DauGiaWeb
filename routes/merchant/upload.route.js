@@ -117,7 +117,8 @@ router.post('/upload', async function(req, res) {
                 "step_price": req.body.stepprice,
                 "start_date": formattedNowDate,
                 "end_date": formattedExpiredDate,
-                "description": encrypt.encrypt(req.body.details),
+                //"description": encrypt.encrypt(req.body.details),
+                "description": req.body.details,
             }
 
             console.log(product);
