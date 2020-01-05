@@ -82,7 +82,7 @@ router.get("/account/profile", function(req, res) {
   }
   res.render("accountProfile", {
     user: user,
-    isBuyer: isBuyer,
+    isReader: isBuyer,
     isMerchant: isMerchant,
     isAdmin: isAdmin
   });
@@ -103,7 +103,7 @@ router.get("/profile/changeProfile", function(req, res) {
   
   res.render("changeProfile", {
     user: user,
-    isBuyer: isBuyer,
+    isReader: isBuyer,
     isMerchant: isMerchant,
     isAdmin: isAdmin
   });
@@ -136,10 +136,90 @@ router.post("/profile/changeProfile",async function(req, res) {
   }
   res.render("accountProfile", {
     user: user,
-    isBuyer: isBuyer,
+    isReader: isBuyer,
     isMerchant: isMerchant,
     isAdmin: isAdmin
   });
+});
+
+router.get("/profile/changePassword", function(req, res) {
+  const user = req.session.authUser;
+  let isBuyer = false;
+  let isAdmin = false;
+  let isMerchant = false;
+  if (user.type == 0) {
+    isBuyer = true;
+  } else if (user.type == 1) {
+    isMerchant = true;
+  } else if (user.type == 2) {
+    isAdmin = true;
+  }
+  
+  res.render("changePassword", {
+    isReader: isBuyer,
+    isMerchant: isMerchant,
+    isAdmin: isAdmin
+  });
+}); 
+
+router.post("/profile/changePassword", async function (req, res) {
+  const user = await userModel.getUserById(req.session.authUser.user_id);
+  let isBuyer = false;
+  let isAdmin = false;
+  let isMerchant = false;
+  if (user.type == 0) {
+    isBuyer = true;
+  } else if (user.type == 1) {
+    isMerchant = true;
+  } else if (user.type == 2) {
+    isAdmin = true;
+  }
+  let rewrite = req.body.rewrite;
+  let newPassword = req.body.newPassword;
+  let oldPassword = req.body.oldPassword;
+
+  const rs = bcrypt.compareSync(oldPassword, user.password);
+
+  if(!rs) {
+    res.render("changePassword", {
+      err_message: "Wrong old password!",
+      isReader: isBuyer,
+      isMerchant: isMerchant,
+      isAdmin: isAdmin
+    });
+    res.end;
+  } else {
+    if( newPassword !== rewrite) {
+      res.render("changePassword", {
+        err_message: "Rewrite new password don't match new password!",
+        isReader: isBuyer,
+        isMerchant: isMerchant,
+        isAdmin: isAdmin
+      });
+      res.end;
+    } else {
+      var re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
+      if(!re.test(newPassword)) {
+          res.render("changePassword", {
+            err_message: "New Password must contain at least 8 characters, 1 number, 1 upper and 1 lowercase.",
+            isReader: isBuyer,
+            isMerchant: isMerchant,
+            isAdmin: isAdmin
+          });
+          res.end;
+      } else {
+        const hash = bcrypt.hashSync(newPassword, config.authentication.saltRounds);
+        console.log(hash);
+        await userModel.changePassword(hash, user.user_id);
+        res.render("changePassword", {
+          success_message: "Change password success.",
+          isReader: isBuyer,
+          isMerchant: isMerchant,
+          isAdmin: isAdmin
+        });
+      }
+    }
+  }
 });
 
 module.exports = router;
