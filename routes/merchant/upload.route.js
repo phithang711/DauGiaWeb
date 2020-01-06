@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 var moment = require('moment');
-var encrypt = require('../../utils/encrypt.util');
 
 const deviceModel = require('../../models/device.model');
 const productModel = require('../../models/product.model');
@@ -121,9 +120,7 @@ router.post('/upload', async function(req, res) {
                 "description": req.body.details,
             }
 
-            console.log(product);
-
-            var addProductResult = await productModel.add(product);
+            var addProductResult = productModel.add(product);
 
             if (addProductResult) {
                 console.log("added");

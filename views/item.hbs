@@ -92,6 +92,23 @@
             <hr>
             <p>Minimum bit: 10010$</p>
             <hr>
+            <form id="add-watchlist" method="POST" action="/watchlist">
+                <input type="text" value="{{item.product_id}}" style="display: none;" name="product_id">
+                <button type="submit" class="btn btn-info">Add to watchlist</button>
+            </form>
+            <script>
+                $('#add-watchlist').submit(function (e) {
+                    e.preventDefault();
+                    $.ajax({
+                        url: '/watchlist',
+                        type: 'post',
+                        data: $('#add-watchlist').serialize(),
+                        success: function () {
+                            alert('Added to watchlist');
+                        }
+                    });
+                });
+            </script>
             <span>Interested?</span>
             <br>
             <a id="bidnow"><button type='button' class='bidbutton'>Bid now</button></a>
@@ -105,7 +122,7 @@
     </div>
 </div>
 </div>
-    {{{item.description}}}    
+{{{item.description}}}
 <div class="suggested-content" style="clear: both;">
     <h5>Suggested</h5>
     <div class="suggested-items">

@@ -1,10 +1,27 @@
 var express = require('express');
 var router = express.Router();
 const productModel = require('../models/product.model');
-var encrypt = require('../utils/encrypt.util');
+const watchlistModel = require('../models/watchlist.model');
 
-router.get('/watchlist', function(req, res, next) {
+router.get('/watchlist',async function(req, res, next) {
+    
     res.render('bidder/watchList', { title: 'Betview' });
+});
+
+router.post('/watchlist', async function(req, res, next) {
+    if (req.session.authUser === null || req.session.authUser === undefined) {
+        res.status(404) // HTTP status 404: NotFound
+            .send('Not found');
+        return;
+    }
+    var productId = req.body.product_id;
+    var userId = req.session.authUser.user_id;
+
+    var result = await watchlistModel.add(userId, productId);
+
+    // if(result){
+    //     res.redirect(`/item/${productId}`)
+    // }
 });
 
 router.get('/betview', function(req, res, next) {
