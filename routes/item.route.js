@@ -51,9 +51,16 @@ router.get('/item/:index/review', function(req, res) {
 
 });
 
-router.get('/otp', (req, res) => {	 
+router.get('/otp', (req, res) => {
+    
     res.render('otpMail', {title: "OTP"});
 });
+
+// router.get('/otp', (req, res) => {
+    
+//     // res.render('otpMail', {title: "OTP"});
+// });
+
 
 router.get('/404', (req, res) => {	 
     res.render('pageNotFound', {title: "404"});
