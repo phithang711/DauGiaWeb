@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 const productModel = require('../models/product.model');
 const watchlistModel = require('../models/watchlist.model');
+const userModel = require('../models/user.model');
+const bidModel = require('../models/bid.model');
 
 router.get('/watchlist',async function(req, res, next) {
     
@@ -32,12 +34,45 @@ router.get('/item/:index', async function(req, res) {
     var index = req.params.index;
 
     var result = await productModel.getById(index);
-    console.log(result);
+    var seller = await userModel.getUserById(result[0].seller_id);
+    var currentBidPrice = await bidModel.getCurrentBid(result[0].product_id);
+    var productBid = await bidModel.getByProductBidPrice(result[0].product_id, currentBidPrice.price);
+    var bidder = await userModel.getUserById(productBid.user_id);
+
+    const minBid = currentBidPrice.price +  result[0].step_price;
+
+    const end_date = (result[0].end_date - result[0].start_date )/1000;
+    console.log(end_date);
+
+    let end = "";
+
+    if(end_date > 86400) {
+        end = result[0].end_date;
+    } else {
+        const day = end_date / 86400;
+        const hour = (end_date % 86400) / 3600;
+        const min = ((end_date % 86400) % 3600) / 60;
+        const sec = ((end_date % 86400) % 3600) % 60;
+        if(Math.floor(day) > 0) {
+            end = day + " days letf.";
+        } else if(Math.floor(hour) > 0) {
+            end = hour + " hours letf.";
+        } else if(Math.floor(min) > 0) {
+            end = min + " mins letf.";
+        } else if(Math.floor(sec) > 0) {
+            end = sec + " secs letf.";
+        }
+    }
+
     // if (result.length > 0) {
     //     result[0].description = encrypt.decrypt(result[0].description);
     // }
     res.render('item', {
         item: result[0],
+        seller: seller,
+        bidder: bidder,
+        end_date: end,
+        minBid: minBid,
         empty: result.length === 0
     })
 });

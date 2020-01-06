@@ -4,5 +4,22 @@
  module.exports = {
      all: _ => db.load('select * from bid'),
      //search: (keyword) => db.load("SELECT * FROM device WHERE (brand) LIKE '%" + keyword + "%' OR (model) LIKE '%" + keyword + "%'"),
-     getById: (id) => db.load("SELECT * FROM bid WHERE (bid_id)=" + id)
+     getById: (id) => db.load("SELECT * FROM bid WHERE (bid_id)=" + id),
+
+     getByProductBidPrice: async (product_id, price) => {
+         const rows = await db.load(`select * from bid where bid_price = '${price}' and product_id = '${product_id}'`);
+         if(rows.length > 0) {
+             return rows[0];
+         }
+         return null;
+     },
+
+     getCurrentBid: async product_id => {
+         const rows = await db.load(`select Max(bid_price) as price from (select * from bid where product_id = '${product_id}') as temp`);
+         if(rows.length > 0)
+         {
+             return rows[0];
+         }
+         return null;
+     }
  };

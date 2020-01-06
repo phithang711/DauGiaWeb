@@ -19,4 +19,13 @@ module.exports = {
         }
         return null;
     },
+
+    getUserById: async id => {
+        const rows = await db.load(`select * from user where user_id = '${id}'`);
+        if(rows.length > 0) {
+            return rows[0];
+        }
+
+        return null;
+    }
 }

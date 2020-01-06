@@ -38,6 +38,7 @@ router.post('/signup', async function(req, res) {
 
 router.post('/logout', async function(req, res) {
     req.session.isAuthenticated = false;
+    res.locals.lcIsAuthenticated = false;
     req.session.authUser = null;
     res.redirect(req.get('referer'));
 });
@@ -65,6 +66,10 @@ router.post('/login', async function(req, res) {
     delete user.password;
     req.session.isAuthenticated = true;
     req.session.authUser = user;
+
+    res.locals.lcIsAuthenticated = req.session.isAuthenticated;
+    res.locals.lcAuthUser = req.session.authUser;
+
     const url = req.query.retUrl || '/';
     res.redirect(url);
 });
