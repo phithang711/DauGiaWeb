@@ -1,15 +1,24 @@
 const db = require('../utils/database.util');
 
 module.exports = {
-    add: function(user_id, product_id) {
+    add: async function(user_id, product_id) {
         var query = `INSERT INTO watchlist values (${user_id},${product_id})`;
         try {
-            db.load(query);
+            await db.load(query);
         } catch {
-            console.log("can't add product");
             return false;
         }
         return true;
+    },
+    remove: async function(user_id, product_id) {
+        try {
+            await db.load(`DELETE FROM watchlist WHERE (user_id)=${user_id} AND (product_id)=${product_id}`);
+        } catch {
+            return false;
+        }
+
+        return true;
+
     },
     getByUserId: (user_id) => db.load("SELECT * FROM watchlist WHERE (user_id)=" + user_id)
 };

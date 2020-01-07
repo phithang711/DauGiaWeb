@@ -32,6 +32,7 @@ var hbs = exphbs.create({
             var accum = '';
             for (var i = from; i < to; i += incr)
                 accum += block.fn(i);
+            console.log(accum);
             return accum;
         },
     },

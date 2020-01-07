@@ -5,12 +5,11 @@
   <form action="/all">
     <div style="padding-left: 20px;font-size:14px">
       <span>Type:</span>
+      {{#each LcCategory}}
       <div class="radio" id="sortOrder">
-        <label><input type="radio" name="type" value="phone" required>Phone</label>
+        <label><input type="radio" name="type" value="{{category_name}}" required>{{category_name}}</label>
       </div>
-      <div class="radio">
-        <label><input type="radio" value="laptop" name="type">Laptop</label>
-      </div>
+      {{/each}}
       <div class="radio">
         <label><input type="radio" value="all" name="type">All</label>
       </div>

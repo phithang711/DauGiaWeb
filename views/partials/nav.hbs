@@ -16,8 +16,9 @@
           Categories
         </a>
         <div class="dropdown-menu dropdown-content" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="/all?type=phone">Phone</a>
-          <a class="dropdown-item" href="/all?type=laptop">Laptop</a>
+          {{#each LcCategory}}
+          <a class="dropdown-item" href="/all?type={{category_name}}&option=bid&order=descending">{{category_name}}</a>
+          {{/each}}
         </div>
       </li>
       <li class="nav-item">
@@ -71,6 +72,15 @@
             <i class="fa fa-user" aria-hidden="true"></i>
             Account Profile
           </a>
+          {{#compareEqual lcAuthUser.type 1}}
+          <i class="fa fa-user" aria-hidden="true"></i>
+            <a class="dropdown-item" href="/manage">Upload</a>
+          {{/compareEqual}}
+
+          {{#compareEqual lcAuthUser.type 2}}
+            <a class="dropdown-item" href="/manage"><i class="fa fa-user" style="color:red" aria-hidden="true"></i>Manage users</a>
+            <a class="dropdown-item" href="/manage"><i class="fa fa-tasks" aria-hidden="true"></i>Edit categories</a>
+          {{/compareEqual}}
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="javascript: $('#frmLogout').submit()">
             <i class="fa fa-sign-out" aria-hidden="true"></i>

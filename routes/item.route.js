@@ -3,12 +3,26 @@ var router = express.Router();
 const productModel = require('../models/product.model');
 const watchlistModel = require('../models/watchlist.model');
 
-router.get('/watchlist',async function(req, res, next) {
-    
-    res.render('bidder/watchList', { title: 'Betview' });
+router.get('/watchlist', async function(req, res, next) {
+    if (req.session.authUser === null || req.session.authUser === undefined) {
+        res.status(404) // HTTP status 404: NotFound
+            .render('pageNotFound');
+        return;
+    }
+
+    result = await watchlistModel.getByUserId(req.session.authUser.user_id);
+
+    var products = [];
+
+    result.forEach(async(element) => {
+        product = await productModel.getById(element.product_id);
+        products.push(product[0]);
+    });
+
+    res.render('bidder/watchList', { title: 'Watchlist', items: products, user_id: req.session.authUser.user_id });
 });
 
-router.post('/watchlist', async function(req, res, next) {
+router.post('/watchlist', function(req, res, next) {
     if (req.session.authUser === null || req.session.authUser === undefined) {
         res.status(404) // HTTP status 404: NotFound
             .send('Not found');
@@ -17,11 +31,26 @@ router.post('/watchlist', async function(req, res, next) {
     var productId = req.body.product_id;
     var userId = req.session.authUser.user_id;
 
-    var result = await watchlistModel.add(userId, productId);
+    var result = watchlistModel.add(userId, productId);
 
     // if(result){
     //     res.redirect(`/item/${productId}`)
     // }
+    res.redirect('/watchlist');
+});
+
+router.post('/watchlist/remove', function(req, res, next) {
+    if (req.session.authUser === null || req.session.authUser === undefined) {
+        res.status(404) // HTTP status 404: NotFound
+            .send('Not found');
+        return;
+    }
+    var productId = req.body.product_id;
+    var userId = req.session.authUser.user_id;
+
+    var result = watchlistModel.remove(userId, productId);
+
+    res.redirect('/');
 });
 
 router.get('/betview', function(req, res, next) {

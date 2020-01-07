@@ -1,115 +1,37 @@
 <div class="limiter">
     <div class="container-main-content container-main-content-top">
         <div class="wrap-main-content wrap-item-view wrap-main-content-top">
-    <div class="flex-row">
-        <div class="btn-group m-5 align-self-start ">
-            <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                aria-expanded="false">
-                Sort
-            </button>
-            <div class="dropdown-menu">
-                <a class="dropdown-item" href="#">A <i class="fa fa-arrow-right" aria-hidden="true"></i> Z</a>
-                <a class="dropdown-item" href="#">Ending Time</a>
-                <a class="dropdown-item" href="#">Rate</a>
+            <h2>Watchlist</h2>
+            <div class="flex-col">
+                {{#each items}}
+                <a href="/item/{{product_id}}" class="text-dark">
+                    <div class="col-sm-12 mt-1">
+                        <div class="card  flex-row">
+                            <div class="card-header">
+                                <img class="img-thumbnail" width="100" src="{{img_url}}" alt="Card image cap">
+                            </div>
+                            <div class="card-body flex-column">
+                                <h4 class="card-title">{{brand}} {{model}}</h4>
+                                <p class="card-text">End date:{{end_date}}</p>
+                                <div class="float-right">
+                                    <form class="remove-item-watchlist" method="POST" action="/watchlist/remove">
+                                        <input style="display: none;" type="text" value="{{product_id}}"
+                                            name="product_id">
+                                        <button class="btn btn-outline-danger" type="submit">
+                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                        </button>
+                                    </form>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </a>
+
+                {{/each}}
             </div>
         </div>
-        <div class="card-group w-75 mt-5">
-            <a href="#" class="text-dark">
-                <div class="col-sm-12 mt-1">
-                    <div class="card  flex-row">
-                        <div class="card-header">
-                            <img class="img-thumbnail" width="100"
-                                src="https://images-na.ssl-images-amazon.com/images/I/91OME-jyFmL.jpg"
-                                alt="Card image cap">
-                        </div>
-                        <div class="card-body flex-column">
-                            <h4 class="card-title">Book</h4>
-                            <p class="card-text">Description</p>
-                            <div>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                            </div>
-                            <span class="badge badge-pill badge-primary">4930 bids</span>
-                            <span class="badge badge-pill badge-danger">3 days</span>
-                            <div class="float-right">
-                                <a href="#">
-                                    <button type="button" class="btn btn-outline-success">
-                                        <i class="fa fa-money" aria-hidden="true"></i>
-                                    </button>
-                                </a>
-                                <button type="button" class="btn btn-outline-danger" data-toggle="modal"
-                                    data-target="#deleteCard">
-                                    <i class="fa fa-trash" aria-hidden="true"></i>
-                                </button>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </a>
-
-            <a href="#" class="text-dark">
-                <div class="col-sm-12 mt-1">
-                    <div class="card  flex-row">
-                        <div class="card-header">
-                            <img class="img-thumbnail" width="100"
-                                src="https://images-na.ssl-images-amazon.com/images/I/91OME-jyFmL.jpg"
-                                alt="Card image cap">
-                        </div>
-                        <div class="card-body flex-column">
-                            <h4 class="card-title">Book</h4>
-                            <p class="card-text">Description</p>
-                            <div>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                            </div>
-                            <span class="badge badge-pill badge-primary">4930 bids</span>
-                            <span class="badge badge-pill badge-danger">3 days</span>
-                            <div class="float-right">
-                                <a href="#">
-                                    <button type="button" class="btn btn-outline-success">
-                                        <i class="fa fa-money" aria-hidden="true"></i>
-                                    </button>
-                                </a>
-                                <button type="button" class="btn btn-outline-danger" data-toggle="modal"
-                                    data-target="#deleteCard">
-                                    <i class="fa fa-trash" aria-hidden="true"></i>
-                                </button>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </a>
-
-        </div>
-    </div>
-    <div class="modal fade" id="deleteCard" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Confirm</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    Do you want to <b>delete</b> this product?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Yes, sure</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
     </div>
 </div>
