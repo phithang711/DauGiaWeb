@@ -9,7 +9,7 @@
     <span class="navbar-toggler-icon"></span>
   </button>
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+  <div class="collapse navbar-collapse" style="display: flex!important;" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="/all" id="navbarDropdown" aria-haspopup="true" aria-expanded="false">
@@ -53,8 +53,8 @@
         <span class="focus-input100"></span>
       </div>
     </li>
-    <li class="nav-item">
-      <a class="nav-link nav-login" href="/watchlist">Watchlist</a>
+    <li class="nav-item text-dark">
+      <a class="nav-link nav-login text-dark" href="/watchlist">Watchlist</a>
     </li>
 
     <form id="frmLogout" action="/logout" method="post"></form>
@@ -85,11 +85,8 @@
           Account
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="login">Login</a>
-          <a class="dropdown-item" href="signup">Signup</a>
-          {{!-- <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="/upload">Upload</a>
-                    <a class="dropdown-item" href="/manage">Manage</a> --}}
+          <a class="dropdown-item" href="/login">Login</a>
+          <a class="dropdown-item" href="/signup">Signup</a>
         </div>
       </li>
       {{/if}}

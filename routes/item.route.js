@@ -95,7 +95,11 @@ router.post('/item/:index/normalBid',async function (req,res) {
 
     const price = req.body.price;
 
-    if(user.rate < 8) {
+    // console.log(user.rate);
+
+    if(user === null) {
+        res.cookie('bidErrorMessage', 'You must login to bid.',{ maxAge: 900000, httpOnly: true });
+    } else if(user.rate < 4) {
         res.cookie('bidErrorMessage', 'Your rating point less than 80%.',{ maxAge: 900000, httpOnly: true });
     } else {
         if(price < minBid) {
@@ -111,17 +115,20 @@ router.post('/item/:index/normalBid',async function (req,res) {
             }
             res.cookie('bidSuccessMessage', 'Bid Item Successful.',{ maxAge: 900000, httpOnly: true });
             const rt = bidModel.add(entity);
-            checkAutoBid();
+            checkAutoBid(index, result[0].step_price);
         }
     }
     req.session.save();
     res.redirect('/item/' + index);
 });
 
-async function checkAutoBid () 
+async function checkAutoBid (product_id, step_price) 
 {
     const autoBids = await bidModel.getAllBidAuto();
-
+    for(entity in autoBids) {
+        const maxPrice = await bidModel.getCurrentBid(product_id);
+        await bidModel.changeBidPrice(entity.bide_id, maxPrice.price + step_price);
+    }
 };
 
 router.post('/item/:index/autoBid',async function(req,res) {
@@ -136,7 +143,13 @@ router.post('/item/:index/autoBid',async function(req,res) {
     const price = req.body.price;
     const maxPrice = req.body.max_price;
 
-
+    if(user === null) {
+        res.cookie('bidErrorMessage', 'You must login to bid.',{ maxAge: 900000, httpOnly: true });
+    } else if(user.rate < 4) {
+        res.cookie('bidErrorMessage', 'Your rating point less than 80%.',{ maxAge: 900000, httpOnly: true });
+    } else {
+        
+    }
 })
 
 router.get('/item/:index/bid', async function(req, res) {
