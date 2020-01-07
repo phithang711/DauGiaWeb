@@ -40,7 +40,12 @@ router.post('/logout', async function(req, res) {
     req.session.isAuthenticated = false;
     res.locals.lcIsAuthenticated = false;
     req.session.authUser = null;
-    res.redirect(req.get('referer'));
+    req.session.save(function (err) {
+        if(err) {
+            return;
+        }
+        res.redirect(req.get('referer'));
+      })
 });
 
 const local = require('../middlewares/local.mdw');
@@ -67,11 +72,14 @@ router.post('/login', async function(req, res) {
     req.session.isAuthenticated = true;
     req.session.authUser = user;
 
-    res.locals.lcIsAuthenticated = req.session.isAuthenticated;
-    res.locals.lcAuthUser = req.session.authUser;
-
     const url = req.query.retUrl || '/';
-    res.redirect(url);
+
+    req.session.save(function (err) {
+        if(err) {
+            return;
+        }
+        res.redirect(url);
+      })
 });
 
 router.get('/account/profile', function(req, res) {

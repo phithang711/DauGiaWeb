@@ -54,13 +54,13 @@ router.get('/item/:index', async function(req, res) {
         const min = ((end_date % 86400) % 3600) / 60;
         const sec = ((end_date % 86400) % 3600) % 60;
         if(Math.floor(day) > 0) {
-            end = day + " days letf.";
+            end = day + " days left.";
         } else if(Math.floor(hour) > 0) {
-            end = hour + " hours letf.";
+            end = hour + " hours left.";
         } else if(Math.floor(min) > 0) {
-            end = min + " mins letf.";
+            end = min + " mins left.";
         } else if(Math.floor(sec) > 0) {
-            end = sec + " secs letf.";
+            end = sec + " secs left.";
         }
     }
 
@@ -68,10 +68,10 @@ router.get('/item/:index', async function(req, res) {
     //     result[0].description = encrypt.decrypt(result[0].description);
     // }
 
-    const success = req.session.bidSuccessMessage;
-    req.session.bidSuccessMessage= null;
-    const error =req.session.bidErrorMessage;
-    req.session.bidErrorMessage = null;
+    const success = req.cookies['bidSuccessMessage'];
+    const error = req.cookies['bidErrorMessage'];
+    res.clearCookie('bidSuccessMessage');
+    res.clearCookie('bidErrorMessage');
 
     res.render('item', {
         err_message: error,
@@ -96,10 +96,10 @@ router.post('/item/:index/normalBid',async function (req,res) {
     const price = req.body.price;
 
     if(user.rate < 8) {
-        req.session.bidErrorMessage = "Your rating point less than 80%."
+        res.cookie('bidErrorMessage', 'Your rating point less than 80%.',{ maxAge: 900000, httpOnly: true });
     } else {
         if(price < minBid) {
-            req.session.bidErrorMessage = "Bid value invalid."    
+            res.cookie('bidErrorMessage', 'Bid value invalid.',{ maxAge: 900000, httpOnly: true });
         } else {
             const currentBidId = await bidModel.getCurrentBidId();
             const entity = {
@@ -109,15 +109,33 @@ router.post('/item/:index/normalBid',async function (req,res) {
                 bid_time: new Date(),
                 bid_price: price
             }
-            req.session.bidSuccessMessage = "Bid Item Successful.";
+            res.cookie('bidSuccessMessage', 'Bid Item Successful.',{ maxAge: 900000, httpOnly: true });
             const rt = bidModel.add(entity);
+            checkAutoBid();
         }
     }
     req.session.save();
     res.redirect('/item/' + index);
 });
 
-router.post('/item/:index/autoBid', function(req,res) {
+async function checkAutoBid () 
+{
+    const autoBids = await bidModel.getAllBidAuto();
+
+};
+
+router.post('/item/:index/autoBid',async function(req,res) {
+    console.log("Inside");
+
+    var index = req.params.index;
+    const user = req.session.authUser;
+    var result = await productModel.getById(index);
+    var currentBidPrice = await bidModel.getCurrentBid(result[0].product_id);
+    const minBid = currentBidPrice.price +  result[0].step_price;
+
+    const price = req.body.price;
+    const maxPrice = req.body.max_price;
+
 
 })
 

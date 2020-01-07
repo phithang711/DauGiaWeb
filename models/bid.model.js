@@ -33,4 +33,15 @@
          return null;
      },
      
+     getAllBidAuto: async () => {
+         const rows = await db.load(`select * from bid where isAutoBid = 1 and maxAutoBid > bid_price`)
+         if(rows.length > 0)
+         {
+             return rows;
+         }
+         return null;
+     },
+
+     changeBidPrice: (bid_id, price)  => db.load(`update bid set bid_price = '${price}' where bid_id = '${bid_id}'`),
+
  };

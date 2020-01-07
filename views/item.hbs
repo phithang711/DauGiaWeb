@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-modal/2.2.6/js/bootstrap-modal.js"></script>
 
 <div id="carouselExampleIndicators" class="carousel slide col-sm-3" data-ride="carousel">
     <div class="carousel-inner">
@@ -76,35 +76,72 @@
 
     <div class="tab-content">
         <div id="normalBid" class="tab-pane fade in active">
-            <form action="/item/{{item.product_id}}/normalBid"  method="POST">
+            <form action="/item/{{item.product_id}}/normalBid" id="formNormalBid"  method="POST">
                 <div class="form-group">
                     <label for="">Price</label>
                     <input type="number" class="form-control w-100" name="price" id="" aria-describedby="helpId"
                         placeholder="Your bid price">
                     <small id="helpId" class="form-text text-muted">Normal bid just bid onetime. <b style="color: red;">Your price must be more than {{minBid}}</b></small>
                 </div>
-                <button type="submit" class="btn btn-primary">Bid Now</button>
+                <button type="button" data-toggle="modal" data-target="#normalBidModal" class="btn btn-primary">Bid Now</button>
             </form>
         </div>
         <div id="autoBid" class="tab-pane fade">
-            <form action="/item/{{item.product_id}}/autoBid" method="POST">
+            <form action="/item/{{item.product_id}}/autoBid" id="formAutoBid" method="POST">
                 <div class="form-group">
                     <label for="">Price</label>
-                    <input type="number" class="form-control w-100" name="" id="" aria-describedby="helpId"
+                    <input type="number" class="form-control w-100" name="price" id="" aria-describedby="helpId"
                         placeholder="Your bid price">
                     <small id="helpId" class="form-text text-muted">Your current bid price in this turn. <b style="color: red;">Your price must be more than {{minBid}}</b></small>
                 </div>
                 <div class="form-group">
                     <label for="">Maximum Price</label>
-                    <input type="number" class="form-control w-100" name="" id="" aria-describedby="helpId"
+                    <input type="number" class="form-control w-100" name="max_price" id="" aria-describedby="helpId"
                         placeholder="Your maximum bid price">
                     <small id="helpId" class="form-text text-muted">Auto bid will stop when bid price meet maximum
                         price. <b style="color: red;">Your price must be more than {{minBid}}</b></small>
                 </div>
-                <button type="submit" class="btn btn-primary">Bid Now</button>
             </form>
+            <button type="button" data-toggle="modal" data-target="#autoBidModal" class="btn btn-primary">Bid Now</button>
         </div>
     </div>
+
+    <div class="modal fade" id="autoBidModal" tabindex="-1" role="dialog" aria-labelledby="autoBidModal" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Confirm</h5>
+
+      </div>
+      <div class="modal-body">
+        Do you want to bid?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">No, Cancel</button>
+        <a name="" id="" class="btn btn-primary" href="javascript: $('#formAutoBid').submit()" role="button">Yes, Sure</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <div class="modal fade" id="normalBidModal" tabindex="-1" role="dialog" aria-labelledby="autoBidModal" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Confirm</h5>
+
+      </div>
+      <div class="modal-body">
+        Do you want to bid?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">No, Cancel</button>
+        <a name="" id="" class="btn btn-primary" href="javascript: $('#formNormalBid').submit()" role="button">Yes, Sure</a>
+      </div>
+    </div>
+  </div>
+</div>
+
 </div>
 
 <div class="col-sm-4">
