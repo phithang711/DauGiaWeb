@@ -67,15 +67,59 @@ router.get('/item/:index', async function(req, res) {
     // if (result.length > 0) {
     //     result[0].description = encrypt.decrypt(result[0].description);
     // }
+
+    const success = req.session.bidSuccessMessage;
+    req.session.bidSuccessMessage= null;
+    const error =req.session.bidErrorMessage;
+    req.session.bidErrorMessage = null;
+
     res.render('item', {
+        err_message: error,
+        success_message: success,
         item: result[0],
         seller: seller,
         bidder: bidder,
         end_date: end,
         minBid: minBid,
+        current_price: currentBidPrice.price,
         empty: result.length === 0
     })
 });
+
+router.post('/item/:index/normalBid',async function (req,res) {
+    var index = req.params.index;
+    const user = req.session.authUser;
+    var result = await productModel.getById(index);
+    var currentBidPrice = await bidModel.getCurrentBid(result[0].product_id);
+    const minBid = currentBidPrice.price +  result[0].step_price;
+
+    const price = req.body.price;
+
+    if(user.rate < 8) {
+        req.session.bidErrorMessage = "Your rating point less than 80%."
+    } else {
+        if(price < minBid) {
+            req.session.bidErrorMessage = "Bid value invalid."    
+        } else {
+            const currentBidId = await bidModel.getCurrentBidId();
+            const entity = {
+                bid_id : currentBidId.id + 1,
+                product_id: index,
+                user_id: user.user_id,
+                bid_time: new Date(),
+                bid_price: price
+            }
+            req.session.bidSuccessMessage = "Bid Item Successful.";
+            const rt = bidModel.add(entity);
+        }
+    }
+    req.session.save();
+    res.redirect('/item/' + index);
+});
+
+router.post('/item/:index/autoBid', function(req,res) {
+
+})
 
 router.get('/item/:index/bid', async function(req, res) {
     //get param

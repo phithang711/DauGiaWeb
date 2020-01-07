@@ -21,5 +21,16 @@
              return rows[0];
          }
          return null;
-     }
+     },
+
+     add: entity => db.add(entity, 'bid'),
+
+     getCurrentBidId: async () => {
+         const rows = await db.load(`select max(bid_id) as id from bid`);
+         if(rows.length > 0) {
+             return rows[0];
+         }
+         return null;
+     },
+     
  };
