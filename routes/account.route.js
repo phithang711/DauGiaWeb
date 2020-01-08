@@ -142,8 +142,6 @@ router.post("/profile/changeProfile", async function(req, res) {
     });
 });
 
-<<
-<< << < HEAD
 router.get('/account/profile', function(req, res) {
     const user = req.session.authUser;
     let isBuyer = false;
@@ -235,98 +233,97 @@ router.get("/account/profile", function(req, res) {
 })
 
 router.post('/tomerchant', async function(req, res) {
-            if (req.session.authUser === null || req.session.authUser.type === "1" || req.session.authUser.type === "2" || req.session.authUser.type === undefined) {
-                res.status(404) // HTTP status 404: NotFound
-                    .send('Not found');
-                return;
-            }
-            console.log(req.session.authUser.email);
-            var checkadd = await toMerchant.add(req.session.authUser.email);
-            if (checkadd == true) {
-                res.redirect(req.get('referer'));
-            } else {
-                console.log("failed redirect");
-            } ===
-            === =
-            router.get("/profile/changePassword", function(req, res) {
-                const user = req.session.authUser;
-                let isBuyer = false;
-                let isAdmin = false;
-                let isMerchant = false;
-                if (user.type == 0) {
-                    isBuyer = true;
-                } else if (user.type == 1) {
-                    isMerchant = true;
-                } else if (user.type == 2) {
-                    isAdmin = true;
-                }
+    if (req.session.authUser === null || req.session.authUser.type === "1" || req.session.authUser.type === "2" || req.session.authUser.type === undefined) {
+        res.status(404) // HTTP status 404: NotFound
+            .send('Not found');
+        return;
+    }
+    console.log(req.session.authUser.email);
+    var checkadd = await toMerchant.add(req.session.authUser.email);
+    if (checkadd == true) {
+        res.redirect(req.get('referer'));
+    } else {
+        console.log("failed redirect");
+    }
+    router.get("/profile/changePassword", function(req, res) {
+        const user = req.session.authUser;
+        let isBuyer = false;
+        let isAdmin = false;
+        let isMerchant = false;
+        if (user.type == 0) {
+            isBuyer = true;
+        } else if (user.type == 1) {
+            isMerchant = true;
+        } else if (user.type == 2) {
+            isAdmin = true;
+        }
 
+        res.render("changePassword", {
+            isReader: isBuyer,
+            isMerchant: isMerchant,
+            isAdmin: isAdmin
+        });
+    });
+
+    router.post("/profile/changePassword", async function(req, res) {
+        const user = await userModel.getUserById(req.session.authUser.user_id);
+        let isBuyer = false;
+        let isAdmin = false;
+        let isMerchant = false;
+        if (user.type == 0) {
+            isBuyer = true;
+        } else if (user.type == 1) {
+            isMerchant = true;
+        } else if (user.type == 2) {
+            isAdmin = true;
+        }
+        let rewrite = req.body.rewrite;
+        let newPassword = req.body.newPassword;
+        let oldPassword = req.body.oldPassword;
+
+        const rs = bcrypt.compareSync(oldPassword, user.password);
+
+        if (!rs) {
+            res.render("changePassword", {
+                err_message: "Wrong old password!",
+                isReader: isBuyer,
+                isMerchant: isMerchant,
+                isAdmin: isAdmin
+            });
+            res.end;
+        } else {
+            if (newPassword !== rewrite) {
                 res.render("changePassword", {
+                    err_message: "Rewrite new password don't match new password!",
                     isReader: isBuyer,
                     isMerchant: isMerchant,
                     isAdmin: isAdmin
                 });
-            });
-
-            router.post("/profile/changePassword", async function(req, res) {
-                const user = await userModel.getUserById(req.session.authUser.user_id);
-                let isBuyer = false;
-                let isAdmin = false;
-                let isMerchant = false;
-                if (user.type == 0) {
-                    isBuyer = true;
-                } else if (user.type == 1) {
-                    isMerchant = true;
-                } else if (user.type == 2) {
-                    isAdmin = true;
-                }
-                let rewrite = req.body.rewrite;
-                let newPassword = req.body.newPassword;
-                let oldPassword = req.body.oldPassword;
-
-                const rs = bcrypt.compareSync(oldPassword, user.password);
-
-                if (!rs) {
+                res.end;
+            } else {
+                var re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
+                if (!re.test(newPassword)) {
                     res.render("changePassword", {
-                        err_message: "Wrong old password!",
+                        err_message: "New Password must contain at least 8 characters, 1 number, 1 upper and 1 lowercase.",
                         isReader: isBuyer,
                         isMerchant: isMerchant,
                         isAdmin: isAdmin
                     });
                     res.end;
                 } else {
-                    if (newPassword !== rewrite) {
-                        res.render("changePassword", {
-                            err_message: "Rewrite new password don't match new password!",
-                            isReader: isBuyer,
-                            isMerchant: isMerchant,
-                            isAdmin: isAdmin
-                        });
-                        res.end;
-                    } else {
-                        var re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
-                        if (!re.test(newPassword)) {
-                            res.render("changePassword", {
-                                err_message: "New Password must contain at least 8 characters, 1 number, 1 upper and 1 lowercase.",
-                                isReader: isBuyer,
-                                isMerchant: isMerchant,
-                                isAdmin: isAdmin
-                            });
-                            res.end;
-                        } else {
-                            const hash = bcrypt.hashSync(newPassword, config.authentication.saltRounds);
-                            console.log(hash);
-                            await userModel.changePassword(hash, user.user_id);
-                            res.render("changePassword", {
-                                success_message: "Change password success.",
-                                isReader: isBuyer,
-                                isMerchant: isMerchant,
-                                isAdmin: isAdmin
-                            });
-                        }
-                    }
-                } >>>
-                >>> > origin / AccountProfileView
-            });
+                    const hash = bcrypt.hashSync(newPassword, config.authentication.saltRounds);
+                    console.log(hash);
+                    await userModel.changePassword(hash, user.user_id);
+                    res.render("changePassword", {
+                        success_message: "Change password success.",
+                        isReader: isBuyer,
+                        isMerchant: isMerchant,
+                        isAdmin: isAdmin
+                    });
+                }
+            }
+        }
+    });
+});
 
-            module.exports = router;
+module.exports = router;
