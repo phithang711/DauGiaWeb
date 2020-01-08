@@ -44,5 +44,14 @@
          return true;
      },
      
+    checkIsBan: async (product_id, user_id) => { 
+        const rows = await db.load(`select * from ban where product_id=  '${product_id}' and user_id = '${user_id}'`);
+        if(rows.length > 0) {
+            return true;
+        }
+        return false;
+    },
 
+    addBanAccount: entity => db.load(entity, 'ban'),
+    
  };

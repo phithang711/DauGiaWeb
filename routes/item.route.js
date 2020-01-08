@@ -44,10 +44,7 @@ router.get("/item/:index", async function(req, res) {
 
   const minBid = currentBidPrice.price + result[0].step_price;
   const currentDate = new Date();
-  const end_date = (result[0].end_date - currentDate) / 1000;
-  
-  console.log(result[0].end_date);
-  console.log(currentDate);
+  const end_date = (moment.utc(result[0].end_date).local()- currentDate) / 1000;
 
   let end = "";
 
@@ -110,8 +107,10 @@ router.get("/item/:index", async function(req, res) {
         historyBidder.push(entity)
     }
     let isMerchant = false;
-    if(user.type ===  1)  {
-        isMerchant = true;
+    if(user !== null )  {
+        if(user.type === 1) {
+            isMerchant = true;
+        }
     }
     res.render("item", {
       err_message: error,
