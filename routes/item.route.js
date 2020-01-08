@@ -141,12 +141,28 @@ router.get("/item/:index", async function(req, res) {
                 isMerchant = true;
             }
         }
+
+        let bidderName = bidder.name;
+        if(bidderName.length > 5) {
+            bidderName = "*****" + bidderName.substr(5);
+        } else {
+            bidderName = "***" + bidderName.substr(3);
+        }
+
+        let sellerName = seller.name;
+        if(sellerName.length > 5) {
+            sellerName = "*****" + sellerName.substr(5);
+        } else {
+            sellerName = "***" + sellerName.substr(3);
+        }
         res.render("item", {
             err_message: error,
             success_message: success,
             item: result[0],
             seller: seller,
+            sellerName: sellerName,
             bidder: bidder,
+            bidderName: bidderName,
             end_date: end,
             minBid: minBid,
             current_price: currentBidPrice.price,
