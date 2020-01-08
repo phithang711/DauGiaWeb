@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const productModel = require('../models/product.model');
+var moment = require('moment');
 
 router.get('/all', async function(req, res) {
     var limit = 10;
@@ -43,12 +44,22 @@ router.get('/all', async function(req, res) {
         count = (await productModel.search(1000000, 0, getKeyword)).length;
     }
 
+    for (i = 0; i < result.length; i++) {
+        result[i].end_date = moment(result[i].end_date).format('DD-MM-YYYY HH:mm');
+
+        result[i].start_date = moment(result[i].start_date).format('DD-MM-YYYY HH:mm');
+
+        console.log(moment().format('DD-MM-YYYY HH:mm'));
+        console.log(moment(result[i].start_date).format('DD-MM-YYYY HH:mm'));
+        console.log(moment().diff(moment(result[i].start_date)));
+    }
+
     count = Math.round(count / limit) + 1;
 
     var context = {
         items: result,
         page: getPage,
-        totalPage: count + 1,
+        totalPage: count,
         empty: result.length === 0
     }
     res.render('productAll', context);
