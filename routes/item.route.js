@@ -94,10 +94,17 @@ router.get("/item/:index", async function(req, res) {
     var historyBidder = [];
     for(i = 0 ; i < history.length ; i++) {
         const userBidHis = await userModel.getUserById(history[i].user_id);
+        let name = "";
+        if(userBidHis.name.length > 5) {
+            name = "*****" + userBidHis.name.substr(5);
+        } else {
+            name = "**" + userBidHis.name.substr(2);
+        }
+
         const entity = {
             order: i + 1,
             time: moment(history[i].bid_time,'MMM dd YYYY').format('HH:mm DD/MM/YYYY'),
-            name: userBidHis.name,
+            name: name,
             price: history[i].bid_price
         }
         historyBidder.push(entity)
@@ -165,10 +172,6 @@ router.post("/item/:index/normalBid", async function(req, res) {
         httpOnly: true
       });
       const rt = bidModel.add(entity);
-
-      /////////////////////////////////////////////////////////////// ADD EMAIL 
-
-      
       checkAutoBid(index, result[0].step_price);
     }
   }
@@ -314,10 +317,6 @@ router.post("/item/:index/autoBid", async function(req, res) {
       maxAge: 900000,
       httpOnly: true
     });
-
-    /////////////////////////////////////////////////////////////// ADD EMAIL 
-
-
     checkAutoBid(index, result[0].step_price);
   }
   res.redirect("/item/" + index);
