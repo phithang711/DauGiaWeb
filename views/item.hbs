@@ -1,4 +1,8 @@
-<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-modal/2.2.6/js/bootstrap-modal.js"></script>
+
+<div id="carouselExampleIndicators" class="carousel slide col-sm-3" data-ride="carousel">
     <div class="carousel-inner">
         <div class="carousel-item active">
             <img class="d-block w-100" src="{{item.img_url}}" class="img-fluid" alt="First slide" />
@@ -39,85 +43,198 @@
     </div>
 </div>
 
-<div>
+<div class="col-sm-5 w-100">
+
+    {{{item.description}}}
+
+    {{#if err_message}}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        {{err_message}}
+    </div>
+    {{/if}}
+    {{#if success_message}}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        {{success_message}}
+    </div>
+    {{/if}}
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#normalBid">
+                <i class="fa fa-money" aria-hidden="true"></i>
+                Normal Bid
+            </a></li>
+        <li><a data-toggle="tab" href="#autoBid">
+                <i class="fa fa-arrows-alt" aria-hidden="true"></i>
+                Auto Bid
+            </a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div id="normalBid" class="tab-pane fade in active">
+            <form action="/item/{{item.product_id}}/normalBid" id="formNormalBid" method="POST">
+                <div class="form-group">
+                    <label for="">Price</label>
+                    <input type="number" class="form-control w-100" name="price" id="" aria-describedby="helpId"
+                        placeholder="Your bid price">
+                    <small id="helpId" class="form-text text-muted">Normal bid just bid onetime. <b
+                            style="color: red;">Your price must be more than {{minBid}}</b></small>
+                </div>
+                <button type="button" data-toggle="modal" data-target="#normalBidModal" class="btn btn-primary">Bid
+                    Now</button>
+            </form>
+        </div>
+        <div id="autoBid" class="tab-pane fade">
+            <form action="/item/{{item.product_id}}/autoBid" id="formAutoBid" method="POST">
+                <div class="form-group">
+                    <label for="">Price</label>
+                    <input type="number" class="form-control w-100" name="price" id="" aria-describedby="helpId"
+                        placeholder="Your bid price">
+                    <small id="helpId" class="form-text text-muted">Your current bid price in this turn. <b
+                            style="color: red;">Your price must be more than {{minBid}}</b></small>
+                </div>
+                <div class="form-group">
+                    <label for="">Maximum Price</label>
+                    <input type="number" class="form-control w-100" name="max_price" id="" aria-describedby="helpId"
+                        placeholder="Your maximum bid price">
+                    <small id="helpId" class="form-text text-muted">Auto bid will stop when bid price meet maximum
+                        price. <b style="color: red;">Your price must be more than {{minBid}}</b></small>
+                </div>
+            </form>
+            <button type="button" data-toggle="modal" data-target="#autoBidModal" class="btn btn-primary">Bid
+                Now</button>
+        </div>
+    </div>
+
+    <div class="modal fade" id="autoBidModal" tabindex="-1" role="dialog" aria-labelledby="autoBidModal"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Confirm</h5>
+
+                </div>
+                <div class="modal-body">
+                    Do you want to bid?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No, Cancel</button>
+                    <a name="" id="" class="btn btn-primary" href="javascript: $('#formAutoBid').submit()"
+                        role="button">Yes, Sure</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="normalBidModal" tabindex="-1" role="dialog" aria-labelledby="autoBidModal"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Confirm</h5>
+
+                </div>
+                <div class="modal-body">
+                    Do you want to bid?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No, Cancel</button>
+                    <a name="" id="" class="btn btn-primary" href="javascript: $('#formNormalBid').submit()"
+                        role="button">Yes, Sure</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <h3>History</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Order</th>
+                    <th scope="col">Time</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each bidderHistory}}
+                <tr>
+                    <th scope="row">{{order}}</th>
+                    <td>{{time}}</td>
+                    <td>{{name}}</td>
+                    <td>{{price}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="col-sm-4">
     <h2>
         <font color='red' style="clear:both;">
             <center>{{item.brand}} {{item.model}}</center>
         </font>
     </h2>
-    <p>
-        <font color='red' size='-1px'>
-            <center>🔥 1100 people viewed this items</center>
-        </font>
-        <br>
-    </p>
-    <center>
-        <div>
-            <span>Rating: </span>
-            <span class="fa fa-star ratechecked "></span>
-            <span class="fa fa-star ratechecked "></span>
-            <span class="fa fa-star ratechecked"></span>
-            <span class="fa fa-star ratechecked"></span>
-            <span class="fa fa-star-o "></span>
-        </div>
-    </center>
     <hr>
     <div class='moveright'>
-        <p style="font-size:large;"><b>Condition</b>: {{item.status}}</p>
-        <p><br></p>
-        <form>
-            <b>Quality:</b> <input type='number' name='Quality_product' value='1' min='0'>
-        </form>
+        <p style="font-size:large;"><b>Status</b>: {{item.status}}</p>
         <p><br></p>
         <div>
-            <p style="font-size:large;"><b>Seller</b>: @phithangnguyen</p>
-            <span style="font-size:small;">Rate: 4.5</span>
+            <p style="font-size:large;"><b>Seller</b>: {{seller.name}}</p>
+            <span style="font-size:small;">Rate: {{seller.rate}}</span>
             <p class="fa fa-star ratechecked"></p>
         </div>
 
     </div>
     <p><br></p>
-    <div class="card mx-auto bg-light" style="width: 30rem">
+    <div class="card mx-auto bg-light w-100">
         <div class='moveright'>
-            <span>Current Price: <b>{{price}}$</b></span>
+            <span>Current Price: <b>{{current_price}}$</b></span>
             <p><br></p>
+            {{#if bidder}}
             <div>
-                <p><b>Highest price bidder</b>: @tranthuanthanh</p>
-                <span style="font-size:small;">Rate: 4.3</span>
+                <p><b>Highest price bidder</b>: {{bidder.name}}</p>
+                <span style="font-size:small;">Rate: {{bidder.rate}}</span>
                 <p class="fa fa-star ratechecked"></p>
             </div>
+            {{/if}}
             <hr>
-            <p>Create at: <span id="create_at"> 5:01 AM 23/11/2019</span></p>
-            <p>Close in: <span id="end_at"> after 10 hours</span></p>
+            <p>Create at: <span id="create_at"> {{item.start_date}}</span></p>
+            <p>Close in: <span id="end_at"> {{end_date}}</span></p>
             <hr>
-            <p>Minimum bit: 10010$</p>
+            <p style="color: red;">Minimum bit: {{minBid}} $</p>
             <hr>
-            <form id="add-watchlist" method="POST" action="/watchlist">
-                <input type="text" value="{{item.product_id}}" style="display: none;" name="product_id">
-                <button type="submit" class="btn btn-info">Add to watchlist</button>
-            </form>
-            <script>
-                $('#add-watchlist').submit(function (e) {
-                    e.preventDefault();
-                    $.ajax({
-                        url: '/watchlist',
-                        type: 'post',
-                        data: $('#add-watchlist').serialize(),
-                        success: function () {
-                            alert('Added to watchlist');
-                        }
+            <div class="row">
+                <form id="add-watchlist" method="POST" action="/watchlist">
+                    <input type="text" value="{{item.product_id}}" style="display: none;" name="product_id">
+                    <button type="submit" class="btn btn-info">Add to watchlist</button>
+                </form>
+                <script>
+                    $('#add-watchlist').submit(function (e) {
+                        e.preventDefault();
+                        $.ajax({
+                            url: '/watchlist',
+                            type: 'post',
+                            data: $('#add-watchlist').serialize(),
+                            success: function () {
+                                alert('Added to watchlist');
+                            }
+                        });
                     });
-                });
-            </script>
-            <span>Interested?</span>
-            <br>
-            <a id="bidnow"><button type='button' class='bidbutton'>Bid now</button></a>
-            <a id="Comment"><button type='button' class='bidbutton'>Review</button></a>
-            <hr>
-            <a id="merchantsite"><button type='button' class='bidbutton'>Deny bid site (for merchant
-                    only)</button></a>
-            <p><br></p>
-
+                </script>
+                {{#if isMerchant}}
+                <a name="" id="" class="btn btn-danger ml-5" href="/item/{{item.product_id}}/deny" role="button">
+                    <i class="fa fa-stop-circle" aria-hidden="true"> Deny Bidder</i>
+                </a>
+                <p><br></p>
+                {{/if}}
+            </div>
+            <br> <br>
         </div>
     </div>
 </div>

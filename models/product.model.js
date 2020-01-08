@@ -43,4 +43,33 @@
          }
          return true;
      },
+     
+    checkIsBan: async (product_id, user_id) => { 
+        const rows = await db.load(`select * from ban where product_id=  '${product_id}' and user_id = '${user_id}'`);
+        if(rows.length > 0) {
+            return true;
+        }
+        return false;
+    },
+
+    addBanAccount: async entity => {
+      await db.load(`insert into ban values('${entity.ban_id}','${entity.user_id}','${entity.product_id}')`) ;
+    },
+
+    getAllBan: async (product_id) => {
+        const rows = await db.load(`select * from ban where product_id = '${product_id}'`);
+        if(rows.length > 0)
+        {
+            return rows;
+        }
+        return null;
+    },
+
+    getMaxBanId: async ()=> {
+        const rows = await db.load(`select max(ban_id) as id from ban`);
+        if(rows.length > 0) {
+            return rows[0].id;
+        }
+        return 0;
+    }
  };
