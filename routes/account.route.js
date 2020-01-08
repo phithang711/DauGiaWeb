@@ -176,19 +176,38 @@ router.post('/tomerchant', async function(req, res) {
 });
 
 router.get('/ListBidding', async function(req, res, next) {
-    console.log(req.session.authUser.email)
-    const accountList = await ListBid.listBidList(req.session.authUser.email)
+    const itemList = await ListBid.listBidList(req.session.authUser.email)
 
-    console.log(accountList);
-    res.render('listbidmanage', { items: accountList });
+    console.log(itemList);
+    res.render('listbidmanage', { items: itemList });
 });
 
 router.get('/WonBidList', async function(req, res, next) {
-    console.log(req.session.authUser.email)
-    const accountList = await ListBid.wonBidList(req.session.authUser.email)
+    const itemList = await ListBid.wonBidList(req.session.authUser.email)
 
-    console.log(accountList);
-    res.render('wonbidlist', { items: accountList });
+    console.log(itemList);
+    res.render('wonbidlist', { items: itemList });
+});
+
+router.get('/PendingBidItemList', async function(req, res, next) {
+    const itemList = await ListBid.PendingBidItemList(req.session.authUser.email)
+
+    console.log(itemList);
+    res.render('pendingbiditemlist', { items: itemList });
+});
+
+router.get('/FinishBidItemList', async function(req, res, next) {
+    const itemList = await ListBid.FinishedBidItemList(req.session.authUser.email)
+
+    console.log(itemList);
+    res.render('finishbiditemlist', { items: itemList });
+});
+
+router.get('/allBidListItem', async function(req, res, next) {
+    const itemList = await ListBid.AllBidItemList(req.session.authUser.email)
+
+    console.log(itemList);
+    res.render('allbidlistitem', { items: itemList });
 });
 
 module.exports = router;
