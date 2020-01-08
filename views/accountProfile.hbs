@@ -1,10 +1,17 @@
+<link rel="stylesheet" type="text/css" href="../css/SimpleStarRating.css">
+<link rel="stylesheet" type="text/css" href="../css/rating.css">
+<script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+    crossorigin="anonymous"></script>
 <title>Profile</title>
 <div class="row w-100">
     <div class="col-sm-12 text-center">
         <h1>Profile</h1>
     </div>
-    <div class="col-sm-2"><img src="../images/img_avatar.png"
-            class="img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}" alt=""></div>
+    <div class="col-sm-2" style="text-align: center;">
+        <img src="../images/img_avatar.png"
+            class="img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}" alt="">
+            <span id="myRating1" class="rating" data-stars="5" data-default-rating="{{rate}}" disabled></span>
+    </div>
 
     <div class="col-sm-8">
         <div class="form-group">
@@ -29,12 +36,6 @@
         <a name="" id="" class="btn btn-outline-primary w-100" href="/profile/changeProfile" role="button">
             <i class="fa fa-user" aria-hidden="true"></i>
             Change Profile
-        </a>
-        <br>
-        <br>
-        <a name="" id="" class="btn btn-outline-primary w-100" href="#" role="button">
-            <i class="fa fa-question-circle-o" aria-hidden="true"></i>
-            Contact
         </a>
         <br>
         <br>
@@ -95,6 +96,8 @@
         <br>
     </div>
 </div>
+<script src="../js/SimpleStarRating.js"></script>
+<script src="../js/rating.js"></script>
 
 
 <script type="module">

@@ -71,7 +71,6 @@ router.post("/login", async function(req, res) {
     req.session.isAuthenticated = true;
     req.session.authUser = user;
     const url = req.query.retUrl || "/";
-    res.redirect(url);
 
     req.session.save(function(err) {
         if (err) {
@@ -93,8 +92,16 @@ router.get("/account/profile", function(req, res) {
     } else if (user.type == 2) {
         isAdmin = true;
     }
+
+    console.log(user.rate);
+    var rate= 0;
+    if(user.rate > 0) { 
+      rate = user.rate;
+    }
+
     res.render("accountProfile", {
         user: user,
+        rate: rate,
         isReader: isBuyer,
         isMerchant: isMerchant,
         isAdmin: isAdmin
