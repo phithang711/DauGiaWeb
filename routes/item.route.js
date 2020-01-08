@@ -65,13 +65,6 @@ router.get('/item/:index', async function(req, res) {
     // if (result.length > 0) {
     //     result[0].description = encrypt.decrypt(result[0].description);
     // }
-    var sd = Date(result[0].start_date);
-    var ed = Date(result[0].end_date);
-    result[0].start_date = sd.substring(0, sd.indexOf('G') - 1);
-    result[0].end_date = ed.substring(0, ed.indexOf('G') - 1);
-
-
-
     res.render('item', {
         item: result[0],
         empty: result.length === 0
