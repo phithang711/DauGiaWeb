@@ -33,8 +33,8 @@
          return null;
      },
      
-     getAllBidAuto: async () => {
-         const rows = await db.load(`select * from bid where isAutoBid = 1 and maxAutoBid > bid_price`)
+     getAllBidAuto: async (product_id) => {
+         const rows = await db.load(`select * from bid where product_id = '${product_id}' and isAutoBid = 1 and maxAutoBid > bid_price`)
          if(rows.length > 0)
          {
              return rows;
@@ -42,6 +42,43 @@
          return null;
      },
 
-     changeBidPrice: (bid_id, price)  => db.load(`update bid set bid_price = '${price}' where bid_id = '${bid_id}'`),
+     changeBidPrice: (bid_id, price, date)  => db.load(`update bid set bid_price = '${price}', bid_time = '${date}'  where bid_id = '${bid_id}'`),
 
+     deleteBid: (product_id, user_id) => db.load(`delete from bid where user_id = '${user_id}' and product_id = '${product_id}'`),
+
+     getMaxBidAuto: async (product_id) => {
+        const rows = await db.load(`select max(maxAutoBid) as value from bid where product_id = '${product_id}' and isAutoBid = 1 and maxAutoBid > bid_price`)
+        if(rows.length > 0)
+        {
+            return rows[0];
+        }
+        return null;
+     },
+
+     getMaxBidAutoExcept: async (product_id, value) => {
+        const rows = await db.load(`select max(maxAutoBid) as value from bid where product_id = '${product_id}' and maxAutoBid != '${value}' and isAutoBid = 1 and maxAutoBid > bid_price`)
+        if(rows.length > 0)
+        {
+            return rows[0];
+        }
+        return null;
+     },
+
+     getMaxBidderAuto: async (product_id, value) => {
+        const rows = await db.load(`select * from bid where product_id = '${product_id}' and maxAutoBid = '${value}' and isAutoBid = 1 `)
+        if(rows.length > 0)
+        {
+            return rows[0];
+        }
+        return null;
+     },
+
+     getTopBidder: async (product_id) => {
+        const rows = await db.load(`select * from (SELECT * from bid where product_id = '${product_id}') as newTable order by bid_price desc limit 5 `)
+        if(rows.length > 0)
+        {
+            return rows;
+        }
+        return null;
+     },
  };

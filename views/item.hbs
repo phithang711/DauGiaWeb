@@ -76,14 +76,16 @@
 
     <div class="tab-content">
         <div id="normalBid" class="tab-pane fade in active">
-            <form action="/item/{{item.product_id}}/normalBid" id="formNormalBid"  method="POST">
+            <form action="/item/{{item.product_id}}/normalBid" id="formNormalBid" method="POST">
                 <div class="form-group">
                     <label for="">Price</label>
                     <input type="number" class="form-control w-100" name="price" id="" aria-describedby="helpId"
                         placeholder="Your bid price">
-                    <small id="helpId" class="form-text text-muted">Normal bid just bid onetime. <b style="color: red;">Your price must be more than {{minBid}}</b></small>
+                    <small id="helpId" class="form-text text-muted">Normal bid just bid onetime. <b
+                            style="color: red;">Your price must be more than {{minBid}}</b></small>
                 </div>
-                <button type="button" data-toggle="modal" data-target="#normalBidModal" class="btn btn-primary">Bid Now</button>
+                <button type="button" data-toggle="modal" data-target="#normalBidModal" class="btn btn-primary">Bid
+                    Now</button>
             </form>
         </div>
         <div id="autoBid" class="tab-pane fade">
@@ -92,7 +94,8 @@
                     <label for="">Price</label>
                     <input type="number" class="form-control w-100" name="price" id="" aria-describedby="helpId"
                         placeholder="Your bid price">
-                    <small id="helpId" class="form-text text-muted">Your current bid price in this turn. <b style="color: red;">Your price must be more than {{minBid}}</b></small>
+                    <small id="helpId" class="form-text text-muted">Your current bid price in this turn. <b
+                            style="color: red;">Your price must be more than {{minBid}}</b></small>
                 </div>
                 <div class="form-group">
                     <label for="">Maximum Price</label>
@@ -102,46 +105,73 @@
                         price. <b style="color: red;">Your price must be more than {{minBid}}</b></small>
                 </div>
             </form>
-            <button type="button" data-toggle="modal" data-target="#autoBidModal" class="btn btn-primary">Bid Now</button>
+            <button type="button" data-toggle="modal" data-target="#autoBidModal" class="btn btn-primary">Bid
+                Now</button>
         </div>
     </div>
 
-    <div class="modal fade" id="autoBidModal" tabindex="-1" role="dialog" aria-labelledby="autoBidModal" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Confirm</h5>
+    <div class="modal fade" id="autoBidModal" tabindex="-1" role="dialog" aria-labelledby="autoBidModal"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Confirm</h5>
 
-      </div>
-      <div class="modal-body">
-        Do you want to bid?
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">No, Cancel</button>
-        <a name="" id="" class="btn btn-primary" href="javascript: $('#formAutoBid').submit()" role="button">Yes, Sure</a>
-      </div>
+                </div>
+                <div class="modal-body">
+                    Do you want to bid?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No, Cancel</button>
+                    <a name="" id="" class="btn btn-primary" href="javascript: $('#formAutoBid').submit()"
+                        role="button">Yes, Sure</a>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
 
-    <div class="modal fade" id="normalBidModal" tabindex="-1" role="dialog" aria-labelledby="autoBidModal" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Confirm</h5>
+    <div class="modal fade" id="normalBidModal" tabindex="-1" role="dialog" aria-labelledby="autoBidModal"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Confirm</h5>
 
-      </div>
-      <div class="modal-body">
-        Do you want to bid?
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">No, Cancel</button>
-        <a name="" id="" class="btn btn-primary" href="javascript: $('#formNormalBid').submit()" role="button">Yes, Sure</a>
-      </div>
+                </div>
+                <div class="modal-body">
+                    Do you want to bid?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No, Cancel</button>
+                    <a name="" id="" class="btn btn-primary" href="javascript: $('#formNormalBid').submit()"
+                        role="button">Yes, Sure</a>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
-
+    <div>
+        <h3>History</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Order</th>
+                    <th scope="col">Time</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each bidderHistory}}
+                <tr>
+                    <th scope="row">{{order}}</th>
+                    <td>{{time}}</td>
+                    <td>{{name}}</td>
+                    <td>{{price}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <div class="col-sm-4">
@@ -166,11 +196,13 @@
         <div class='moveright'>
             <span>Current Price: <b>{{current_price}}$</b></span>
             <p><br></p>
+            {{#if bidder}}
             <div>
                 <p><b>Highest price bidder</b>: {{bidder.name}}</p>
                 <span style="font-size:small;">Rate: {{bidder.rate}}</span>
                 <p class="fa fa-star ratechecked"></p>
             </div>
+            {{/if}}
             <hr>
             <p>Create at: <span id="create_at"> {{item.start_date}}</span></p>
             <p>Close in: <span id="end_at"> {{end_date}}</span></p>
@@ -194,15 +226,15 @@
                     });
                 });
             </script>
+            <br>
             <span>Interested?</span>
             <br>
-            <a id="bidnow"><button type='button' class='bidbutton'>Bid now</button></a>
             <a id="Comment"><button type='button' class='bidbutton'>Review</button></a>
             <hr>
-            <a id="merchantsite"><button type='button' class='bidbutton'>Deny bid site (for merchant
-                    only)</button></a>
+            {{#if isMerchant}}
+            <a id="merchantsite"><button type='button' class='bidbutton'>Deny bid site </button></a>
             <p><br></p>
-
+            {{/if}}
         </div>
     </div>
 </div>
