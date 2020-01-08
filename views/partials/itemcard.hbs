@@ -1,6 +1,9 @@
 <div class="card suggested-item">
     <div style="float:left;">
-                    <span class="badge bg-danger" style="float:right;color:white">3 days </span>
+        {{#if new}}
+            <span class="badge bg-danger" style="float:right;color:white">NEW</span>
+        {{/if}}
+                    <span class="badge bg-danger" style="float:right;color:white">{{end_date}}</span>
                     <span class="badge badge-info" style="float:right">{{count}} bid(s)</span>
                 </div>
                 <div class="section-image-parent">

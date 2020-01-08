@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 const productModel = require('../models/product.model');
 const watchlistModel = require('../models/watchlist.model');
+var moment = require('moment');
 
 router.get('/watchlist', async function(req, res, next) {
     if (req.session.authUser === null || req.session.authUser === undefined) {
@@ -62,15 +63,14 @@ router.get('/item/:index', async function(req, res) {
 
     var result = await productModel.getById(index);
     console.log(result);
-    // if (result.length > 0) {
-    //     result[0].description = encrypt.decrypt(result[0].description);
-    // }
-    var sd = Date(result[0].start_date);
-    var ed = Date(result[0].end_date);
-    result[0].start_date = sd.substring(0, sd.indexOf('G') - 1);
-    result[0].end_date = ed.substring(0, ed.indexOf('G') - 1);
 
+    result[0].start_date = moment(result[0].start_date).format('DD-MM-YYYY hh:mm');
+    result[0].end_date = moment(result[0].end_date).format('DD-MM-YYYY hh:mm');
 
+    var diffM = moment().diff(moment(result[0].start_date), 'minutes');
+    if (diffM < 300 && diffM > 0) {
+        result[0].end_date = `${diffM} minutes`;
+    }
 
     res.render('item', {
         item: result[0],

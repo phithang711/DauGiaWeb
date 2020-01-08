@@ -103,11 +103,10 @@ router.post('/upload', async function(req, res) {
         }
 
         if (id !== "-1") {
-            var date = Date.parse(req.body.expired);
-            var nowDate = Date.now();
+            console.log(req.body.expired);
 
-            var formattedExpiredDate = moment(date).format('YYYY-MM-DD hh:mm:ss');
-            var formattedNowDate = moment(nowDate).format('YYYY-MM-DD hh:mm:ss');
+            var formattedExpiredDate = moment(req.body.expired).format('YYYY-MM-DD HH:mm:ss');
+            var formattedNowDate = moment().format('YYYY-MM-DD HH:mm:ss');
 
             var product = {
                 "device_id": id,
