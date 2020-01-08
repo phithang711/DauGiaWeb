@@ -52,6 +52,24 @@
         return false;
     },
 
-    addBanAccount: entity => db.load(entity, 'ban'),
-    
+    addBanAccount: async entity => {
+      await db.load(`insert into ban values('${entity.ban_id}','${entity.user_id}','${entity.product_id}')`) ;
+    },
+
+    getAllBan: async (product_id) => {
+        const rows = await db.load(`select * from ban where product_id = '${product_id}'`);
+        if(rows.length > 0)
+        {
+            return rows;
+        }
+        return null;
+    },
+
+    getMaxBanId: async ()=> {
+        const rows = await db.load(`select max(ban_id) as id from ban`);
+        if(rows.length > 0) {
+            return rows[0].id;
+        }
+        return 0;
+    }
  };

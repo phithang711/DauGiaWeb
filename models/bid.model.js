@@ -81,4 +81,13 @@
         }
         return null;
      },
+     
+     getBidWithProductId: async (product_id) => {
+         const rows = await db.load(`select * from bid where product_id = '${product_id}'`);
+         if(rows.length > 0)
+         {
+             return rows;
+         }
+         return null;
+     }
  };

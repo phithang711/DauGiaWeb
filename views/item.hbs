@@ -209,32 +209,32 @@
             <hr>
             <p style="color: red;">Minimum bit: {{minBid}} $</p>
             <hr>
-            <form id="add-watchlist" method="POST" action="/watchlist">
-                <input type="text" value="{{item.product_id}}" style="display: none;" name="product_id">
-                <button type="submit" class="btn btn-info">Add to watchlist</button>
-            </form>
-            <script>
-                $('#add-watchlist').submit(function (e) {
-                    e.preventDefault();
-                    $.ajax({
-                        url: '/watchlist',
-                        type: 'post',
-                        data: $('#add-watchlist').serialize(),
-                        success: function () {
-                            alert('Added to watchlist');
-                        }
+            <div class="row">
+                <form id="add-watchlist" method="POST" action="/watchlist">
+                    <input type="text" value="{{item.product_id}}" style="display: none;" name="product_id">
+                    <button type="submit" class="btn btn-info">Add to watchlist</button>
+                </form>
+                <script>
+                    $('#add-watchlist').submit(function (e) {
+                        e.preventDefault();
+                        $.ajax({
+                            url: '/watchlist',
+                            type: 'post',
+                            data: $('#add-watchlist').serialize(),
+                            success: function () {
+                                alert('Added to watchlist');
+                            }
+                        });
                     });
-                });
-            </script>
-            <br>
-            <span>Interested?</span>
-            <br>
-            <a id="Comment"><button type='button' class='bidbutton'>Review</button></a>
-            <hr>
-            {{#if isMerchant}}
-            <a id="merchantsite"><button type='button' class='bidbutton'>Deny bid site </button></a>
-            <p><br></p>
-            {{/if}}
+                </script>
+                {{#if isMerchant}}
+                <a name="" id="" class="btn btn-danger ml-5" href="/item/{{item.product_id}}/deny" role="button">
+                    <i class="fa fa-stop-circle" aria-hidden="true"> Deny Bidder</i>
+                </a>
+                <p><br></p>
+                {{/if}}
+            </div>
+            <br> <br>
         </div>
     </div>
 </div>

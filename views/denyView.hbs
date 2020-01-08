@@ -1,0 +1,36 @@
+<div class="text-center col-xs-1">
+    <h3>Deny Bid</h3>
+    <br>
+</div>
+<div class="table-responsive w-100">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Rate</th>
+                <th>Price</th>
+                <th>Choosen</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each bidder}}
+            <form action="/item/{{index}}/{{id}}/deny" method="POST" id="denyPost"></form>
+            <tr>
+                <td>{{id}}</td>
+                <td>{{name}}</td>
+                <td>
+                    <i class="fa fa-star ratechecked" aria-hidden="true"></i>
+                    {{rate}}
+                </td>
+                <td>{{price}}</td>
+                <td>
+                    <a name="" id="" class="btn btn-danger" href="javascript:$('#denyPost').submit()" role="button">
+                        <i class="fa fa-window-close" aria-hidden="true"></i>
+                    </a>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>

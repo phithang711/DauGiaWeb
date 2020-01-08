@@ -139,13 +139,25 @@ router.post("/item/:index/normalBid", async function(req, res) {
   }
 
   const price = req.body.price;
+  
+  let isBanned = false;
+
+  if(user !== null) {
+    isBanned = await productModel.checkIsBan(index, user.user_id);
+  }
 
   if (user === null) {
     res.cookie("bidErrorMessage", "You must login to bid.", {
       maxAge: 900000,
       httpOnly: true
     });
-  } else if (user.rate < 4) {
+  } else if (isBanned) {
+    res.cookie("bidErrorMessage", "You was banned by merchant.", {
+        maxAge: 900000,
+        httpOnly: true
+      });
+  } 
+  else if (user.rate < 4) {
     res.cookie("bidErrorMessage", "Your rating point less than 80%.", {
       maxAge: 900000,
       httpOnly: true
@@ -279,11 +291,23 @@ router.post("/item/:index/autoBid", async function(req, res) {
   if(currentBidPrice.price === null) {
     minBid = result[0].first_price;
   }
+
+  let isBanned = false;
+
+  if(user !== null) {
+    isBanned = await productModel.checkIsBan(index, user.user_id);
+  }
+
   if (user === null) {
     res.cookie("bidErrorMessage", "You must login to bid.", {
       maxAge: 900000,
       httpOnly: true
     });
+  } else if (isBanned) {
+    res.cookie("bidErrorMessage", "You was banned by merchant.", {
+        maxAge: 900000,
+        httpOnly: true
+      });
   } else if (user.rate < 4) {
     res.cookie("bidErrorMessage", "Your rating point less than 80%.", {
       maxAge: 900000,
@@ -366,5 +390,43 @@ router.get("/404", (req, res) => {
 //     }
 
 // });
+
+router.get('/item/:index/deny',async function (req, res) {
+    var index = parseInt(req.params.index);
+    const bidder =await bidModel.getBidWithProductId(index);
+    var result = [];
+    console.log(bidder);
+    if(bidder !== null) {
+        for(i = 0 ; i < bidder.length ;i++) {
+            const user = await userModel.getUserById(bidder[i].user_id);
+            const entity = {
+                id: user.user_id,
+                name: user.name,
+                price: bidder[i].bid_price,
+                rate: user.rate,
+                index: index,
+            }
+            result.push(entity);
+        }
+    }
+    res.render('denyView', {
+        bidder: result
+    });
+});
+
+router.post('/item/:index/:id/deny', async function (req, res) {  
+    var index = parseInt(req.params.index);
+    const user_id = parseInt(req.params.id);
+    const banId = await productModel.getMaxBanId();
+    const entity =  {
+        ban_id: banId + 1,
+        user_id: user_id,
+        product_id: index
+    }
+
+    console.log(entity);
+    const rs = await productModel.addBanAccount(entity);
+    res.redirect("/item/" + index + "/deny");
+})
 
 module.exports = router;
