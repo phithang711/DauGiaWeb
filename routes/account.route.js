@@ -1,27 +1,26 @@
-var express = require('express');
+var express = require("express");
 var router = express.Router();
-const bcrypt = require('bcryptjs');
-const userModel = require('../models/user.model');
-const config = require('../configs/userModelConfig.json');
-const toMerchant = require('../models/tomerchant');
+const bcrypt = require("bcryptjs");
+const moment = require("moment");
+const userModel = require("../models/user.model");
+const config = require("../configs/userModelConfig.json");
 
-const nodemailer = require('nodemailer');
-router.get('/login', function(req, res, next) {
-    res.render('login', { title: 'AuctionDealer Login', layout: false });
+router.get("/login", function(req, res, next) {
+    res.render("login", { title: "AuctionDealer Login", layout: false });
 });
 
-router.get('/signup', function(req, res, next) {
-    res.render('signup', { title: 'AuctionDealer Sign up', layout: false });
+router.get("/signup", function(req, res, next) {
+    res.render("signup", { title: "AuctionDealer Sign up", layout: false });
 });
 
-router.post('/signup', async function(req, res) {
+router.post("/signup", async function(req, res) {
     var email = req.body.email;
     var password = req.body.password;
     const user = await userModel.checkUsernameIsExisted(email);
     if (user !== null) {
-        return res.render('signup', {
+        return res.render("signup", {
             layout: false,
-            err_message: 'Username is existed.'
+            err_message: "Username is existed."
         });
     }
     console.log(config.authentication.saltRounds);
@@ -33,42 +32,118 @@ router.post('/signup', async function(req, res) {
         type: 0
     };
     const ret = await userModel.add(entity);
-    res.redirect('/login');
+    res.redirect("/login");
 });
 
-router.post('/logout', async function(req, res) {
+router.post("/logout", async function(req, res) {
     req.session.isAuthenticated = false;
     req.session.authUser = null;
-    res.redirect(req.get('referer'));
+    res.redirect("/");
 });
 
-const local = require('../middlewares/local.mdw');
+const local = require("../middlewares/local.mdw");
 
-router.post('/login', async function(req, res) {
+router.post("/login", async function(req, res) {
     var email = req.body.email;
     var password = req.body.pass;
     const user = await userModel.checkUsernameIsExisted(email);
     if (user === null) {
-        return res.render('login', {
+        return res.render("login", {
             layout: false,
-            err_message: 'Invalid username or password.'
+            err_message: "Invalid username or password."
         });
     }
     const rs = bcrypt.compareSync(password, user.password);
     if (rs === false) {
-        return res.render('login', {
+        return res.render("login", {
             layout: false,
-            err_message: 'Invalid username or password.'
+            err_message: "Invalid username or password."
         });
     }
 
     delete user.password;
     req.session.isAuthenticated = true;
     req.session.authUser = user;
-    const url = req.query.retUrl || '/';
+    const url = req.query.retUrl || "/";
     res.redirect(url);
 });
 
+router.get("/account/profile", function(req, res) {
+    const user = req.session.authUser;
+    let isBuyer = false;
+    let isAdmin = false;
+    let isMerchant = false;
+    if (user.type == 0) {
+        isBuyer = true;
+    } else if (user.type == 1) {
+        isMerchant = true;
+    } else if (user.type == 2) {
+        isAdmin = true;
+    }
+    res.render("accountProfile", {
+        user: user,
+        isReader: isBuyer,
+        isMerchant: isMerchant,
+        isAdmin: isAdmin
+    });
+});
+
+router.get("/profile/changeProfile", function(req, res) {
+    const user = req.session.authUser;
+    let isBuyer = false;
+    let isAdmin = false;
+    let isMerchant = false;
+    if (user.type == 0) {
+        isBuyer = true;
+    } else if (user.type == 1) {
+        isMerchant = true;
+    } else if (user.type == 2) {
+        isAdmin = true;
+    }
+
+    res.render("changeProfile", {
+        user: user,
+        isReader: isBuyer,
+        isMerchant: isMerchant,
+        isAdmin: isAdmin
+    });
+});
+
+router.post("/profile/changeProfile", async function(req, res) {
+    let user = req.session.authUser;
+
+    const email = req.body.email;
+    const phone = req.body.phone;
+    const dob = moment(req.body.dob, 'DD/MM/YYYY').format('YYYY-MM-DD');
+    console.log(dob);
+    console.log(req.body.phone);
+    const name = req.body.name;
+    user.email = email;
+    user.phone = phone;
+    user.DOB = dob;
+    user.name = name;
+    req.session.authUser = user;
+    await userModel.changeProfile(user);
+    let isBuyer = false;
+    let isAdmin = false;
+    let isMerchant = false;
+    if (user.type == 0) {
+        isBuyer = true;
+    } else if (user.type == 1) {
+        isMerchant = true;
+    } else if (user.type == 2) {
+        isAdmin = true;
+    }
+    res.render("accountProfile", {
+        user: user,
+        isReader: isBuyer,
+        isMerchant: isMerchant,
+        isAdmin: isAdmin
+    });
+});
+
+<<
+<< << < HEAD
 router.get('/account/profile', function(req, res) {
     const user = req.session.authUser;
     let isBuyer = false;
@@ -160,18 +235,98 @@ router.get("/account/profile", function(req, res) {
 })
 
 router.post('/tomerchant', async function(req, res) {
-    if (req.session.authUser === null || req.session.authUser.type === "1" || req.session.authUser.type === "2" || req.session.authUser.type === undefined) {
-        res.status(404) // HTTP status 404: NotFound
-            .send('Not found');
-        return;
-    }
-    console.log(req.session.authUser.email);
-    var checkadd = await toMerchant.add(req.session.authUser.email);
-    if (checkadd == true) {
-        res.redirect(req.get('referer'));
-    } else {
-        console.log("failed redirect");
-    }
-});
+            if (req.session.authUser === null || req.session.authUser.type === "1" || req.session.authUser.type === "2" || req.session.authUser.type === undefined) {
+                res.status(404) // HTTP status 404: NotFound
+                    .send('Not found');
+                return;
+            }
+            console.log(req.session.authUser.email);
+            var checkadd = await toMerchant.add(req.session.authUser.email);
+            if (checkadd == true) {
+                res.redirect(req.get('referer'));
+            } else {
+                console.log("failed redirect");
+            } ===
+            === =
+            router.get("/profile/changePassword", function(req, res) {
+                const user = req.session.authUser;
+                let isBuyer = false;
+                let isAdmin = false;
+                let isMerchant = false;
+                if (user.type == 0) {
+                    isBuyer = true;
+                } else if (user.type == 1) {
+                    isMerchant = true;
+                } else if (user.type == 2) {
+                    isAdmin = true;
+                }
 
-module.exports = router;
+                res.render("changePassword", {
+                    isReader: isBuyer,
+                    isMerchant: isMerchant,
+                    isAdmin: isAdmin
+                });
+            });
+
+            router.post("/profile/changePassword", async function(req, res) {
+                const user = await userModel.getUserById(req.session.authUser.user_id);
+                let isBuyer = false;
+                let isAdmin = false;
+                let isMerchant = false;
+                if (user.type == 0) {
+                    isBuyer = true;
+                } else if (user.type == 1) {
+                    isMerchant = true;
+                } else if (user.type == 2) {
+                    isAdmin = true;
+                }
+                let rewrite = req.body.rewrite;
+                let newPassword = req.body.newPassword;
+                let oldPassword = req.body.oldPassword;
+
+                const rs = bcrypt.compareSync(oldPassword, user.password);
+
+                if (!rs) {
+                    res.render("changePassword", {
+                        err_message: "Wrong old password!",
+                        isReader: isBuyer,
+                        isMerchant: isMerchant,
+                        isAdmin: isAdmin
+                    });
+                    res.end;
+                } else {
+                    if (newPassword !== rewrite) {
+                        res.render("changePassword", {
+                            err_message: "Rewrite new password don't match new password!",
+                            isReader: isBuyer,
+                            isMerchant: isMerchant,
+                            isAdmin: isAdmin
+                        });
+                        res.end;
+                    } else {
+                        var re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
+                        if (!re.test(newPassword)) {
+                            res.render("changePassword", {
+                                err_message: "New Password must contain at least 8 characters, 1 number, 1 upper and 1 lowercase.",
+                                isReader: isBuyer,
+                                isMerchant: isMerchant,
+                                isAdmin: isAdmin
+                            });
+                            res.end;
+                        } else {
+                            const hash = bcrypt.hashSync(newPassword, config.authentication.saltRounds);
+                            console.log(hash);
+                            await userModel.changePassword(hash, user.user_id);
+                            res.render("changePassword", {
+                                success_message: "Change password success.",
+                                isReader: isBuyer,
+                                isMerchant: isMerchant,
+                                isAdmin: isAdmin
+                            });
+                        }
+                    }
+                } >>>
+                >>> > origin / AccountProfileView
+            });
+
+            module.exports = router;
