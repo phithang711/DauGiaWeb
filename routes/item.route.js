@@ -424,9 +424,13 @@ router.post('/item/:index/:id/deny', async function (req, res) {
         product_id: index
     }
 
-    console.log(entity);
     const rs = await productModel.addBanAccount(entity);
+    denyHandle(index, user_id);
     res.redirect("/item/" + index + "/deny");
 })
+
+async function denyHandle(product_id, user_id) {
+    await bidModel.deleteBid(product_id, user_id);
+};
 
 module.exports = router;

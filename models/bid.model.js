@@ -46,6 +46,14 @@
 
      deleteBid: (product_id, user_id) => db.load(`delete from bid where user_id = '${user_id}' and product_id = '${product_id}'`),
 
+     getBidderWithId: async (product_id, user_id)=> {
+         const rows =await db.load(`select * from bid where product_id = '${product_id}' and user_id  = '${user_id}'`);
+         if(rows.length > 0) {
+             return rows[0];
+         }
+         return null;
+     },
+
      getMaxBidAuto: async (product_id) => {
         const rows = await db.load(`select max(maxAutoBid) as value from bid where product_id = '${product_id}' and isAutoBid = 1 and maxAutoBid > bid_price`)
         if(rows.length > 0)
