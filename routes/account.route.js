@@ -69,21 +69,16 @@ router.post("/login", async function(req, res) {
 
     delete user.password;
     req.session.isAuthenticated = true;
-    req.session.authUser = user; <<
-    << << < HEAD
+    req.session.authUser = user;
     const url = req.query.retUrl || "/";
-    res.redirect(url); ===
-    === =
-
-    const url = req.query.retUrl || '/';
+    res.redirect(url);
 
     req.session.save(function(err) {
-            if (err) {
-                return;
-            }
-            res.redirect(url);
-        }) >>>
-        >>> > origin / Bid
+        if (err) {
+            return;
+        }
+        res.redirect(url);
+    })
 });
 
 router.get("/account/profile", function(req, res) {
