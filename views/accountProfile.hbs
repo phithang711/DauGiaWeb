@@ -44,6 +44,18 @@
         </button>
         <br>
         <br>
+        <a type="button" class="btn btn-outline-primary w-100" href="/ListBidding">
+            <i class="fa fa-eye" aria-hidden="true"></i>
+            Bidding List
+        </a>
+        <br>
+        <br>
+        <a type="button" class="btn btn-outline-primary w-100" href="/WonBidList">
+            <i class="fa fa-eye" aria-hidden="true"></i>
+            Won Bidding List
+        </a>
+        <br>
+        <br>
         {{#if isBuyer}}
         <form id="frmToMerchant" action="/tomerchant" method="post">
         <button type="button" class="btn btn-outline-primary w-100" value="{{this.user.email}}" id="uptomerchant">

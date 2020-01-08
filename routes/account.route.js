@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs');
 const userModel = require('../models/user.model');
 const config = require('../configs/userModelConfig.json');
 const toMerchant = require('../models/tomerchant');
+const ListBid = require('../models/user.profile.js')
 
 const nodemailer = require('nodemailer');
 router.get('/login', function(req, res, next) {
@@ -172,6 +173,22 @@ router.post('/tomerchant', async function(req, res) {
     } else {
         console.log("failed redirect");
     }
+});
+
+router.get('/ListBidding', async function(req, res, next) {
+    console.log(req.session.authUser.email)
+    const accountList = await ListBid.listBidList(req.session.authUser.email)
+
+    console.log(accountList);
+    res.render('listbidmanage', { items: accountList });
+});
+
+router.get('/WonBidList', async function(req, res, next) {
+    console.log(req.session.authUser.email)
+    const accountList = await ListBid.wonBidList(req.session.authUser.email)
+
+    console.log(accountList);
+    res.render('wonbidlist', { items: accountList });
 });
 
 module.exports = router;
