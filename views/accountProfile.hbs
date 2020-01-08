@@ -69,15 +69,21 @@
         <br>
         {{/if}}
         {{#if isAdmin}}
-        <button type="button" class="btn btn-outline-primary w-100">
+        <a type="button" class="btn btn-outline-primary w-100" href="/manage">
             <i class="fa fa-eye" aria-hidden="true"></i>
-            Account List
-        </button>
+            Account list
+        </a>
+        <br>
+        <br>
+        <a type="button" class="btn btn-outline-primary w-100" href="/manage/category">
+            <i class="fa fa-eye" aria-hidden="true"></i>
+            Manage account
+        </a>
         <br>
         <br>
         <button type="button" class="btn btn-outline-primary w-100">
             <i class="fa fa-upload" aria-hidden="true"></i>
-            Book List
+            Book list
         </button>
         <br><br>
         {{/if}}
