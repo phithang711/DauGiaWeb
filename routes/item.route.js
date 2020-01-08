@@ -45,6 +45,9 @@ router.get("/item/:index", async function(req, res) {
   const minBid = currentBidPrice.price + result[0].step_price;
   const currentDate = new Date();
   const end_date = (result[0].end_date - currentDate) / 1000;
+  
+  console.log(result[0].end_date);
+  console.log(currentDate);
 
   let end = "";
 
@@ -124,7 +127,10 @@ router.post("/item/:index/normalBid", async function(req, res) {
   const user = req.session.authUser;
   var result = await productModel.getById(index);
   var currentBidPrice = await bidModel.getCurrentBid(result[0].product_id);
-  const minBid = currentBidPrice.price + result[0].step_price;
+  let minBid = currentBidPrice.price + result[0].step_price;
+  if(currentBidPrice.price === null) {
+    minBid = result[0].first_price;
+  }
 
   const price = req.body.price;
 
@@ -171,14 +177,19 @@ router.post("/item/:index/normalBid", async function(req, res) {
 
 async function checkAutoBid(product_id, step_price) {
   const autoBids = await bidModel.getAllBidAuto(product_id);
-
+  if(autoBids === null){
+    return;
+  }
   //Find max autoBidPrice
-  const maxBidValue = await bidModel.getMaxBidAuto(product_id);
-  const secondBidValue  = await bidModel.getMaxBidAutoExcept(product_id, maxBidValue.value);
-  const maxPrice = await bidModel.getCurrentBid(product_id);
+  const maxBidValue = await bidModel.getMaxBidAuto(product_id); //get max value in autobid list
+  const secondBidValue  = await bidModel.getMaxBidAutoExcept(product_id, maxBidValue.value); //get second max value in autobid
+  const maxPrice = await bidModel.getCurrentBid(product_id); // get max price hien tai user1 vua bid thanh cong
   
   if(maxPrice.price > maxBidValue.value) {
+    // Tat ca auto bid -> max value
     for(i = 0; i < autoBids.length;  i++) {
+      const userBid = await userModel.getUserById(autoBids[i].user_id); // -> mail
+      const product = await productModel.getById(product_id); // -> ten + autoBids[i].maxAutoBid
         await bidModel.changeBidPrice(
         autoBids[i].bid_id,
         autoBids[i].maxAutoBid,
@@ -186,6 +197,7 @@ async function checkAutoBid(product_id, step_price) {
       );
     }
   } else if(maxPrice.price < maxBidValue.value) {
+
     if(secondBidValue === null) {
         if ((maxPrice.price + step_price) < maxBidValue.value ){
             const bidder = await bidModel.getMaxBidderAuto(product_id, maxBidValue.value);
@@ -210,25 +222,37 @@ async function checkAutoBid(product_id, step_price) {
                 secondBidValue.value + step_price,
                 new Date()
             );
-            for(i = 0; i < autoBids.length;  i++) {
-                if(autoBids[i].maxAutoBid != maxBidValue.value) {
-                    await bidModel.changeBidPrice(
-                        autoBids[i].bid_id,
-                        autoBids[i].maxAutoBid,
-                        new Date()
-                    );
-                }
-            }
+            // for(i = 0; i < autoBids.length;  i++) {
+            //     if(autoBids[i].maxAutoBid != maxBidValue.value) {
+            //         await bidModel.changeBidPrice(
+            //             autoBids[i].bid_id,
+            //             autoBids[i].maxAutoBid,
+            //             new Date()
+            //         );
+            //     }
+            // }
         } else {
+
             const bidder = await bidModel.getMaxBidderAuto(product_id, maxBidValue.value);
             await bidModel.changeBidPrice(
                 bidder.bid_id,
                 maxBidValue.value,
                 new Date()
-            );
+            );            
         }
+
+        for(i = 0; i < autoBids.length;  i++) {
+          if(autoBids[i].maxAutoBid != maxBidValue.value) {
+              await bidModel.changeBidPrice(
+                  autoBids[i].bid_id,
+                  autoBids[i].maxAutoBid,
+                  new Date()
+              );
+          }
+      }
+
     }
-  } else {
+  } else { // ===
     const bidder = await bidModel.getMaxBidderAuto(product_id, maxBidValue.value);
     await bidModel.changeBidPrice(
         bidder.bid_id,
@@ -240,17 +264,19 @@ async function checkAutoBid(product_id, step_price) {
 }
 
 router.post("/item/:index/autoBid", async function(req, res) {
-  console.log("Inside");
+
 
   var index = req.params.index;
   const user = req.session.authUser;
   var result = await productModel.getById(index);
   var currentBidPrice = await bidModel.getCurrentBid(result[0].product_id);
-  const minBid = currentBidPrice.price + result[0].step_price;
+  let minBid = currentBidPrice.price + result[0].step_price;
 
   const price = req.body.price;
   const maxPrice = req.body.max_price;
-
+  if(currentBidPrice.price === null) {
+    minBid = result[0].first_price;
+  }
   if (user === null) {
     res.cookie("bidErrorMessage", "You must login to bid.", {
       maxAge: 900000,
