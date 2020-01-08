@@ -112,6 +112,18 @@ $(function() {
   body.on('keyup', 'input', goToNextInput);
   body.on('keydown', 'input', onKeyDown);
   body.on('click', 'input', onFocus);
+
+  $("#form").submit(function(e){
+    e.preventDefault();
+    $.ajax({
+      url: '/send-otp',
+      type: 'post',
+      data: $('#form').serialize(),
+      success: function(){
+        alert('Exacly');
+      }
+    })
+  });
 })
 </script>
 <div id="wrapper">
