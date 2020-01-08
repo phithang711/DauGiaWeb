@@ -43,7 +43,7 @@ router.post("/logout", async function(req, res) {
         if (err) {
             return;
         }
-        res.redirect(req.get('referer'));
+        res.redirect('/');
     })
 });
 
@@ -82,6 +82,8 @@ router.post("/login", async function(req, res) {
 
 router.get("/account/profile", function(req, res) {
     const user = req.session.authUser;
+    res.locals.lcIsAuthenticated = req.session.isAuthenticated;
+    res.locals.lcAuthUser = req.session.authUser;
     let isBuyer = false;
     let isAdmin = false;
     let isMerchant = false;
@@ -93,15 +95,16 @@ router.get("/account/profile", function(req, res) {
         isAdmin = true;
     }
 
-    console.log(user.rate);
     var rate= 0;
     if(user.rate > 0) { 
       rate = user.rate;
     }
 
+    const date = moment.utc(user.DOB).local().format('DD-MM-YYYY');
     res.render("accountProfile", {
         user: user,
         rate: rate,
+        date:date,
         isReader: isBuyer,
         isMerchant: isMerchant,
         isAdmin: isAdmin
