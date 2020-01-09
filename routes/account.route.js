@@ -361,7 +361,8 @@ router.get('/FinishBidItemList', async function(req, res, next) {
     res.render('finishbiditemlist', { items: itemList });
 });
 
-router.post('/FinishBidItemList/:seller_id/:productId', function (req,res) {  
+router.post('/FinishBidItemList/:seller_id/:productId/:type', function (req,res) {  
+	const type = req.params.type;
 	const seller_id = req.params.seller_id;
 	const id = parseInt(req.params.productId);
 	res.cookie('commentSeller', seller_id, {
@@ -369,6 +370,11 @@ router.post('/FinishBidItemList/:seller_id/:productId', function (req,res) {
 		httpOnly: true
 	});
 	res.cookie('commentProductId', id, {
+		maxAge: 900000,
+		httpOnly: true
+	});
+
+	res.cookie('commentType', type, {
 		maxAge: 900000,
 		httpOnly: true
 	});
@@ -383,24 +389,44 @@ router.get('/itemReview',async function (req,res) {
 	});
 });
 
+
 router.post('/itemReview',async function (req, res) {
 	const seller_id = req.cookies["commentSeller"];
 	const id = req.cookies["commentProductId"];
+	const type = req.cookies["commentType"];
 	res.clearCookie("commentSeller");
 	res.clearCookie("commentProductId");
+	res.clearCookie("commentType");
 	const rate  = parseInt(req.body.ratingValue);
 	const content  = req.body.textContent;
 	
-	const user = await userModel.getUserById(seller_id);
+	let id1 = 0;
+	let id2 = 0;
+	const user = req.session.authUser;
+	const seller = await userModel.getUserById(seller_id);
+
+	console.log(user);
+	console.log(seller);
+
+	if(type === 0){
+		id2 = seller.user_id;
+		id1 = user.user_id;
+	} else {
+		id1 = seller.user_id;
+		id2 = user.user_id;
+	}
+
 	let avg = (user.rate + rate )/ 2;
 	await userModel.updateUserRate(avg, user.user_id);
 
 	const entity = {
-		user_id: user.user_id,
+		user_id: id1,
 		product_id:  id,
 		content: content,
 		rate:  rate,
-		time: new Date()
+		type:type,
+		time: new Date(),
+		user_id2: id2
 	}
 
 	await commentModel.add(entity);

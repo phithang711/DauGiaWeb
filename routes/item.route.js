@@ -631,11 +631,10 @@ async function denyHandle(product_id, user_id) {
     await bidModel.deleteBid(product_id, user_id);
 };
 
-router.get('/item/:index/:id/review',async function (req, res) {
-  var index = parseInt(req.params.index);
+router.get('/item/:id/review',async function (req, res) {
   const id =  parseInt(req.params.id);
-
-  const comments = await commentModel.getById(id,index);
+console.log(id);
+  const comments = await commentModel.getById(id);
 
   let result = [];
   for(i = 0;i<comments.length ; i++)  {
