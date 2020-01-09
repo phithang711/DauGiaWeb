@@ -121,13 +121,16 @@ router.post('/upload', async function(req, res) {
             }
 
             var addProductResult = productModel.add(product);
-            var curentTableResult = currentProduct.add(product.product_id);
-
             if (addProductResult) {
                 console.log("added");
             } else {
                 console.log("failed to add");
             }
+
+            var test=productModel.getmaxId();
+            currentProduct.add(test);
+
+            
         }
     });
 });
