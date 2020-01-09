@@ -21,11 +21,13 @@
 
                 <div class="currency" style="float: right;font-size:large;font-weight:bold;color:red">
                     <span class="sign">$</span>
-                    <span class="currency">{{first_price}}</span>
+                    <span class="currency">{{max_price}}</span>
                 </div>
                 <br>
-                <p class="card-text" style="clear:both;">{{cpu}}</p>
-
+                <p class="card-text" style="clear:both;"><b>Holding by: {{user_info}}</b></p>
+                {{#if is_holding}}
+                    <span class="badge bg-danger" style="color:white">Your holding this product </span>
+                {{/if}}
             </div>
         </div>
         {{/each}}

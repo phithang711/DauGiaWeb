@@ -1,6 +1,8 @@
     var express = require('express');
     var router = express.Router();
     const productModel = require('../models/product.model');
+    const bidModel = require('../models/bid.model');
+    const userModel = require('../models/user.model');
     var moment = require('moment');
 
     router.get('/all', async function(req, res) {
@@ -44,6 +46,8 @@
             count = (await productModel.search(1000000, 0, getKeyword)).length;
         }
 
+        var maxBids = await bidModel.getMaxBidList();
+
         var dayCountDown = 0;
         var checkNewLabel = 0;
         for (i = 0; i < result.length; i++) {
@@ -59,8 +63,24 @@
             } else
                 result[i].new = false;
 
-
             result[i].start_date = moment(result[i].start_date).format('DD-MM-YYYY HH:mm');
+
+            var curProduct = maxBids.filter(obj => {
+                return obj.product_id === result[i].product_id
+            })[0];
+            console.log(curProduct);
+
+            var curUser = await userModel.getUserById(curProduct.user_id);
+
+            result[i].user_info = "*****" + curUser.name.substr(5);
+
+            if (req.session.authUser != undefined)
+                if (req.session.authUser.user_id === curProduct.user_id) {
+                    result[i].is_holding = true;
+                }
+
+            result[i].max_price = curProduct.bid_price;
+
         }
 
         count = Math.round(count / limit) + 1;

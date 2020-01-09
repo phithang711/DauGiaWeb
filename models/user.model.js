@@ -58,6 +58,9 @@ module.exports = {
 
     getUserById: async user_id => {
         const rows = await db.load(`select * from user where user_id = '${user_id}'`);
+        console.log("RR");
+        console.log(rows);
+        console.log(user_id);
         if (rows.length > 0) {
             return rows[0];
         }
