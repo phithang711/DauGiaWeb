@@ -5,6 +5,10 @@
      all: (limit, offset) => db.load(`SELECT * FROM device AS b INNER JOIN (SELECT p.*,b.user_id,b.bid_price, COUNT(b.product_id) AS count FROM product AS p LEFT JOIN bid AS b ON p.product_id = b.product_id WHERE CURDATE()<= p.end_date GROUP BY p.product_id) as a ON (b.device_id=a.device_id) LIMIT ${limit} OFFSET ${offset}`),
      search: (limit, offset, keyword) => db.load(`SELECT * FROM device AS b INNER JOIN (SELECT p.*,b.user_id,b.bid_price, COUNT(b.product_id) AS count FROM product AS p LEFT JOIN bid AS b ON p.product_id = b.product_id WHERE CURDATE()<= p.end_date GROUP BY p.product_id) as a ON (b.device_id=a.device_id AND MATCH(b.model,b.brand,b.type) AGAINST('${keyword}' IN NATURAL LANGUAGE MODE)) LIMIT ${limit} OFFSET ${offset}`),
      getCount: _ => db.load('SELECT COUNT(*) FROM device AS b INNER JOIN product as a ON (b.device_id=a.device_id) WHERE CURDATE()<= a.end_date'),
+     getmaxId: _ => {
+        var query="Select max(product_id) as id from product";
+        return db.load(query);
+     },
      getById: (id) => db.load(`SELECT * FROM device AS b INNER JOIN product as a ON (b.device_id=a.device_id) WHERE CURDATE()<= a.end_date AND (a.product_id)= ${id}`),
      getTopBidCount: (limit, offset) => db.load(`SELECT * FROM device AS b INNER JOIN (SELECT p.*, COUNT(b.product_id) AS count FROM product AS p LEFT JOIN bid AS b ON p.product_id = b.product_id WHERE CURDATE()<= p.end_date GROUP BY p.product_id ORDER BY count DESC) as a ON (b.device_id=a.device_id) LIMIT ${limit} OFFSET ${offset}`),
      getTopBidPrice: (limit, offset) => db.load(`SELECT * FROM device AS b INNER JOIN (SELECT p.*,b.user_id,b.bid_price, COUNT(b.product_id) AS count FROM product AS p LEFT JOIN bid AS b ON p.product_id = b.product_id WHERE CURDATE()<= p.end_date GROUP BY p.product_id) as a ON (b.device_id=a.device_id) ORDER BY a.bid_price DESC LIMIT ${limit} OFFSET ${offset}`),
