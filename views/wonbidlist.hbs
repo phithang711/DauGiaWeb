@@ -9,8 +9,15 @@
                 <br>
                 <thead>
                     <tr>
-                        <th><h3>Product Bid ID</h3></th>
-                        <th><h3>Product Model</h3></th>
+                        <th>
+                            <h3>Product Bid ID</h3>
+                        </th>
+                        <th>
+                            <h3>Product Model</h3>
+                        </th>
+                        <th>
+                            <h3>Review</h3>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -19,13 +26,21 @@
                         <td scope="row">
                             <a type="button" href="/item/{{ProductID}}">
                                 <h3>{{ProductID}}</h3>
-                            </a>    
+                            </a>
                         </td>
-                       
+
                         <td scope="row">
                             <a type="button" href="/item/{{ProductID}}">
                                 <h3>{{Model}}</h3>
-                            </a>    
+                            </a>
+                        </td>
+                        <td scope="row">
+                            <form action="/FinishBidItemList/{{seller_id}}/{{ProductID}}/0" method="POST" id="frmsubmit">
+                            </form>
+                            <a name="" id="" class="btn btn-primary" href="javascript: $('#frmsubmit').submit()"
+                                role="button">
+                                <i class="fa fa-comment" aria-hidden="true"></i>
+                            </a>
                         </td>
                     </tr>
                     {{/each}}

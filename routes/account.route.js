@@ -10,6 +10,8 @@ const ListBid = require('../models/user.profile.js')
 
 const nodemailer = require('nodemailer');
 
+const commentModel = require('../models/comment.model');
+
 router.get("/login", function(req, res, next) {
     res.render("login", { title: "AuctionDealer Login", layout: false });
 });
@@ -108,7 +110,7 @@ router.get("/account/profile", function(req, res) {
     if (user.rate > 0) {
         rate = user.rate;
     }
-	console.log(user.rate)
+
     const date = moment.utc(user.DOB).local().format('DD-MM-YYYY');
     res.render("accountProfile", {
         user: user,
@@ -357,6 +359,83 @@ router.get('/FinishBidItemList', async function(req, res, next) {
 
     console.log(itemList);
     res.render('finishbiditemlist', { items: itemList });
+});
+
+router.post('/FinishBidItemList/:seller_id/:productId/:type', function (req,res) {  
+	const type = req.params.type;
+	const seller_id = req.params.seller_id;
+	const id = parseInt(req.params.productId);
+	res.cookie('commentSeller', seller_id, {
+		maxAge: 900000,
+		httpOnly: true
+	});
+	res.cookie('commentProductId', id, {
+		maxAge: 900000,
+		httpOnly: true
+	});
+
+	res.cookie('commentType', type, {
+		maxAge: 900000,
+		httpOnly: true
+	});
+	res.redirect('/itemReview');
+});
+
+router.get('/itemReview',async function (req,res) {
+	const message = req.cookies['messageReview'];
+	res.clearCookie('messageReview');
+	res.render('itemReview', {
+		message: message
+	});
+});
+
+
+router.post('/itemReview',async function (req, res) {
+	const seller_id = req.cookies["commentSeller"];
+	const id = req.cookies["commentProductId"];
+	const type = req.cookies["commentType"];
+	res.clearCookie("commentSeller");
+	res.clearCookie("commentProductId");
+	res.clearCookie("commentType");
+	const rate  = parseInt(req.body.ratingValue);
+	const content  = req.body.textContent;
+	
+	let id1 = 0;
+	let id2 = 0;
+	const user = req.session.authUser;
+	const seller = await userModel.getUserById(seller_id);
+
+	console.log(user);
+	console.log(seller);
+
+	if(type === 0){
+		id2 = seller.user_id;
+		id1 = user.user_id;
+	} else {
+		id1 = seller.user_id;
+		id2 = user.user_id;
+	}
+
+	let avg = (user.rate + rate )/ 2;
+	await userModel.updateUserRate(avg, user.user_id);
+
+	const entity = {
+		user_id: id1,
+		product_id:  id,
+		content: content,
+		rate:  rate,
+		type:type,
+		time: new Date(),
+		user_id2: id2
+	}
+
+	await commentModel.add(entity);
+
+	res.cookie('messageReview', 'Review Successful',{
+		maxAge: 900000,
+		httpOnly: true
+	});
+	res.redirect('/itemReview');
 });
 
 router.get('/allBidListItem', async function(req, res, next) {

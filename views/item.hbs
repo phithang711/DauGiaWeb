@@ -171,7 +171,7 @@
                     <td>{{name}}</td>
                     <td>{{price}}</td>
                     <td>
-                        <a name="" id="" class="btn btn-outline-primary" href="/item/{{product_id}}/{{user_id}}/review" role="button">
+                        <a name="" id="" class="btn btn-outline-primary" href="/item/{{user_id}}/review" role="button">
                             <i class="fa fa-eye" aria-hidden="true"></i>
                         </a>
                     </td>
@@ -193,7 +193,7 @@
         <p style="font-size:large;"><b>Status</b>: {{item.status}}</p>
         <p><br></p>
         <div>
-            <a href="/item/{{item.product_id}}/{{seller.user_id}}/review"><p style="font-size:large;"><b>Seller</b>: {{sellerName}}</p></a>
+            <a href="/item/{{seller.user_id}}/review"><p style="font-size:large;"><b>Seller</b>: {{sellerName}}</p></a>
             <span style="font-size:small;">Rate: {{seller.rate}}</span>
             <p class="fa fa-star ratechecked"></p>
         </div>

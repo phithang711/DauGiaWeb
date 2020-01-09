@@ -10,7 +10,7 @@
     <div class="col-sm-2" style="text-align: center;">
         <img src="../images/img_avatar.png"
             class="img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}" alt="">
-            <span id="myRating1" class="rating" data-stars="5" data-default-rating="{{rate}}" disabled></span>
+        <span id="myRating1" class="rating" data-stars="5" data-default-rating="{{rate}}" disabled></span>
     </div>
 
     <div class="col-sm-8">
@@ -39,10 +39,10 @@
         </a>
         <br>
         <br>
-        <button type="button" class="btn btn-outline-primary w-100">
-            <i class="fa fa-heart" aria-hidden="true"></i>
-            Favorite List
-        </button>
+        <a name="" id="" class="btn btn-outline-primary w-100" href="/item/{{this.user.user_id}}/review" role="button">
+            <i class="fa fa-eye" aria-hidden="true"></i>
+            View Review
+        </a>
         <br>
         <br>
         <a type="button" class="btn btn-outline-primary w-100" href="/ListBidding">
@@ -59,10 +59,10 @@
         <br>
         {{#if isBuyer}}
         <form id="frmToMerchant" action="/tomerchant" method="post">
-        <button type="button" class="btn btn-outline-primary w-100" value="{{this.user.email}}" id="uptomerchant">
-            <i class="fa fa-arrow-up" aria-hidden="true"></i>
-            Become Merchant
-        </button>
+            <button type="button" class="btn btn-outline-primary w-100" value="{{this.user.email}}" id="uptomerchant">
+                <i class="fa fa-arrow-up" aria-hidden="true"></i>
+                Become Merchant
+            </button>
         </form>
         <br>
         <br>

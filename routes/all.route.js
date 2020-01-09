@@ -18,12 +18,7 @@
         var result = [];
         var count = 0;
         if (getKeyword === undefined || getKeyword === null) {
-
-            console.log(limit);
-            console.log(getPage);
-
             if (type == null) {
-
                 result = await productModel.all(limit, (getPage - 1) * limit);
                 count = (await productModel.all(1000000, 0)).length;
 
@@ -51,10 +46,7 @@
             count = (await productModel.search(1000000, 0, getKeyword)).length;
         }
 
-        console.log(1);
         var maxBids = await bidModel.getMaxBidList();
-        console.log(maxBids);
-        console.log(2);
 
         var dayCountDown = 0;
         var checkNewLabel = 0;
