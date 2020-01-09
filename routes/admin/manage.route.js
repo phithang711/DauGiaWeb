@@ -14,8 +14,6 @@ router.get('/manage', async function(req, res, next) {
                 accountList[i].haveRequest = true;
             }
     }
-
-    console.log(accountList);
     res.render('admin/manage', { items: accountList });
 });
 

@@ -47,7 +47,6 @@ router.post("/signup", async function(req, res) {
 
 router.post("/logout", async function(req, res) {
     req.session.isAuthenticated = false;
-    res.locals.lcIsAuthenticated = false;
     req.session.authUser = null;
     req.session.save(function(err) {
         if (err) {
@@ -109,7 +108,7 @@ router.get("/account/profile", function(req, res) {
     if (user.rate > 0) {
         rate = user.rate;
     }
-
+	console.log(user.rate)
     const date = moment.utc(user.DOB).local().format('DD-MM-YYYY');
     res.render("accountProfile", {
         user: user,
@@ -122,7 +121,8 @@ router.get("/account/profile", function(req, res) {
 });
 
 router.get("/profile/changeProfile", function(req, res) {
-    const user = req.session.authUser;
+	const user = req.session.authUser;
+
     let isBuyer = false;
     let isAdmin = false;
     let isMerchant = false;
@@ -335,14 +335,12 @@ router.post("/profile/changePassword", async function(req, res) {
 });
 router.get('/ListBidding', async function(req, res, next) {
     const itemList = await ListBid.listBidList(req.session.authUser.email)
-
     console.log(itemList);
     res.render('listbidmanage', { items: itemList });
 });
 
 router.get('/WonBidList', async function(req, res, next) {
     const itemList = await ListBid.wonBidList(req.session.authUser.email)
-
     console.log(itemList);
     res.render('wonbidlist', { items: itemList });
 });
@@ -681,8 +679,6 @@ router.post('/send', (req, res) => {
         if (error) {
             return console.log(error);
         }
-        console.log('Message sent: %s', info.messageId);
-        console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
 
         res.render('otpMail', { title: 'otp' });
     });

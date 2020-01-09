@@ -7,6 +7,8 @@ const bidModel = require("../models/bid.model");
 const moment = require('moment');
 const nodemailer = require('nodemailer');
 const getMailContent = require("./mail.content.js");
+const commentModel = require('../models/comment.model');
+
 
 router.get("/otp", (req, res) => {
     res.render("otpMail", { title: "OTP" });
@@ -265,6 +267,8 @@ router.get("/item/:index", async function(req, res) {
             }
 
             const entity = {
+                user_id: userBidHis.user_id,
+                product_id: index,
                 order: i + 1,
                 time: moment(history[i].bid_time, 'MMM dd YYYY').format('HH:mm DD/MM/YYYY'),
                 name: name,
@@ -525,20 +529,20 @@ router.get("/item/:index/bid", async function(req, res) {
     res.render("itemBid", result[0]);
 });
 
-router.get("/item/:index/review", function(req, res) {
-    //get param
-    var productType = req.params.type.normalize();
-    var index = parseInt(req.params.index);
-    if (productType === "all") {
-        item = products.all.content.items[index];
-        res.render("itemReview", item);
-    } else {
-        item = products.homepageItems.find(
-            item => item.content.title === productType
-        ).content.items[index];
-        res.render("user_page/commentrate", item);
-    }
-});
+// router.get("/item/:index/review", function(req, res) {
+//     //get param
+//     var productType = req.params.type.normalize();
+//     var index = parseInt(req.params.index);
+//     if (productType === "all") {
+//         item = products.all.content.items[index];
+//         res.render("itemReview", item);
+//     } else {
+//         item = products.homepageItems.find(
+//             item => item.content.title === productType
+//         ).content.items[index];
+//         res.render("user_page/commentrate", item);
+//     }
+// });
 
 router.get("/item/:index/edit", async function(req, res) {
     if (req.session.authUser === undefined || req.session.authUser.type === 0) {
@@ -626,5 +630,29 @@ router.post('/item/:index/:id/deny', async function(req, res) {
 async function denyHandle(product_id, user_id) {
     await bidModel.deleteBid(product_id, user_id);
 };
+
+router.get('/item/:index/:id/review',async function (req, res) {
+  var index = parseInt(req.params.index);
+  const id =  parseInt(req.params.id);
+
+  const comments = await commentModel.getById(id,index);
+
+  let result = [];
+  for(i = 0;i<comments.length ; i++)  {
+    const user = await userModel.getUserById(comments[i].user_id);
+    const entity = {
+      name: user.name,
+      rate: comments[i].rate,
+      content: comments[i].content,
+      time: moment.utc(comments[i].date).local().format('HH:mm DD-MM-YYYY')
+    }
+    result.push(entity);
+  }
+  
+  res.render('reviewView', {
+    items: result,
+    isEmpty: result.length === 0
+  });
+});
 
 module.exports = router;
