@@ -161,11 +161,6 @@ module.exports = {
       <tbody><tr>
       <td align="center">
       <div style="font-family:Ariel,Helvetica,sans-serif;font-size:16px;color:#313131;text-align:left;line-height:24px">
-        <strong>Your eMail:</strong><br>
-        <a>` +
-            user.email +
-            `</a><br><br>
-        <strong>Merchant:</strong><br>
         `
 
         +
@@ -285,12 +280,15 @@ module.exports = {
     },
 
     getBannedMailContent: function(user, price, productName, merchantName) {
-        return this.getMailContent(user, price, productName, "Hi, you were banned from bidding a product. product information:");
+        return this.getMailContent(user, price, productName, merchantName, "Hi, you were banned from bidding a product. product information:");
     },
     getBidMailContent: function(user, price, productName, merchantName) {
-        return this.getMailContent(user, price, productName, "Hi, you bidded a product. Product information:");
+        return this.getMailContent(user, price, productName, merchantName, "Hi, you bidded a product. Product information:");
     },
     getWinMailContent: function(user, price, productName, merchantName) {
-        return this.getMailContent(user, price, productName, "Congratulation on winning an auction on our website for the product:");
+        return this.getMailContent(user, price, productName, merchantName, "Congratulation on winning an auction on our website for the product:");
+    },
+    getBidMerchantMailContent: function(user, price, productName, merchantName) {
+        return this.getMailContent(user, price, productName, merchantName, "A bidder bidded on your product:");
     },
 }

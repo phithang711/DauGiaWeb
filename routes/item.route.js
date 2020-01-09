@@ -15,9 +15,9 @@ router.get("/otp", (req, res) => {
 async function sendMailNormalBid(user, price, productName, merchantName, title, type) {
     console.log(1234);
 
-    if (type === 0) {
-        const output = getMailContent.getBidMailContent(user, price, productName, merchantName);
-    } else if (type === 1) {
+
+    const output = getMailContent.getBidMailContent(user, price, productName, merchantName);
+    if (type === 1) {
         const output = getMailContent.getWinMailContent(user, price, productName, merchantName);
     } else if (type === 2) {
         const output = getMailContent.getBannedMailContent(user, price, productName, merchantName);
@@ -106,6 +106,7 @@ router.post("/item/:index/normalBid", async function(req, res) {
             /////////////////////////////////////////////////////////////// ADD EMAIL 
             var seller = await userModel.getUserById(result[0].seller_id)
             sendMailNormalBid(user, price, result[0].brand + result[0].model, seller.name, "You bidded this product", 0);
+            sendMailNormalBid(seller, price, result[0].brand + result[0].model, "*****" + user.name.substr(5), "A bidder bidded your product", 1);
 
             checkAutoBid(index, result[0].step_price);
         }
@@ -524,16 +525,27 @@ router.get("/item/:index/review", function(req, res) {
     }
 });
 
+router.get("/item/:index/edit", async function(req, res) {
+    if (req.session.authUser === undefined || req.session.authUser.type === 0) {
+        res.status(404).render('pageNotFound');
+        return;
+    }
+
+    var index = parseInt(req.params.index);
+    var result = await productModel.getById(index);
+
+    console.log(result);
+    if (result.length > 0) {
+        res.render('merchant/editProductDescription', { item: result[0] });
+    } else {
+        res.status(404).render('pageNotFound');
+    }
+});
+
 router.get('/otp', (req, res) => {
 
     res.render('otpMail', { title: "OTP" });
 });
-
-// router.get('/otp', (req, res) => {
-
-//     // res.render('otpMail', {title: "OTP"});
-// });
-
 
 router.get('/404', (req, res) => {
     res.render('pageNotFound', { title: "404" });

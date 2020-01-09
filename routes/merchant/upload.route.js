@@ -4,6 +4,7 @@ var moment = require('moment');
 
 const deviceModel = require('../../models/device.model');
 const productModel = require('../../models/product.model');
+const currentProduct = require('../../models/currentProduct.model');
 
 router.get('/upload', async function(req, res) {
     if (req.session.authUser === null || req.session.authUser.type === "0" || req.session.authUser.type === undefined) {
@@ -92,6 +93,7 @@ router.post('/upload', async function(req, res) {
                 "img_url2": pictureDir[2],
             }
             result = await deviceModel.add(device);
+
         }
 
         if (!result) {
@@ -119,6 +121,7 @@ router.post('/upload', async function(req, res) {
             }
 
             var addProductResult = productModel.add(product);
+            var curentTableResult = await currentProduct.add(product.product_id);
 
             if (addProductResult) {
                 console.log("added");
