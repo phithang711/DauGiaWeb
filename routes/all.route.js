@@ -48,10 +48,6 @@ router.get('/all', async function(req, res) {
         result[i].end_date = moment(result[i].end_date).format('DD-MM-YYYY HH:mm');
 
         result[i].start_date = moment(result[i].start_date).format('DD-MM-YYYY HH:mm');
-
-        console.log(moment().format('DD-MM-YYYY HH:mm'));
-        console.log(moment(result[i].start_date).format('DD-MM-YYYY HH:mm'));
-        console.log(moment().diff(moment(result[i].start_date)));
     }
 
     count = Math.round(count / limit) + 1;

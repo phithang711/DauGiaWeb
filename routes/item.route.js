@@ -5,6 +5,117 @@ const watchlistModel = require("../models/watchlist.model");
 const userModel = require("../models/user.model");
 const bidModel = require("../models/bid.model");
 const moment = require('moment');
+const nodemailer = require('nodemailer');
+const getMailContent = require("./mail.content.js");
+
+router.get("/otp", (req, res) => {
+    res.render("otpMail", { title: "OTP" });
+});
+
+async function sendMailNormalBid(user, price, productName, merchantName, title, type) {
+    console.log(1234);
+
+    if (type === 0) {
+        const output = getMailContent.getBidMailContent(user, price, productName, merchantName);
+    } else if (type === 1) {
+        const output = getMailContent.getWinMailContent(user, price, productName, merchantName);
+    } else if (type === 2) {
+        const output = getMailContent.getBannedMailContent(user, price, productName, merchantName);
+    }
+
+
+    // create reusable transporter object using the default SMTP transport
+    let transporter = await nodemailer.createTransport({
+        service: 'gmail',
+        // host: 'mail.YOURDOMAIN.com',
+        // port: 587,
+        // secure: false, // true for 465, false for other ports
+        auth: {
+            user: 'derekzohar@gmail.com', // generated ethereal user
+            pass: 'thangww123' // generated ethereal password
+        },
+        tls: {
+            rejectUnauthorized: false
+        }
+    });
+
+    // setup email data with unicode symbols
+    let mailOptions = await {
+        from: '"Online Auction" <derekzohar@gmail.com>', // sender address
+        //to: 'ngovietthangww@gmail.com', // list of receivers
+        to: user.email,
+        subject: title, // Subject line
+        text: 'Hello world?', // plain text body
+        html: output // html body
+    };
+    // send mail with defined transport object
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            return console.log(error);
+        }
+        console.log('Message sent: %s', info.messageId);
+        console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+
+        //res.render('otpMail', { title: 'otp' });	
+    });
+}
+router.post("/item/:index/normalBid", async function(req, res) {
+    var index = req.params.index;
+    const user = req.session.authUser;
+    var result = await productModel.getById(index);
+    var currentBidPrice = await bidModel.getCurrentBid(result[0].product_id);
+    let minBid = currentBidPrice.price + result[0].step_price;
+    if (currentBidPrice.price === null) {
+        minBid = result[0].first_price;
+    }
+
+    const price = req.body.price;
+
+    if (user === null) {
+        res.cookie("bidErrorMessage", "You must login to bid.", {
+            maxAge: 900000,
+            httpOnly: true
+        });
+    } else if (user.rate < 4) {
+        res.cookie("bidErrorMessage", "Your rating point less than 80%.", {
+            maxAge: 900000,
+            httpOnly: true
+        });
+    } else {
+        if (price < minBid) {
+            res.cookie("bidErrorMessage", "Bid value invalid.", {
+                maxAge: 900000,
+                httpOnly: true
+            });
+        } else {
+            await bidModel.deleteBid(result[0].product_id, user.user_id);
+            const currentBidId = await bidModel.getCurrentBidId();
+            const entity = {
+                bid_id: currentBidId.id + 1,
+                product_id: index,
+                user_id: user.user_id,
+                bid_time: new Date(),
+                bid_price: price
+            };
+            res.cookie("bidSuccessMessage", "Bid Item Successful.", {
+                maxAge: 900000,
+                httpOnly: true
+            });
+            const rt = bidModel.add(entity);
+
+            /////////////////////////////////////////////////////////////// ADD EMAIL 
+            var seller = await userModel.getUserById(result[0].seller_id)
+            sendMailNormalBid(user, price, result[0].brand + result[0].model, seller.name, "You bidded this product", 0);
+
+            checkAutoBid(index, result[0].step_price);
+        }
+    }
+    res.redirect("/item/" + index);
+});
+
+router.get("/404", (req, res) => {
+    res.render("pageNotFound", { title: "404" });
+});
 
 router.get('/watchlist', async function(req, res, next) {
     if (req.session.authUser === null || req.session.authUser === undefined) {
@@ -477,6 +588,11 @@ router.post('/item/:index/:id/deny', async function(req, res) {
 
     const rs = await productModel.addBanAccount(entity);
     denyHandle(index, user_id);
+
+    var product = await productModel.getById(index);
+    var user = await userModel.getUserById(user_id);
+    sendMailNormalBid(user, "Denied", product[0].brand + product[0].model, "Id:" + (banId + 1), "You were denied to bid this product", 2);
+
     res.redirect("/item/" + index + "/deny");
 })
 
