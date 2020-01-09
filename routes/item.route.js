@@ -175,7 +175,7 @@ router.get("/betview", function(req, res, next) {
 router.get("/item/:index", async function(req, res) {
     var index = req.params.index;
 
-    var result = await productModel.getById(index);
+    var result = await productModel.getProductByIdNotCheckTime(index);
     var seller = await userModel.getUserById(result[0].seller_id);
     var currentBidPrice = await bidModel.getCurrentBid(result[0].product_id);
     var productBid = await bidModel.getByProductBidPrice(
@@ -189,7 +189,18 @@ router.get("/item/:index", async function(req, res) {
 
     let end = "";
 
-    if (end_date > 86400) {
+    let bidAvailable = true;
+
+    let success = req.cookies["bidSuccessMessage"];
+    let error = req.cookies["bidErrorMessage"];
+    res.clearCookie("bidSuccessMessage");
+    res.clearCookie("bidErrorMessage");
+
+    if(end_date < 0) {
+      end = result[0].end_date;
+      bidAvailable = false;
+      error = "Product out of time";
+    } else if (end_date > 86400 ) {
         end = result[0].end_date;
     } else {
         const day = end_date / 86400;
@@ -206,11 +217,22 @@ router.get("/item/:index", async function(req, res) {
             end = Math.floor(sec) + " secs left.";
         }
     }
+    const user = req.session.authUser;
+    let isMerchant = false;
+    if (user !== null) {
+        if (user.type === 1) {
+            if(seller.user_id === result[0].seller_id) {
+              isMerchant = true
+            }
+        }
+    }
 
-    const success = req.cookies["bidSuccessMessage"];
-    const error = req.cookies["bidErrorMessage"];
-    res.clearCookie("bidSuccessMessage");
-    res.clearCookie("bidErrorMessage");
+    let sellerName = seller.name;
+    if (sellerName.length > 5) {
+        sellerName = "*****" + sellerName.substr(5);
+    } else {
+        sellerName = "***" + sellerName.substr(3);
+    }
 
     if (productBid === null) {
         res.render("item", {
@@ -218,14 +240,17 @@ router.get("/item/:index", async function(req, res) {
             success_message: success,
             item: result[0],
             seller: seller,
+            sellerName: sellerName,
+            bidAvailable: bidAvailable,
             bidder: null,
             end_date: end,
+            isMerchant: isMerchant,
             minBid: result[0].first_price,
             current_price: result[0].first_price,
             empty: result.length === 0
         });
     } else {
-        const user = req.session.authUser;
+        
         var bidder = await userModel.getUserById(productBid.user_id);
         //Get History
         var history = await bidModel.getTopBidder(result[0].product_id);
@@ -247,12 +272,6 @@ router.get("/item/:index", async function(req, res) {
             }
             historyBidder.push(entity)
         }
-        let isMerchant = false;
-        if (user !== null) {
-            if (user.type === 1) {
-                isMerchant = true;
-            }
-        }
 
         let bidderName = bidder.name;
         if (bidderName.length > 5) {
@@ -261,12 +280,7 @@ router.get("/item/:index", async function(req, res) {
             bidderName = "***" + bidderName.substr(3);
         }
 
-        let sellerName = seller.name;
-        if (sellerName.length > 5) {
-            sellerName = "*****" + sellerName.substr(5);
-        } else {
-            sellerName = "***" + sellerName.substr(3);
-        }
+        
         res.render("item", {
             err_message: error,
             success_message: success,
@@ -274,6 +288,7 @@ router.get("/item/:index", async function(req, res) {
             seller: seller,
             sellerName: sellerName,
             bidder: bidder,
+            bidAvailable: bidAvailable,
             bidderName: bidderName,
             end_date: end,
             minBid: minBid,

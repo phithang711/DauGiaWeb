@@ -71,5 +71,14 @@
             return rows[0].id;
         }
         return 0;
+    },
+
+    getProductByIdNotCheckTime: async product_id => {
+        const rows = await db.load(`SELECT * FROM device AS b INNER JOIN product as a ON (b.device_id=a.device_id) WHERE (a.product_id)= ${product_id}`);
+        if(rows.length > 0) {
+            return rows;
+        }
+
+        return null;
     }
  };

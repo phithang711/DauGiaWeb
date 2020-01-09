@@ -63,6 +63,7 @@
         {{success_message}}
     </div>
     {{/if}}
+    {{#if bidAvailable}}
     <ul class="nav nav-tabs">
         <li class="active"><a data-toggle="tab" href="#normalBid">
                 <i class="fa fa-money" aria-hidden="true"></i>
@@ -109,7 +110,7 @@
                 Now</button>
         </div>
     </div>
-
+    {{/if}}
     <div class="modal fade" id="autoBidModal" tabindex="-1" role="dialog" aria-labelledby="autoBidModal"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
