@@ -5,8 +5,19 @@ const moment = require("moment");
 const userModel = require("../models/user.model");
 const config = require("../configs/userModelConfig.json");
 
+const userModel = require('../models/user.model');
+const toMerchant = require('../models/tomerchant');
+const ListBid = require('../models/user.profile.js')
+
+const nodemailer = require('nodemailer');
+
 router.get("/login", function(req, res, next) {
     res.render("login", { title: "AuctionDealer Login", layout: false });
+});
+
+
+router.get('/login', function(req, res, next) {
+    res.render('login', { title: 'AuctionDealer Login', layout: false });
 });
 
 router.get("/signup", function(req, res, next) {
@@ -95,16 +106,16 @@ router.get("/account/profile", function(req, res) {
         isAdmin = true;
     }
 
-    var rate= 0;
-    if(user.rate > 0) { 
-      rate = user.rate;
+    var rate = 0;
+    if (user.rate > 0) {
+        rate = user.rate;
     }
 
     const date = moment.utc(user.DOB).local().format('DD-MM-YYYY');
     res.render("accountProfile", {
         user: user,
         rate: rate,
-        date:date,
+        date: date,
         isReader: isBuyer,
         isMerchant: isMerchant,
         isAdmin: isAdmin
@@ -348,6 +359,40 @@ router.post("/profile/changePassword", async function(req, res) {
             }
         }
     }
+});
+router.get('/ListBidding', async function(req, res, next) {
+    const itemList = await ListBid.listBidList(req.session.authUser.email)
+
+    console.log(itemList);
+    res.render('listbidmanage', { items: itemList });
+});
+
+router.get('/WonBidList', async function(req, res, next) {
+    const itemList = await ListBid.wonBidList(req.session.authUser.email)
+
+    console.log(itemList);
+    res.render('wonbidlist', { items: itemList });
+});
+
+router.get('/PendingBidItemList', async function(req, res, next) {
+    const itemList = await ListBid.PendingBidItemList(req.session.authUser.email)
+
+    console.log(itemList);
+    res.render('pendingbiditemlist', { items: itemList });
+});
+
+router.get('/FinishBidItemList', async function(req, res, next) {
+    const itemList = await ListBid.FinishedBidItemList(req.session.authUser.email)
+
+    console.log(itemList);
+    res.render('finishbiditemlist', { items: itemList });
+});
+
+router.get('/allBidListItem', async function(req, res, next) {
+    const itemList = await ListBid.AllBidItemList(req.session.authUser.email)
+
+    console.log(itemList);
+    res.render('allbidlistitem', { items: itemList });
 });
 
 module.exports = router;

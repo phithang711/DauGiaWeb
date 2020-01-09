@@ -45,6 +45,18 @@
         </button>
         <br>
         <br>
+        <a type="button" class="btn btn-outline-primary w-100" href="/ListBidding">
+            <i class="fa fa-eye" aria-hidden="true"></i>
+            Bidding List
+        </a>
+        <br>
+        <br>
+        <a type="button" class="btn btn-outline-primary w-100" href="/WonBidList">
+            <i class="fa fa-eye" aria-hidden="true"></i>
+            Won Bidding List
+        </a>
+        <br>
+        <br>
         {{#if isBuyer}}
         <form id="frmToMerchant" action="/tomerchant" method="post">
         <button type="button" class="btn btn-outline-primary w-100" value="{{this.user.email}}" id="uptomerchant">
@@ -56,10 +68,22 @@
         <br>
         {{/if}}
         {{#if isMerchant}}
-        <button type="button" class="btn btn-outline-primary w-100">
+        <a type="button" class="btn btn-outline-primary w-100" href="/allBidListItem">
             <i class="fa fa-eye" aria-hidden="true"></i>
             View Uploaded
-        </button>
+        </a>
+        <br>
+        <br>
+        <a type="button" class="btn btn-outline-primary w-100" href="/PendingBidItemList">
+            <i class="fa fa-eye" aria-hidden="true"></i>
+            Pending Bidding List Item
+        </a>
+        <br>
+        <br>
+        <a type="button" class="btn btn-outline-primary w-100" href="/FinishBidItemList">
+            <i class="fa fa-eye" aria-hidden="true"></i>
+            Finished Bidding List Item
+        </a>
         <br>
         <br>
         <a type="button" class="btn btn-outline-primary w-100" href="/upload">
