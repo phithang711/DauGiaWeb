@@ -121,7 +121,7 @@ router.post('/upload', async function(req, res) {
             }
 
             var addProductResult = productModel.add(product);
-            var curentTableResult = await currentProduct.add(product.product_id);
+            var curentTableResult = currentProduct.add(product.product_id);
 
             if (addProductResult) {
                 console.log("added");

@@ -13,8 +13,8 @@ const pool = mysql.createPool({
     host: 'localhost',
     port: 3306,
     user: 'root',
-    password: 'Thanh1999@',
-    database: 'auctiondealer',
+    password: 'root',
+    database: 'webdatabase2',
     insecureAuth: true
 });
 
