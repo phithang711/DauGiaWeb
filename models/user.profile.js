@@ -17,7 +17,7 @@ WHERE
 u.email='thichdaugia@gmail.com' and u.user_id=wbd.UserWonID and wbd.ProductID=pd.product_id and pd.device_id=de.device_id
 */
     wonBidList: async email => {
-        var query = "Select DISTINCT(pd.product_id) as ProductID, de.model as Model from user as u,  wonbidlist as wbd , product as pd, device as de WHERE u.email='" +email+"' and u.user_id=wbd.UserWonID and wbd.ProductID=pd.product_id and pd.device_id=de.device_id"
+        var query = "Select DISTINCT(pd.product_id) as ProductID,pd.seller_id as seller_id, de.model as Model from user as u,  wonbidlist as wbd , product as pd, device as de WHERE u.email='" +email+"' and u.user_id=wbd.UserWonID and wbd.ProductID=pd.product_id and pd.device_id=de.device_id"
         return  db.load(query);
     },
 /* Dong query cho viec tim ra cac san pham dang ban va con han dau gia
@@ -37,7 +37,7 @@ WHERE
 u.email="test2@gmail.com" and u.user_id=pd.seller_id and pd.product_id =wo.ProductID and pd.device_id=de.device_id and wo.UserWonID=userwon.user_id
 */
     FinishedBidItemList: async email => {
-        var query = "Select DISTINCT(pd.product_id) as ProductID, de.model as Model, userwon.name, userwon.email as email, userwon.phone from user as u , product as pd, device as de, wonbidlist wo, user as userwon WHERE u.email='"+email+"' and u.user_id=pd.seller_id and pd.product_id =wo.ProductID and pd.device_id=de.device_id and wo.UserWonID=userwon.user_id"
+        var query = "Select DISTINCT(pd.product_id) as ProductID,pd.seller_id as seller_id, de.model as Model, userwon.name, userwon.email as email, userwon.phone from user as u , product as pd, device as de, wonbidlist wo, user as userwon WHERE u.email='"+email+"' and u.user_id=pd.seller_id and pd.product_id =wo.ProductID and pd.device_id=de.device_id and wo.UserWonID=userwon.user_id"
         return  db.load(query);
     },
 

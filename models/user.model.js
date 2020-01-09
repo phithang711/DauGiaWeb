@@ -66,4 +66,17 @@ module.exports = {
         }
         return null;
     },
+
+    getUserIdByEmail: async email => {
+        const rows = await db.load(`select * from user where email = '${email}'`);
+        if(rows.length > 0)
+        {
+            return rows[0];
+        }
+        return null;
+    },
+    
+    updateUserRate: async (rate, user_id) => {
+        await db.load(`update user set rate = '${rate}' where user_id = '${user_id}'`);
+    }
 }
