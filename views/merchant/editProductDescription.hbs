@@ -1,0 +1,23 @@
+<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.css" rel="stylesheet">
+<link href="/css/uploadProduct.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.js"></script>
+
+<div style="display: block;">
+    <h3>{{item.brand}} {{item.model}}</h3>
+    <form id="edit-description">
+        <div class="upload-product-zone">
+            <label for="exampleFormControlSelect2">Edit product's description:</label>
+            <textarea id="summernote" name="details"></textarea>
+        </div>
+        <button class="btn btn-primary" type="submit">
+            Edit
+        </button>
+    </form>
+
+</div>
+
+<script>
+    $("#summernote").summernote("code", "{{item.description}}");
+</script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="/js/merchant/uploadProduct.js"></script>

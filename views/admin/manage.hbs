@@ -1,0 +1,176 @@
+<div class="limiter">
+    <div class="container-main-content container-main-content-top">
+        <div class="wrap-main-content wrap-item-view wrap-main-content-top">
+            <br>
+            <div class="dropdown  ml-2">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Sort
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="#">All</a>
+                    <a class="dropdown-item" href="#">Seller</a>
+                    <a class="dropdown-item" href="#">Bidder</a>
+                </div>
+            </div>
+            <br>
+            <h3>Admin:</h3>
+            <h3 id="admin-email">{{lcAuthUser.email}}</h3>
+            <table class="table table-hover table-responsive">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>User</th>
+                        <th>Type</th>
+                        <th>Rating</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each items}}
+                    {{#compareNotEqual type 2}}
+                    <tr>
+                        <td scope="row">{{name}}</td>
+                        <td scope="row">{{email}}</td>
+                        {{#compareEqual type 1}}
+                        <td>Seller</td>
+                        <td>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                        </td>
+                        <td style="display:flex;">
+                            <div class="dropdown">
+                                <button class="btn btn-outline-secondary" type="button" id="dropdownMenuButton"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    ...
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <button type="button" class="btn btn-outline-danger user-delete"
+                                        data-email={{email}}>
+                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-outline-warning user-warning"
+                                        data-email={{email}}>
+                                        <i class="fa fa-bell" aria-hidden="true"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-outline-primary user-downgrade"
+                                        data-email={{email}}>
+                                        <i class="fa fa-arrow-down" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            {{/compareEqual}}
+
+                            {{#compareEqual type 0}}
+                        <td>Bidder</td>
+                        <td>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                        </td>
+                        <td style="display:flex;">
+                            <div class="dropdown">
+                                <button st class="btn btn-outline-secondary" type="button" id="dropdownMenuButton"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    ...
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <button type="button" class="btn btn-outline-danger user-delete"
+                                        data-email={{email}}>
+                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-outline-warning user-alert"
+                                        data-email={{email}}>
+                                        <i class="fa fa-bell" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            {{#if haveRequest}}
+                            <button style="margin-left:20px;" type="button" class="btn btn-danger user-upgrade"
+                                data-email={{email}}>
+                                <i class="fa fa-arrow-up" aria-hidden="true"></i>
+                            </button>
+                            {{/if}}
+
+
+                            {{/compareEqual}}
+                        </td>
+                    </tr>
+                    {{/compareNotEqual}}
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script>
+    $(".user-delete").click(function () {
+        $.ajax('/manage/delete',   // request url
+            {
+                method:"post",
+                data: {
+                    email: $(this).attr("data-email"),
+                },
+                success: function (data, status, xhr) {// success callback function
+                    alert(data);
+                },
+                error: function (jqXhr, textStatus, errorMessage) { // error callback 
+                    alert("Failed");
+                },
+            });
+    });
+
+    $(".user-warning").click(function () {
+        $.ajax('/manage/warning',   // request url
+            {
+                method:"post",
+                data: {
+                    email: $(this).attr("data-email"),
+                },
+                success: function (data, status, xhr) {// success callback function
+                    alert(data);
+                },
+                error: function (jqXhr, textStatus, errorMessage) { // error callback 
+                    alert("Failed");
+                },
+            });
+    });
+
+    $(".user-upgrade").click(function () {
+        $.ajax('/manage/upgrade',   // request url
+            {
+                method:"post",
+                data: {
+                    email: $(this).attr("data-email"),
+                },
+                success: function (data, status, xhr) {// success callback function
+                    alert(data);
+                },
+                error: function (jqXhr, textStatus, errorMessage) { // error callback 
+                    alert("Failed");
+                },
+            });
+    });
+
+    $(".user-downgrade").click(function () {
+        $.ajax('/manage/downgrade',   // request url
+            {
+                method:"post",
+                data: {
+                    email: $(this).attr("data-email"),
+                },
+                success: function (data, status, xhr) {// success callback function
+                    alert(data);
+                },
+                error: function (jqXhr, textStatus, errorMessage) { // error callback 
+                    alert("Failed");
+                },
+            });
+    });
+</script>

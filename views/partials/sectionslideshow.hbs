@@ -1,0 +1,32 @@
+<div class="section-container section-container-slideshow" style="height: 450px;">
+    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel" style="height:450px">
+  <div id="home-slideshow" class="carousel-inner">
+    <style>
+      #home-slideshow img{
+        margin-top: -200px;
+        height: initial;
+      }
+
+      #home-slideshow carousel-item{
+        height:500px;
+      }
+    </style>
+    <div class="carousel-item active">
+      <a href="#"><img class="d-block w-100" src="images/slideshow.jpg" alt="First slide"></a>
+    </div>
+    {{#each item}}
+      <div class="carousel-item">
+        <a href="/item/{{product_id}}"><img class="d-block w-100" src="{{img_url2}}" alt="Second slide"></a>
+      </div>
+    {{/each}}   
+  </div>
+  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+</div>

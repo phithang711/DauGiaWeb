@@ -1,0 +1,131 @@
+<link rel="stylesheet" type="text/css" href="../css/SimpleStarRating.css">
+<link rel="stylesheet" type="text/css" href="../css/rating.css">
+<script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+    crossorigin="anonymous"></script>
+<title>Profile</title>
+<div class="row w-100">
+    <div class="col-sm-12 text-center">
+        <h1>Profile</h1>
+    </div>
+    <div class="col-sm-2" style="text-align: center;">
+        <img src="../images/img_avatar.png"
+            class="img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}" alt="">
+            <span id="myRating1" class="rating" data-stars="5" data-default-rating="{{rate}}" disabled></span>
+    </div>
+
+    <div class="col-sm-8">
+        <div class="form-group">
+            <label for="">Name</label>
+            <input type="text" class="form-control" disabled name="" id="" value="{{this.user.name}}">
+        </div>
+        <div class="form-group">
+            <label for="">Email</label>
+            <input type="text" class="form-control" disabled name="" id="" value="{{this.user.email}}">
+        </div>
+        <div class="form-group">
+            <label for="">Phone</label>
+            <input type="text" class="form-control" disabled name="" id="" value="{{this.user.phone}}">
+        </div>
+        <div class="form-group">
+            <label for="">Date Of Birth</label>
+            <input type="text" class="form-control" disabled name="" id="" value="{{date}}">
+        </div>
+    </div>
+
+    <div class="col-sm-2">
+        <a name="" id="" class="btn btn-outline-primary w-100" href="/profile/changeProfile" role="button">
+            <i class="fa fa-user" aria-hidden="true"></i>
+            Change Profile
+        </a>
+        <br>
+        <br>
+        <button type="button" class="btn btn-outline-primary w-100">
+            <i class="fa fa-heart" aria-hidden="true"></i>
+            Favorite List
+        </button>
+        <br>
+        <br>
+        <a type="button" class="btn btn-outline-primary w-100" href="/ListBidding">
+            <i class="fa fa-eye" aria-hidden="true"></i>
+            Bidding List
+        </a>
+        <br>
+        <br>
+        <a type="button" class="btn btn-outline-primary w-100" href="/WonBidList">
+            <i class="fa fa-eye" aria-hidden="true"></i>
+            Won Bidding List
+        </a>
+        <br>
+        <br>
+        {{#if isBuyer}}
+        <form id="frmToMerchant" action="/tomerchant" method="post">
+        <button type="button" class="btn btn-outline-primary w-100" value="{{this.user.email}}" id="uptomerchant">
+            <i class="fa fa-arrow-up" aria-hidden="true"></i>
+            Become Merchant
+        </button>
+        </form>
+        <br>
+        <br>
+        {{/if}}
+        {{#if isMerchant}}
+        <a type="button" class="btn btn-outline-primary w-100" href="/allBidListItem">
+            <i class="fa fa-eye" aria-hidden="true"></i>
+            View Uploaded
+        </a>
+        <br>
+        <br>
+        <a type="button" class="btn btn-outline-primary w-100" href="/PendingBidItemList">
+            <i class="fa fa-eye" aria-hidden="true"></i>
+            Pending Items
+        </a>
+        <br>
+        <br>
+        <a type="button" class="btn btn-outline-primary w-100" href="/FinishBidItemList">
+            <i class="fa fa-eye" aria-hidden="true"></i>
+            Finished Items
+        </a>
+        <br>
+        <br>
+        <a type="button" class="btn btn-outline-primary w-100" href="/upload">
+            <i class="fa fa-upload" aria-hidden="true"></i>
+            Upload Book
+        </a>
+        <br>
+        <br>
+        {{/if}}
+        {{#if isAdmin}}
+        <a type="button" class="btn btn-outline-primary w-100" href="/manage">
+            <i class="fa fa-eye" aria-hidden="true"></i>
+            Account list
+        </a>
+        <br>
+        <br>
+        <a type="button" class="btn btn-outline-primary w-100" href="/manage/category">
+            <i class="fa fa-eye" aria-hidden="true"></i>
+            Manage category
+        </a>
+        <br>
+        <br>
+        <button type="button" class="btn btn-outline-primary w-100">
+            <i class="fa fa-upload" aria-hidden="true"></i>
+            Book list
+        </button>
+        <br><br>
+        {{/if}}
+        <a name="" id="" class="btn btn-outline-danger w-100" href="/profile/changePassword" role="button">
+            <i class="fa fa-key" aria-hidden="true"></i>
+            Change Password
+        </a>
+        <br>
+        <br>
+    </div>
+</div>
+<script src="../js/SimpleStarRating.js"></script>
+<script src="../js/rating.js"></script>
+
+
+<script type="module">
+    $('#uptomerchant').click(function (e) {
+        $("#frmToMerchant").submit();
+    });
+</script>

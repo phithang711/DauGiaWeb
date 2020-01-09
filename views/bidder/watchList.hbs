@@ -1,0 +1,37 @@
+<div class="limiter">
+    <div class="container-main-content container-main-content-top">
+        <div class="wrap-main-content wrap-item-view wrap-main-content-top">
+            <h2>Watchlist</h2>
+            <div class="flex-col">
+                {{#each items}}
+                <a href="/item/{{product_id}}" class="text-dark">
+                    <div class="col-sm-12 mt-1">
+                        <div class="card  flex-row">
+                            <div class="card-header">
+                                <img class="img-thumbnail" width="100" src="{{img_url}}" alt="Card image cap">
+                            </div>
+                            <div class="card-body flex-column">
+                                <h4 class="card-title">{{brand}} {{model}}</h4>
+                                <p class="card-text">End date:{{end_date}}</p>
+                                <div class="float-right">
+                                    <form class="remove-item-watchlist" method="POST" action="/watchlist/remove">
+                                        <input style="display: none;" type="text" value="{{product_id}}"
+                                            name="product_id">
+                                        <button class="btn btn-outline-danger" type="submit">
+                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                        </button>
+                                    </form>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </a>
+
+                {{/each}}
+            </div>
+        </div>
+    </div>
+</div>

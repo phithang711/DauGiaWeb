@@ -1,0 +1,194 @@
+<!-- include summernote css/js-->
+<!-- include summernote css/js -->
+<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.css" rel="stylesheet">
+<link href="css/uploadProduct.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.js"></script>
+
+{{#section 'css'}}
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.min.css" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.1/css/fileinput.min.css" media="all"
+    rel="stylesheet" type="text/css" />
+{{/section}}
+
+{{#section 'js'}}
+<script src="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js" type="text/javascript"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/3.0.0/js/bootstrap-datetimepicker.min.js" type="text/javascript"></script>  
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.4.0/lang/en-gb.js" type="text/javascript"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.1/js/fileinput.min.js"></script>
+    <script>
+    $("#images").fileinput({
+        autoOrientImage:false,
+    });
+</script>
+{{/section}}
+
+
+
+<form id="product-details" method="POST" novalidate enctype="multipart/form-data">
+    <div class="upload-image-zone" style="width: 100%;margin-left:30px">
+        <h3 style="padding-top:30px;padding-bottom:30px;">Upload a product</h3>
+        <div class="modal fade" data-backdrop="static" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Add a new device</h4>
+                    </div>
+                    <div class="modal-body">
+                        <fieldset>
+                            <div id="product-details" class="form-group">
+                                <label for="brand">Brand:</label>
+                                <input type="text" class="form-control" id="brand" name="brand">
+                            </div>
+                            <div id="product-details" class="form-group">
+                                <label for="model">Model:</label>
+                                <input type="text" class="form-control" id="model" name="model">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="exampleFormControlSelect2">Type:</label>
+                                <select class="form-control" id="type" name="type">
+                                    <option name="type" value="phone">Phone</option>
+                                    <option name="type" value="laptop">Laptop</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="exampleFormControlFile1">Choose 3 images:</label>
+                                <input type="file" class="file" name="images" id="images" multiple/>                               
+                            </div>
+
+                            <h5 class="mb-0">
+                                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOne"
+                                    aria-expanded="false" aria-controls="collapseOne">
+                                    Add more specific details
+                                </button>
+                            </h5>
+
+                            <div id="collapseOne" class="collapse" aria-labelledby="headingOne"
+                                data-parent="#accordion">
+                                <div class="form-group">
+                                    <label for="exampleFormControlInput1">Released:</label>
+                                    <input type="text" class="form-control" id="released" name="released">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleFormControlInput1">Status:</label>
+                                    <input type="text" class="form-control" id="status" name="status">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleFormControlInput1">Weight:</label>
+                                    <input type="text" class="form-control" id="weight" name="weight">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleFormControlInput1">Display type:</label>
+                                    <input type="text" class="form-control" id="displaytype" name="displaytype">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleFormControlInput1">Display size:</label>
+                                    <input type="text" class="form-control" id="displaysize" name="displaysize">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleFormControlInput1">Display resolution:</label>
+                                    <input type="text" class="form-control" id="displayres" name="displayres">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleFormControlInput1">OS:</label>
+                                    <input type="text" class="form-control" id="os" name="os">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleFormControlInput1">GPU:</label>
+                                    <input type="text" class="form-control" id="gpu" name="gpu">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleFormControlInput1">RAM:</label>
+                                    <input type="text" class="form-control" id="ram" name="ram">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleFormControlInput1">Sensors:</label>
+                                    <input type="text" class="form-control" id="sensors" name="sensors">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleFormControlInput1">Battery:</label>
+                                    <input type="text" class="form-control" id="battery" name="battery">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleFormControlInput1">Color:</label>
+                                    <input type="text" class="form-control" id="color" name="color">
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button id="addNewDevice" type="button" class="btn btn-primary">Add</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="form-group">
+                <label for="sel1">Select list:</label>
+                <select class="form-control" id="deviceid" name="deviceid">
+                    {{#each list.items}}
+                    <option name="deviceid" value="{{device_id}}">{{brand}} {{model}}</option>
+
+                    {{/each}}
+                </select>
+            </div>
+            <span>Your phone/tablet doensn't appear in the list?</span>
+            <button type="button" class="btn btn-sm btn-outline-dark" data-toggle="modal" data-target="#myModal">
+                Add a new deivce
+            </button>
+            <div class="form-group">
+                <label for="exampleFormControlInput1">Starting price:</label>
+                <input name="startprice" style="width: 150px;" type="number" step="10" min="0" value="0"
+                    class="form-control" id="startingPrice" required>
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlInput1">Step price:</label>
+                <div class="col-lg-2">
+                    <div class="input-group">
+                        <span class="input-group-btn">
+                            <button type="button" class="quantity-left-minus btn btn-outline-secondary"
+                                data-type="minus" data-field="">
+                                -
+                            </button>
+                        </span>
+                        <input type="text" name="stepprice" id="uploadDevice_stepPrice" style="width:150px"
+                            name="quantity" class="form-control input-number step-price" value="10" min="10" max="100" required>
+                        <span class="input-group-btn">
+                            <button type="button" class="quantity-right-plus btn btn-outline-secondary" data-type="plus"
+                                data-field="">
+                                +
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class='input-group date' id='expiredDate'>
+                <label for="startDate">Expired date:</label>
+                <input type='text' class="form-control" id='datetimepicker4' required name="expired"/>
+                <script>    
+                    $('#datetimepicker4').datetimepicker();
+                </script>
+            </div>
+
+            <div class="upload-product-zone">
+                <label for="exampleFormControlSelect2">Details:</label>
+                <textarea id="summernote" name="details" form="product-details">
+                                                                                            </textarea>
+            </div>
+            <button class="btn btn-primary" id="submitForm">
+                Post product
+            </button>
+    </div>
+</form>
+
+
+
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="/js/merchant/uploadProduct.js"></script>

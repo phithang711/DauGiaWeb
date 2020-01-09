@@ -1,0 +1,22 @@
+<div class="card suggested-item">
+    <div style="float:left;">
+        {{#if new}}
+        <span class="badge bg-danger" style="float:right;color:white">NEW</span>
+        {{/if}}
+        <span class="badge bg-danger" style="float:right;color:white">{{end_date}} </span>
+        <span class="badge badge-info" style="float:right">{{count}} bid(s)</span>
+    </div>
+    <div class="section-image-parent">
+        <img class="card-img-top" src="{{picture}}" alt="Card image cap">
+    </div>
+
+    <div class="card-body">
+        <h6 class="card-title" style="float: left;font-size:smaller;font-weight:bold"><a class="product-name"
+                href="all/{{index}}">{{name}}</a></h6>
+
+        <div class="currency" style="float: right;font-size:large;font-weight:bold;color:red">
+            <span class="sign">$</span>
+            <span class="currency">{{price}}</span>
+        </div>
+    </div>
+</div>

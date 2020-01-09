@@ -1,0 +1,89 @@
+<h4>Manage categories</h4>
+<input type="text" name="addname" id="addname" placeholder="Type here to add a new category">
+<button type="button" class="btn btn-outline-primary category-add">
+    <i class="fa fa-plus" aria-hidden="true"></i>
+</button>
+<table class="table table-hover table-responsive">
+    <thead class="thead-dark">
+        <tr>
+            <th>Category</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each cats}}
+        <tr>
+            <td scope="row">{{category_name}}</td>
+
+
+            </td>
+            <td>
+                <div>
+                    <button type="button" class="btn btn-outline-danger category-delete" data-cate={{category_name}}>
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                    </button>
+                    <input type="text" class="category-edit-input" data-cate={{category_name}} placeholder="Type here to edit">
+                    <button type="button" class="btn btn-outline-warning category-edit" data-cate={{category_name}}>
+                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+<script>
+    $(".category-delete").click(function () {
+        $.ajax('/manage/category/delete',   // request url
+            {
+                method:"post",
+                data: {
+                    category: $(this).attr("data-cate"),
+                },
+                success: function (data, status, xhr) {// success callback function
+                    location.reload();
+                },
+                error: function (jqXhr, textStatus, errorMessage) { // error callback 
+                    alert("Failed");
+                },
+            });
+    });
+
+    $(".category-edit").click(function () {
+        var value=$( ".category-edit" ).siblings('input')[0].value;
+        var old=$(this).attr("data-cate");
+        console.log(value);
+
+        $.ajax('/manage/category/edit',   // request url
+            {
+                method:"post",
+                data: {
+                    cate: value,
+                    oldcate: old,
+                },
+                success: function (data, status, xhr) {// success callback function
+                    location.reload();
+                },
+                error: function (jqXhr, textStatus, errorMessage) { // error callback 
+                    alert("Failed");
+                },
+            });
+    });
+
+    $(".category-add").click(function () {
+        $.ajax('/manage/category/add',   // request url
+            {
+                method:"post",
+                data: {
+                    cate: $("#addname")[0].value,
+                },
+                success: function (data, status, xhr) {// success callback function
+                    location.reload();
+                },
+                error: function (jqXhr, textStatus, errorMessage) { // error callback 
+                    alert("Failed");
+                },
+            });
+    });
+</script>

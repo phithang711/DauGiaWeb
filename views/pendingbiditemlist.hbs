@@ -1,0 +1,36 @@
+<div class="limiter">
+    <div class="container-main-content container-main-content-top">
+        <div class="wrap-main-content wrap-item-view wrap-main-content-top">
+            <table class="table table-hover table-responsive">
+                <h1>Your Pending Bidding Item List</h1>
+                <br>
+                <br>
+                <br>
+                <br>
+                <thead>
+                    <tr>
+                        <th><h3>Product Bid ID</h3></th>
+                        <th><h3>Product Model</h3></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each items}}
+                    <tr>
+                        <td scope="row">
+                            <a type="button" href="/item/{{ProductID}}">
+                                <h3>{{ProductID}}</h3>
+                            </a>    
+                        </td>
+                       
+                        <td scope="row">
+                            <a type="button" href="/item/{{ProductID}}">
+                                <h3>{{Model}}</h3>
+                            </a>    
+                        </td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

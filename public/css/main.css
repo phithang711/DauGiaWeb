@@ -47,7 +47,7 @@ html {
 }
 
 .containerflex .card {
-    width: 280px;
+    width: 250px;
     height: 450px;
     margin: 5px 5px 5px 10px;
 }
@@ -82,6 +82,14 @@ html {
 
 .wrap-item-view {
     justify-content: space-around;
+}
+
+.container-main-content-top {
+    align-items: baseline;
+}
+
+.wrap-main-content-top {
+    justify-content: flex-start;
 }
 
 .wrap-item-view .carousel {
@@ -740,13 +748,21 @@ iframe {
 .suggested-content .suggested-items {
     padding-top: 20px;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    align-items: stretch;
+    align-content: flex-end;
 }
 
 .suggested-item {
-    width: 150px;
-    height: 150px;
+    width: 200px;
+    height: 200px;
     margin: 10px;
+}
+
+.suggested-item img {
+    height: 100px;
+    widows: 100%;
 }
 
 .form-submit {
@@ -905,4 +921,4 @@ input[type="number"] {
     display: inline-block;
     text-decoration: none;
     cursor: pointer;
-}
+}   
