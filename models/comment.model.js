@@ -5,7 +5,7 @@
      all: _ => db.load('select * from comment'),
      //search: (keyword) => db.load("select * from book where match (title) against('-" + keyword + "')"),
      //search: (keyword) => db.load("SELECT * FROM device WHERE (brand) LIKE '%" + keyword + "%' OR (model) LIKE '%" + keyword + "%'"),
-     getById: (userId) => db.load(`select * from comment where user_id = '${userId}' and type = 1`),
+     getById: (userId) => db.load(`select * from comment where (user_id = '${userId}' and type = 1) or (user_id2 ='${userId}' and type = 0)`),
  
     add: entity => db.add(entity, 'comment'),
     

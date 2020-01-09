@@ -633,9 +633,9 @@ async function denyHandle(product_id, user_id) {
 
 router.get('/item/:id/review',async function (req, res) {
   const id =  parseInt(req.params.id);
-console.log(id);
-  const comments = await commentModel.getById(id);
 
+  const comments = await commentModel.getById(id);
+    console.log(comments);
   let result = [];
   for(i = 0;i<comments.length ; i++)  {
     const user = await userModel.getUserById(comments[i].user_id);
