@@ -143,14 +143,14 @@ router.get("/item/:index", async function(req, res) {
         }
 
         let bidderName = bidder.name;
-        if(bidderName.length > 5) {
+        if (bidderName.length > 5) {
             bidderName = "*****" + bidderName.substr(5);
         } else {
             bidderName = "***" + bidderName.substr(3);
         }
 
         let sellerName = seller.name;
-        if(sellerName.length > 5) {
+        if (sellerName.length > 5) {
             sellerName = "*****" + sellerName.substr(5);
         } else {
             sellerName = "***" + sellerName.substr(3);
@@ -413,12 +413,19 @@ router.get("/item/:index/review", function(req, res) {
     }
 });
 
-router.get("/otp", (req, res) => {
-    res.render("otpMail", { title: "OTP" });
+router.get('/otp', (req, res) => {
+
+    res.render('otpMail', { title: "OTP" });
 });
 
-router.get("/404", (req, res) => {
-    res.render("pageNotFound", { title: "404" });
+// router.get('/otp', (req, res) => {
+
+//     // res.render('otpMail', {title: "OTP"});
+// });
+
+
+router.get('/404', (req, res) => {
+    res.render('pageNotFound', { title: "404" });
 });
 // router.get('/:type/:index/merchantview', function(req, res) {
 //     //get param
