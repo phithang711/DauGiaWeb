@@ -5,7 +5,6 @@ const moment = require("moment");
 const userModel = require("../models/user.model");
 const config = require("../configs/userModelConfig.json");
 
-const userModel = require('../models/user.model');
 const toMerchant = require('../models/tomerchant');
 const ListBid = require('../models/user.profile.js')
 
